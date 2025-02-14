@@ -1,0 +1,16 @@
+Index: backend/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/.phpunit.cache\n/node_modules\n/public/build\n/public/hot\n/public/storage\n/storage/*.key\n/storage/pail\n/vendor\n.env\n.env.backup\n.env.production\n.phpactor.json\n.phpunit.result.cache\nHomestead.json\nHomestead.yaml\nnpm-debug.log\nyarn-error.log\n/auth.json\n/.fleet\n/.idea\n/.nova\n/.vscode\n/.zed\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/backend/.gitignore b/backend/.gitignore
+--- a/backend/.gitignore	
++++ b/backend/.gitignore	
+@@ -21,3 +21,5 @@
+ /.nova
+ /.vscode
+ /.zed
++.idea
++workspace.xml

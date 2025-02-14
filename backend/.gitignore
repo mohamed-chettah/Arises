@@ -21,3 +21,6 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+.idea
+workspace.xml
+vcs.xml
