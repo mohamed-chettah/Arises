@@ -16,7 +16,7 @@ services:
 
   db:
     image: mysql:8.0
-    container_name: mysql-db
+    container_name: database
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: laravel
@@ -27,6 +27,22 @@ services:
       - dbdata:/var/lib/mysql
     ports:
       - "3307:3306"
+    networks:
+      - laravel-net
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    command: npm run dev
+    depends_on:
+      - backend
     networks:
       - laravel-net
 
