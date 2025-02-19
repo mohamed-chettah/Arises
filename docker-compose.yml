@@ -16,7 +16,6 @@ services:
 
   db:
     image: mysql:8.0
-    container_name: database
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: laravel
@@ -35,11 +34,13 @@ services:
       context: ./frontend
     container_name: frontend
     working_dir: /app
+    environment:
+      - NUXT_PORT=3000
     volumes:
       - ./frontend:/app
       - /app/node_modules
     ports:
-      - "3000:3000"
+      - "3001:3000"
     command: npm run dev
     depends_on:
       - backend
@@ -52,3 +53,4 @@ volumes:
 networks:
   laravel-net:
     driver: bridge
+

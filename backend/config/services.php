@@ -35,4 +35,19 @@ return [
         ],
     ],
 
+    'github' => [
+        'client_id' => env('GITHUB_CLIENT_ID'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET'),
+        'redirect' => 'http://example.com/callback-url',
+    ],
+
+    'twitter' => [
+        'client_id' => env('TWITTER_CLIENT_ID'),
+        'client_secret' => env('TWITTER_CLIENT_SECRET'),
+        'redirect' => env('TWITTER_REDIRECT_URI'),
+        'guzzle' => [
+            'verify' => false, // Ignore les erreurs SSL
+        ],
+    ],
+
 ];

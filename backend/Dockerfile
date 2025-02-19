@@ -28,6 +28,8 @@ RUN composer install --no-interaction --optimize-autoloader
 # Donner les permissions nécessaires
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
+RUN docker-php-ext-install pdo_mysql
+
 # Exposer le port
 EXPOSE 5005
 
