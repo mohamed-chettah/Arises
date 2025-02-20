@@ -19,9 +19,9 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: laravel
-      MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: laravel
       MYSQL_PASSWORD: laravel
+      MYSQL_ROOT_PASSWORD: root
     volumes:
       - dbdata:/var/lib/mysql
     ports:
