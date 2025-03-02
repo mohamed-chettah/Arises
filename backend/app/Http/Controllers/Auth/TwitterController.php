@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -16,7 +17,7 @@ class TwitterController extends Controller
         return response()->json(['url' => $url]);
     }
 
-    public function handleTwitterCallback(): JsonResponse
+    public function handleTwitterCallback(): JsonResponse|RedirectResponse
     {
         try {
             $twitterUser = Socialite::driver('twitter')->user();
@@ -28,7 +29,7 @@ class TwitterController extends Controller
                 // Si l'utilisateur n'existe pas, crée un nouvel enregistrement
                 $user = User::create([
                     'name' => $twitterUser->getName(),
-                    'email' => $twitterUser->getEmail() ? $twitterUser->getEmail() : '',
+                    'email' => $twitterUser->getEmail() ?: '',
                     'twitter_id' => $twitterUser->getId(),
                     'avatar' => $twitterUser->getAvatar(),
                 ]);
@@ -36,15 +37,15 @@ class TwitterController extends Controller
 
             Auth::login($user);
 
-            // Générer un token pour ton API (JWT, Sanctum, etc.)
+            // Générer un token API (JWT, Sanctum, etc.)
             $token = $user->createToken('auth_token')->plainTextToken;
 
-            return response()->json([
-                'user' => $user,
-                'token' => $token
-            ]);
+            // 🔥 Redirection vers l'extension avec le token en paramètre 🔥
+            return redirect()->away("chrome-extension://<EXTENSION_ID>/callback.html?token=$token/user=$user");
+
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
 }
