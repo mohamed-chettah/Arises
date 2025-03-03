@@ -8,9 +8,6 @@ const router = useRouter()
 const token = route.query.token
 
 if (token) {
-  // Supprime le token de l'URL pour la sécurité
-  window.history.replaceState({}, document.title, "/oauthConnexion")
-
   // Envoyer le token à l'extension via window.postMessage
   setTimeout(() => {
     window.postMessage({ type: "AUTH_SUCCESS", token }, "*")
