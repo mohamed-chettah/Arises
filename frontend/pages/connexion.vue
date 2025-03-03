@@ -1,4 +1,5 @@
 <script setup>
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const router = useRouter()
@@ -7,20 +8,18 @@ const router = useRouter()
 const token = route.query.token
 
 if (token) {
-  // Envoyer le token à l'extension Chrome
-  setTimeout(() => {
-    try {
-      chrome.runtime.sendMessage({ type: "AUTH_SUCCESS", token }, (response) => {
-        console.log("Réponse de l'extension :", response)
-      })
-    } catch (error) {
-      console.error("Impossible d'envoyer le message à l'extension :", error)
-    }
-  }, 1000) // Petit délai pour s'assurer du chargement
+  // Supprime le token de l'URL pour la sécurité
+  window.history.replaceState({}, document.title, "/oauthConnexion")
 
+  // Envoyer le token à l'extension via window.postMessage
   setTimeout(() => {
-    window.close();
-  }, 5000); // Ferme la page après 5 secondes
+    window.postMessage({ type: "AUTH_SUCCESS", token }, "*")
+  }, 1000)
+
+  // Optionnel : Fermer la page après quelques secondes
+  setTimeout(() => {
+    window.close()
+  }, 5000)
 }
 </script>
 
