@@ -13,14 +13,18 @@ class TwitterController extends Controller
 {
     public function redirectToTwitter(): JsonResponse
     {
+        // Obtenir l'URL de redirection générée par Socialite
         $url = Socialite::driver('twitter')->redirect()->getTargetUrl();
+
         return response()->json(['url' => $url]);
     }
+
 
     public function handleTwitterCallback(): JsonResponse|RedirectResponse
     {
         try {
-            $twitterUser = Socialite::driver('twitter')->user();
+
+            $twitterUser = Socialite::driver('twitter')->stateless()->user();
 
             // Vérifie si l'utilisateur existe déjà
             $user = User::where('twitter_id', $twitterUser->getId())->first();

@@ -3,7 +3,7 @@
 </script>
 
 <template>
-
+  <p>Connexion</p>
 </template>
 
 <style scoped>
