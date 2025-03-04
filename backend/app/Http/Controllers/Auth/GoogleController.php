@@ -45,7 +45,7 @@ class GoogleController extends Controller
 
             $token = JWTAuth::fromUser($user);
 
-            // 🔥 Générer un `authKey` unique et stocker les données temporairement
+            // Générer un `authKey` unique et stocker les données temporairement
             $authKey = Str::random(40);
             Cache::put("auth:$authKey", ['token' => $token, 'user' => $user], now()->addMinutes(5));
 
@@ -58,6 +58,5 @@ class GoogleController extends Controller
             ], 500);
         }
     }
-
 
 }

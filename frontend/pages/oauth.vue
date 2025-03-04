@@ -23,7 +23,12 @@ if (token) {
 <template>
   <div class="oauth-container">
     <h2>Connexion en cours...</h2>
-    <p v-if="token">Votre connexion est en train d'être validée.</p>
+    <div v-if="token">
+      <p >Votre connexion est en train d'être validée.</p>
+      <p >Veuillez patienter...</p>
+      <p>Maintenant vous pouvez cliquez sur l'extension et accomplir de grandes choses</p>
+    </div>
+
     <p v-else>Erreur : aucun token trouvé.</p>
   </div>
 </template>
