@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
@@ -21,25 +22,15 @@ class GoogleController extends Controller
     }
 
 
-    public function handleGoogleCallback()
+    public function handleGoogleCallback(): RedirectResponse | JsonResponse
     {
         try {
-
             $googleUser = Socialite::driver('google')->stateless()->user();
 
-            if (!request()->has('code')) {
-                return response()->json([
-                    'error' => 'Code OAuth manquant. Google n\'a pas redirigé avec un code.',
-                    'query' => request()->all() // Voir ce qui est renvoyé
-                ], 400);
-            }
-
-            // Vérifie si Google a bien renvoyé des données
             if (!$googleUser) {
-                throw new \Exception("Google n'a pas renvoyé d'utilisateur.");
+                throw new \Exception("Google dont return user data.");
             }
 
-            // Vérifie si l'utilisateur existe déjà
             $user = User::where('google_id', $googleUser->getId())->first();
 
             if (!$user) {
@@ -59,7 +50,7 @@ class GoogleController extends Controller
             Cache::put("auth:$authKey", ['token' => $token, 'user' => $user], now()->addMinutes(5));
 
             // return to arises.app with the token
-            return redirect()->away("https://arises.vercel.app/connexion?token=$authKey");
+            return redirect()->away("https://arises.vercel.app/oauth?token=$authKey");
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
