@@ -8,15 +8,19 @@ const router = useRouter()
 const token = route.query.token
 
 if (token) {
-  // Envoyer le token à l'extension via window.postMessage
-  setTimeout(() => {
-    window.postMessage({ type: "AUTH_SUCCESS", token }, "*")
-  }, 1000)
+  // Vérifier si l'API Chrome est disponible (l'extension est installée)
+  if (window.chrome && chrome.runtime) {
+    chrome.runtime.sendMessage(
+        "ID_DE_TON_EXTENSION", // Remplace par ton ID d'extension
+        { action: "saveToken", token: "XYZ123" }, // Envoie le token
+        (response) => {
+          console.log("Réponse de l'extension :", response);
+        }
+    );
+  } else {
+    console.warn("Extension non détectée");
+  }
 
-  // Optionnel : Fermer la page après quelques secondes
-  setTimeout(() => {
-    window.close()
-  }, 5000)
 }
 </script>
 
