@@ -31,7 +31,7 @@ class GoogleController extends Controller
                 throw new \Exception("Google dont return user data.");
             }
 
-            $user = User::where('google_id', $googleUser->getId())->first();
+            $user = User::where('google_id', $googleUser->getId())->OrWhere('email', $googleUser->getEmail())->first();
 
             if (!$user) {
                 $user = User::create([

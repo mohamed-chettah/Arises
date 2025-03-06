@@ -11,7 +11,7 @@ if (token) {
   // Vérifier si l'API Chrome est disponible (l'extension est installée)
   if (window.chrome && chrome.runtime) {
     chrome.runtime.sendMessage(
-        "ID_DE_TON_EXTENSION", // Remplace par ton ID d'extension
+        "fjjenhlhpcdimhbdbfachdhndiiejgjo", // Remplace par ton ID d'extension
         { action: "saveToken", token: "XYZ123" }, // Envoie le token
         (response) => {
           console.log("Réponse de l'extension :", response);
