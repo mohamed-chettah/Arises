@@ -50,7 +50,8 @@ class GoogleController extends Controller
             Cache::put("auth:$authKey", ['token' => $token, 'user' => $user], now()->addMinutes(5));
 
             // return to arises.app with the token
-            return redirect()->away("https://arises.vercel.app/oauth?token=$authKey");
+            return redirect()->away("chrome-extension:/fjjenhlhpcdimhbdbfachdhndiiejgjo/views/oauth.html?token=$authKey");
+
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),
