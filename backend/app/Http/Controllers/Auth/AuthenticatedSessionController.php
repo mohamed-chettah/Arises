@@ -26,8 +26,7 @@ class AuthenticatedSessionController extends Controller
         }
 
         return response()->json([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
+            'token' => $token,
             'user' => auth()->user()
         ]);
     }
@@ -38,7 +37,7 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request): JsonResponse
     {
         JWTAuth::invalidate(JWTAuth::getToken());
-
+        auth()->logout();
         return response()->json(['message' => 'Successfully logged out']);
     }
 }

@@ -41,8 +41,7 @@ class RegisteredUserController extends Controller
             $token =  JWTAuth::fromUser($user);
 
             return response()->json([
-                'access_token' => $token,
-                'token_type' => 'Bearer',
+                'token' => $token,
                 'user' => $user
             ]);
         } catch (ValidationException $e) {

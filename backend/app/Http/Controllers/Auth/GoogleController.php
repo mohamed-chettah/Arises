@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
@@ -45,11 +46,10 @@ class GoogleController extends Controller
 
             $token = JWTAuth::fromUser($user);
 
-            // Générer un `authKey` unique et stocker les données temporairement
             $authKey = Str::random(40);
-            Cache::put("auth:$authKey", ['token' => $token, 'user' => $user], now()->addMinutes(5));
+            Cache::put("auth:$authKey", ['token' => $token, 'user' => $user], now()->addMinutes(10));
 
-            // return to arises.app with the token
+            // return to the extension
             return redirect()->away("chrome-extension:/fjjenhlhpcdimhbdbfachdhndiiejgjo/views/oauth.html?token=$authKey");
 
         } catch (\Exception $e) {
