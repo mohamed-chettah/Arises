@@ -56,12 +56,10 @@ Route::middleware(['jwt'])->group(function () {
     Route::get('/dashboard', function () {
 
     });
-
     Route::get('/logout', [LoginController::class, 'logout']);
 });
 
 // AUTH ROUTES
-
 
 //
 //Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
