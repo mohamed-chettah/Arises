@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\TwitterController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Extension\WebsiteController;
 use App\Models\User;
 use Firebase\JWT\Key;
 use Illuminate\Http\JsonResponse;
@@ -28,6 +29,7 @@ Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 // Cache authentification (récuperation des informations de l'utilisateur)
+
 Route::get('/auth/status/{authKey}', function ($authKey): JsonResponse {
     $authKey = urldecode($authKey);
     $data = Cache::get("auth:$authKey");
@@ -56,8 +58,14 @@ Route::middleware(['jwt'])->group(function () {
     Route::get('/dashboard', function () {
 
     });
-    Route::get('/logout', [LoginController::class, 'logout']);
+//    Route::get('/logout', [LoginController::class, 'logout']);
+
+
 });
+
+// Websites Routes
+Route::post('/websites', [WebsiteController::class, 'store'])
+    ->name('websites.store');
 
 // AUTH ROUTES
 
