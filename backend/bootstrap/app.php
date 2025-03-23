@@ -6,6 +6,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -28,5 +30,17 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->renderable(function (ValidationException $e, $request) {
+            return response()->json([
+                'message' => 'Invalid data provided. Please check the errors.',
+                'errors' => $e->errors(),
+            ], 422);
+        });
+
+        // Gestion des exceptions pour les routes non trouvées
+        $exceptions->renderable(function (NotFoundHttpException $e, $request) {
+            return response()->json([
+                'message' => 'Resource not found.',
+            ], 404);
+        });
     })->create();

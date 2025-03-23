@@ -2,26 +2,39 @@
 
 namespace App\Http\Controllers\Extension;
 
+use App\Http\Requests\StoreWebsiteRequest;
+use App\Services\UserWebsiteService;
 use App\Services\WebsiteService;
 use DOMDocument;
 use DOMXPath;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class WebsiteController
 {
-    public function store(Request $request)
+    public function store(StoreWebsiteRequest $request): JsonResponse
     {
-        $validated = $request->validate([
-            'website_url' => 'required|url',
-        ]);
-
+        $validated = $request->validated();
         $websiteInfo = $this->fetchTitleAndFavicon($validated['website_url']);
 
-        dd($websiteInfo);
-        $website = WebsiteService::createWebsite($validated);
+        $websiteInfo['website_name'] = ucfirst($validated['title']);
 
-        return response()->json($website, 201);
+        if(isset($websiteInfo['error'])){
+            return response()->json(['error' => $websiteInfo['error']], 400);
+        }
+
+        if (!$websiteInfo['favicon']) {
+            return response()->json(['error' => 'Impossible de récupérer la favicon de la page.'], 400);
+        }
+
+        $website = WebsiteService::findOrCreate($websiteInfo);
+
+        UserWebsiteService::findOrCreate(['website_id' => $website->id]);
+
+        // Send List of website of the user
+        $websiteList = UserWebsiteService::getAllWebsiteUser();
+        return response()->json($websiteList, 201);
     }
 
     private function fetchTitleAndFavicon($url): array
@@ -34,12 +47,21 @@ class WebsiteController
             $response = Http::get($url);
             $html = $response->body();
 
+            // check if the url is valid
+            if ($response->status() !== 200) {
+                return [
+                    'website_url'     => $url,
+                    'favicon' => $favicon,
+                    'error'   => 'Impossible de récupérer le contenu de la page.'
+                ];
+            }
+
             if (empty($html)) {
                 return [
-                    'url'     => $url,
-                    'title'   => null,
+                    'website_url'     => $url,
+                    'website_name'   => null,
                     'favicon' => $favicon,
-                    'error'   => 'Le HTML est vide.',
+                    'error'   => 'Impossible de récupérer le contenu de la page.'
                 ];
             }
 
@@ -56,55 +78,15 @@ class WebsiteController
             $title = $titleNodes->length > 0 ? trim($titleNodes->item(0)->nodeValue) : null;
 
             return [
-                'url'     => $url,
-                'title'   => $title,
+                'website_url'     => $url,
                 'favicon' => $favicon,
             ];
         } catch (\Exception $e) {
             return [
-                'url'     => $url,
-                'title'   => null,
-                'favicon' => null,
+                'website_url'     => $url,
                 'error'   => $e->getMessage(),
             ];
         }
-    }
-
-    private function getFromHtml(string $html, array $tags) {
-
-        $collect = [];
-
-        // Turn off default error reporting so we're not drowning
-        // in errors when the HTML is malformed. We can get a
-        // hold of them anytime via libxml_get_errors().
-        // Cf. https://www.php.net/libxml_use_internal_errors
-        libxml_use_internal_errors(true);
-
-        // Turn HTML string into a DOM tree.
-        $dom = new DomDocument;
-        $dom->loadHTML($html);
-
-        // Set up XPath
-        $xpath = new DomXPath($dom);
-
-        // Query the DOM tree for the given set of tags.
-        foreach ($tags as $tag) {
-
-            // You can do *a lot* more with XPath, cf. this cheat sheet:
-            // https://gist.github.com/LeCoupa/8c305ec8c713aad07b14
-            $result = $xpath->query("//{$tag}");
-
-            if ($result instanceof DOMNodeList) {
-
-                $collect[$tag] = $result;
-            }
-        }
-
-        // Clear errors to free up memory, cf.
-        // https://www.php.net/manual/de/function.libxml-use-internal-errors.php#78236
-        libxml_clear_errors();
-
-        return $collect;
     }
 
 }

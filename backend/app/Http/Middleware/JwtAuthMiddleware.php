@@ -8,6 +8,7 @@ use Firebase\JWT\Key;
 use Closure;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class JwtAuthMiddleware
 {
@@ -33,7 +34,8 @@ class JwtAuthMiddleware
                 return response()->json(["error" => "Invalid Token"], 401);
             }
 
-            $request->user = $user; // Ajoute l'user à la requête
+            Auth::setUser($user);
+            $request->user = $user;
         } catch (\Exception $e) {
             return response()->json(["error" => "Invalid Token"], 401);
         }

@@ -58,14 +58,15 @@ Route::middleware(['jwt'])->group(function () {
     Route::get('/dashboard', function () {
 
     });
-//    Route::get('/logout', [LoginController::class, 'logout']);
 
+    // Websites Routes
+    Route::post('/websites', [WebsiteController::class, 'store'])
+        ->name('websites.store');
+
+//    Route::get('/logout', [LoginController::class, 'logout']);
 
 });
 
-// Websites Routes
-Route::post('/websites', [WebsiteController::class, 'store'])
-    ->name('websites.store');
 
 // AUTH ROUTES
 

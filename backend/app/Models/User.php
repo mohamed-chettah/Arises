@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -60,5 +62,19 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public static function decodeToken($token)
+    {
+        $decoded = JWT::decode($token, new Key(env('JWT_SECRET'), 'HS256'));
+
+        // Vérifier si l'utilisateur existe en BDD
+        $user = User::find($decoded->sub);
+
+        if (!$user) {
+            return response()->json(["error" => "Invalid Token"], 401);
+        }
+
+        return $user;
     }
 }
