@@ -8,11 +8,17 @@ use App\Services\WebsiteService;
 use DOMDocument;
 use DOMXPath;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
-class WebsiteController
+class UserWebsiteController
 {
+
+    public function index(): JsonResponse
+    {
+        $websiteList = UserWebsiteService::getAllWebsiteUser();
+        return response()->json($websiteList, 200);
+    }
+
     public function store(StoreWebsiteRequest $request): JsonResponse
     {
         $validated = $request->validated();
@@ -35,6 +41,16 @@ class WebsiteController
         // Send List of website of the user
         $websiteList = UserWebsiteService::getAllWebsiteUser();
         return response()->json($websiteList, 201);
+    }
+
+    public function destroy($id): void
+    {
+        try {
+            UserWebsiteService::delete($id);
+        }
+        catch (\Exception $e) {
+            abort(500, $e->getMessage());
+        }
     }
 
     private function fetchTitleAndFavicon($url): array

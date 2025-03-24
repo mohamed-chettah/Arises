@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\TwitterController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Extension\UserWebsiteController;
 use App\Http\Controllers\Extension\WebsiteController;
 use App\Models\User;
 use Firebase\JWT\Key;
@@ -60,8 +61,16 @@ Route::middleware(['jwt'])->group(function () {
     });
 
     // Websites Routes
-    Route::post('/websites', [WebsiteController::class, 'store'])
+
+    Route::get('/user-website', [UserWebsiteController::class, 'index'])
         ->name('websites.store');
+
+    Route::post('/user-website', [UserWebsiteController::class, 'store'])
+        ->name('websites.store');
+
+    Route::delete('/user-website/{id}', [UserWebsiteController::class, 'destroy'])
+        ->name('websites.destroy');
+
 
 //    Route::get('/logout', [LoginController::class, 'logout']);
 

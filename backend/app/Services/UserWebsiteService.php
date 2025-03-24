@@ -36,4 +36,9 @@ class UserWebsiteService
     {
         return UserWebsite::where('user_id', Auth::id())->with('website')->get();
     }
+
+    public static function delete($id)
+    {
+        UserWebsite::where('user_id', Auth::id())->where('id', $id)->delete();
+    }
 }
