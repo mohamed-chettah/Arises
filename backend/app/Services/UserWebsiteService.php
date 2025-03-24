@@ -11,7 +11,7 @@ class UserWebsiteService
     public static function create(array $data)
     {
         return UserWebsite::create([
-            'user_id' => Auth::id(),
+            'user_id' => Auth::id() ?? $data['user_id'],
             'website_id' => $data['website_id'],
         ]);
     }
