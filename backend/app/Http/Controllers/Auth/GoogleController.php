@@ -53,8 +53,15 @@ class GoogleController extends Controller
 
             $token = JWTAuth::fromUser($user);
 
+            $refreshToken = auth()->claims(['refresh' => true])->setTTL(10080)->fromUser($user);
+
             $authKey = Str::random(40);
-            Cache::put("auth:$authKey", ['token' => $token, 'user' => $user], now()->addMinutes(20));
+
+            Cache::put("auth:$authKey", [
+                'token' => $token,
+                'refresh_token' => $refreshToken,
+                'user' => $user
+            ], now()->addMinutes(20));
 
             // return to the extension
             return redirect()->away("chrome-extension:/fjjenhlhpcdimhbdbfachdhndiiejgjo/views/oauth.html?token=$authKey");
