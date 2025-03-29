@@ -22,6 +22,12 @@ class UserWebsiteController
     public function store(StoreWebsiteRequest $request): JsonResponse
     {
         $validated = $request->validated();
+
+        $websiteCount = UserWebsiteService::countWebsiteUser();
+        if($websiteCount >= 20){
+            return response()->json(['error' => 'Vous avez atteint le nombre maximum de site web.'], 400);
+        }
+
         $websiteInfo = $this->fetchFavicon($validated['website_url']);
 
         $websiteInfo['website_name'] = ucfirst($validated['title']);

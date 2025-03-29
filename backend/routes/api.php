@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\JWT;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
@@ -53,19 +54,27 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store'])
     ->middleware('guest')
     ->name('login');
 
-
 Route::post('/refresh', function (Request $request) {
     try {
-        $newToken = auth()->setToken($request->refresh_token)->refresh();
+        // On récupère manuellement le token depuis la requête (Authorization ou refresh_token)
+        $refreshToken = $request->bearerToken();
+
+        if (!$refreshToken) {
+            return response()->json(['message' => 'Refresh token manquant'], 400);
+        }
+
+        $newToken = JWTAuth::setToken($refreshToken)->refresh();
 
         return response()->json([
-            'token' => $newToken,
+            'access_token' => $newToken,
+            'expires_in' => JWTAuth::factory()->getTTL() * 60, // secondes
         ]);
     } catch (TokenInvalidException $e) {
-        return response()->json(['message' => 'Invalid refresh token'], 401);
+        return response()->json(['message' => 'Refresh token invalide'], 401);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Erreur lors du refresh', 'error' => $e->getMessage()], 500);
     }
 });
-
 
 Route::middleware(['jwt'])->group(function () {
     Route::get('/is-connected', function (Request $request) {

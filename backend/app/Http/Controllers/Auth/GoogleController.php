@@ -53,13 +53,11 @@ class GoogleController extends Controller
 
             $token = JWTAuth::fromUser($user);
 
-            $refreshToken = auth()->claims(['refresh' => true])->setTTL(10080)->fromUser($user);
-
             $authKey = Str::random(40);
 
             Cache::put("auth:$authKey", [
                 'token' => $token,
-                'refresh_token' => $refreshToken,
+                'expires_in' => JWTAuth::factory()->getTTL() * 60,
                 'user' => $user
             ], now()->addMinutes(20));
 

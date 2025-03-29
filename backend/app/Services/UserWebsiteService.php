@@ -41,4 +41,9 @@ class UserWebsiteService
     {
         UserWebsite::where('user_id', Auth::id())->where('id', $id)->delete();
     }
+
+    public static function countWebsiteUser()
+    {
+        return UserWebsite::where('user_id', Auth::id())->count();
+    }
 }

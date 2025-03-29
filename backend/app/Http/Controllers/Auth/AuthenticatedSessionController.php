@@ -27,7 +27,7 @@ class AuthenticatedSessionController extends Controller
 
         return response()->json([
             'token' => $token,
-            'refresh_token' => auth()->claims(['refresh' => true])->setTTL(10080)->attempt($credentials),
+            'expires_in' => JWTAuth::factory()->getTTL() * 60, // in seconds
             'user' => auth()->user()
         ]);
     }
