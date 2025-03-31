@@ -22,7 +22,7 @@ jobs:
           key: ${{ secrets.VPS_KEY }}
           port: 22
           script: |
-            cd /arises
+            cd ~/arises
             git pull origin main
             docker compose down
             docker compose up -d --build
