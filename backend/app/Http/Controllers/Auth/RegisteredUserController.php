@@ -37,11 +37,11 @@ class RegisteredUserController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-            $datas = [
-                'user_id' => $user->id,
-                'website_id' => 3 // X
-            ];
-            UserWebsiteService::create($datas);
+//            $datas = [
+//                'user_id' => $user->id,
+//                'website_id' => 3 // X
+//            ];
+//            UserWebsiteService::create($datas);
 
             event(new Registered($user));
 
