@@ -4,7 +4,7 @@ import Navbar from "~/components/Navbar.vue";
 </script>
 
 <template>
-  <section  class="background pt-5 px-40 bg-[#000000] h-full">
+  <section class="background pt-5 px-40 bg-[#000000] min-h-screen h-full">
 
     <Navbar />
 
