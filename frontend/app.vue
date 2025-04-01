@@ -2,8 +2,13 @@
 useHead({
   title:"Arises"
 })
+
+
+
 </script>
 
 <template>
-  <NuxtPage class="" />
+  <UApp>
+    <NuxtPage />
+  </UApp>
 </template>
