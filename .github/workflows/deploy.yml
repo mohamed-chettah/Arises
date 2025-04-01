@@ -27,5 +27,4 @@ jobs:
             docker compose down
             docker compose up -d --build
             cd ~/arises/frontend
-            npm install
-            npm run build
+  

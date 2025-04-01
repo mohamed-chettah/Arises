@@ -13,8 +13,11 @@ RUN npm install
 # Copier tout le projet
 COPY . .
 
-# Exposer le port utilisé par Nuxt
+# Builder l'app Nuxt
+RUN npm run build
+
+# Exposer le port utilisé par Nuxt (en mode serveur)
 EXPOSE 3000
 
-# Lancer Nuxt
-CMD ["npm", "run", "dev"]
+# Lancer l'app Nuxt
+CMD ["node", ".output/server/index.mjs"]
