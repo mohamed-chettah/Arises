@@ -24,13 +24,18 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 <template>
   <UForm :schema="schema" :state="state" class="w-full flex flex-col gap-2 mt-5" @submit="onSubmit">
 
-    <UInput v-model="state.email"  placeholder="Email Adress"/>
+    <UInput v-model="state.email" class="input"  placeholder="Email Adress"/>
 
-    <UInput v-model="state.name" placeholder="Name"/>
+    <UInput v-model="state.name" class="input" placeholder="Name"/>
 
     <UButton type="submit" class="bg-[#A480F2] hover:bg-[#A480F2]/70 cta w-full inter">
-      Get Notified
+      Get Notified ->
     </UButton>
   </UForm>
 </template>
+
+<style>
+
+
+</style>
 

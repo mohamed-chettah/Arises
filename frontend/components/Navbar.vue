@@ -6,9 +6,9 @@
 
   <div class="flex justify-between items-center">
 
-    <NuxtImg class="w-20" src="/images/Arise.svg" />
+    <NuxtImg class="w-22" src="/images/Arise.svg" />
 
-    <UButton class="cta inter w-40 bg-[#A480F2] hover:bg-[#A480F2]/70 text-sm ">What is Arises?</UButton>
+    <UButton class=" cta inter w-40 bg-[#A480F2] hover:bg-[#A480F2]/70 text-sm ">What is Arises?</UButton>
   </div>
 
 </template>
