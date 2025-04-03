@@ -8,14 +8,14 @@
 
 @font-face {
     font-family: 'Bank Gothic Light';
-    src: url('../../public/fonts/Bank Gothic Light Regular.otf') format('truetype');
+    src: url('/fonts/Bank Gothic Light Regular.otf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Bank Gothic Bold';
-    src: url('../../public/fonts/BankGothic Bold.ttf') format('truetype');
+    src: url('/fonts/BankGothic Bold.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 
