@@ -3,7 +3,7 @@ import FormWaitlist from "~/components/FormWaitlist.vue";
 </script>
 
 <template>
-  <div class="flex items-center justify-center flex-col gap-12 mt-20 px-4">
+  <div class="flex items-center justify-center flex-col gap-12 mt-10 px-4">
 
     <h1 class="bank-gothic-bold text-white text-[28px] sm:text-[40px] leading-tight text-center">
       Your smart AI calendar<br> to plan better and level up faster.
