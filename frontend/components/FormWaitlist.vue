@@ -26,7 +26,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
     <UInput  icon="i-lucide-mail" v-model="state.email" class="input" type="email" placeholder="Email Adress"/>
 
-    <UInput icon="i-lucide-circle-user-round"  v-model="state.name" type="text" class="input" placeholder="Name"/>
+    <UInput icon="i-lucide-user"  v-model="state.name" type="text" class="input" placeholder="Name"/>
 
     <UButton type="submit" class="bg-[#A480F2] hover:bg-[#A480F2]/70 cta w-full inter">
       Get Notified ->

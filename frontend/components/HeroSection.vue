@@ -10,12 +10,13 @@ import FormWaitlist from "~/components/FormWaitlist.vue";
       <UBadge
           icon="i-lucide-zap"
           size="sm"
-          class="border border-primary/40 bg-white/10 backdrop-blur-sm text-white px-4 py-1 rounded-xl font-medium tracking-wide"
+          class="border border-white/10 bg-white/5 backdrop-blur-sm text-white px-4 py-1 rounded-xl font-medium tracking-wide"
           color="primary"
           variant="solid"
       >
         Inspired by Solo Leveling
       </UBadge>
+
       <h1 class="bank-gothic-bold text-white text-[28px] sm:text-[40px] leading-tight text-center">
         Your smart AI calendar<br> to plan better and level up faster.
       </h1>
