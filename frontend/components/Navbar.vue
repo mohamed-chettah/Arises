@@ -5,7 +5,7 @@
 <template>
 
   <div class="flex justify-center items-center">
-    <NuxtImg class="sm:w-22 w-16" src="/images/Arise.svg" />
+    <NuxtImg class="w-22" src="/images/Arise.svg" />
   </div>
 
 </template>
