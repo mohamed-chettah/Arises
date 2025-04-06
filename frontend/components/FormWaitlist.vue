@@ -24,7 +24,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 <template>
   <UForm :schema="schema" :state="state" class="w-full flex flex-col gap-2 mt-5" @submit="onSubmit">
 
-    <UInput  icon="i-lucide-mail" v-model="state.email" class="input" type="email" placeholder="Email Adress"/>
+    <UInput  icon="i-lucide-mail" v-model="state.email" class="input " type="email" placeholder="Email Address"/>
 
     <UInput icon="i-lucide-user"  v-model="state.name" type="text" class="input" placeholder="Name"/>
 
