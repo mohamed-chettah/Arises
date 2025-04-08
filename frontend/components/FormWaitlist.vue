@@ -18,7 +18,7 @@ const toast = useToast()
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   try {
-    await useFetch('https://backend.arises.app/api/waitlist', {
+      const { data, status, error, refresh, clear } = await useFetch('https://backend.arises.app/api/waitlist', {
       method: 'POST',
       body: {
         email: state.email,
@@ -26,10 +26,19 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       }
     })
 
+    if (error) {
+      toast.add({
+        title: 'Error',
+        description: 'Something went wrong. Please try again later.',
+        color: 'error'
+      })
+      return
+    }
+
     toast.add({
       title: 'Success',
       description: 'You have been added to the waitlist!',
-      color: 'green'
+      color: 'success'
     })
 
     // Optionnel : reset le formulaire
@@ -41,7 +50,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     toast.add({
       title: 'Error',
       description: 'Something went wrong. Please try again later.',
-      color: 'red'
+      color: 'error'
     })
   }
 }

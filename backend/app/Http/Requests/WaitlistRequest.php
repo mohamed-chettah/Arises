@@ -14,14 +14,14 @@ class WaitlistRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email|max:70',
+            'email' => 'required|email|max:70|unique:waitlists,email',
             'name' => 'required|string|max:50',
         ];
     }
 
     public function wantsJson(): true
     {
-        return true; // Force toujours JSON
+        return true;
     }
 
 }

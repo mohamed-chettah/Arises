@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\WaitlistRequest;
 use App\Services\WaitlistService;
-use App\Services\WebsiteService;
 use Illuminate\Http\JsonResponse;
 
 class WaitlistController
@@ -12,6 +11,7 @@ class WaitlistController
     public function store(WaitlistRequest $request): JsonResponse
     {
         $validated = $request->validated();
+        dd($validated);
         try {
              WaitlistService:: create($validated);
 
