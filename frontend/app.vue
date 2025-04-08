@@ -13,14 +13,11 @@ useHead({
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
-        gtag('config', 'G-NR5YSZPY2Q'');
+        gtag('config', 'G-NR5YSZPY2Q');
       `,
       type: 'text/javascript'
     }
   ],
-  htmlAttrs: {
-    class: 'nuxt-ui-scrollbars',
-  },
 });
 
 

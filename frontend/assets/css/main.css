@@ -39,5 +39,5 @@
 }
 
 .input {
-    @apply border-6 border-[#A480F2]/50 rounded-xl focus:outline-none focus:border-[#A480F2]
+    @apply border-6 border-[#A480F2]/30 rounded-xl focus:outline-none focus:border-[#A480F2]
 }

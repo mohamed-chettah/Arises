@@ -16,8 +16,5 @@
     "vue": "latest",
     "vue-router": "latest",
     "zod": "^3.24.2"
-  },
-  "devDependencies": {
-    "@zadigetvoltaire/nuxt-gtm": "^0.0.13"
   }
 }
