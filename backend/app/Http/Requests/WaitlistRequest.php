@@ -14,7 +14,7 @@ class WaitlistRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email|max:70|unique:waitlists,email',
+            'email' => 'required|email|max:70|unique:waitlist,email',
             'name' => 'required|string|max:50',
         ];
     }
