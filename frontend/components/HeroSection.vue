@@ -24,8 +24,6 @@ import FormWaitlist from "~/components/FormWaitlist.vue";
       </h1>
     </div>
 
-
-
     <div class="w-full xl:w-1/3 w-1/2 mt-2">
       <h2 class="inter text-white text-lg sm:text-xl text-center">
        Coming Soon

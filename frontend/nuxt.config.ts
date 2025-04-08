@@ -11,7 +11,4 @@ export default defineNuxtConfig({
   ui: {
     colorMode: false
   },
-  routeRules: {
-    '/api/**': { proxy: 'https://backend.arises.app/**' },
-  }
 })
