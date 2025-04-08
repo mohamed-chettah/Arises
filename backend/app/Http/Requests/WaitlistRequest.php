@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreWebsiteRequest extends FormRequest
+class WaitlistRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,8 +14,8 @@ class StoreWebsiteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:16',
-            'website_url' => 'required|url|max:30',
+            'email' => 'required|email|max:70',
+            'name' => 'required|string|max:50',
         ];
     }
 

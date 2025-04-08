@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Extension\UserWebsiteController;
+use App\Http\Controllers\WaitlistController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -14,7 +15,6 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 Route::group(['throttle:60,1'], function () {
     // Google OAuth
-
     Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle']);
     Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
@@ -62,6 +62,9 @@ Route::group(['throttle:60,1'], function () {
             return response()->json(['message' => 'Erreur lors du refresh', 'error' => $e->getMessage()], 500);
         }
     });
+
+    Route::post('/waitlist', [WaitlistController::class, 'store'])
+        ->name('waitlist.store');
 });
 
 Route::middleware(['jwt','throttle:60,1'])->group(function () {
