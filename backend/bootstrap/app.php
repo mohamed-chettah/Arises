@@ -31,6 +31,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(StartSession::class);
         //
     })
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->validateCsrfTokens(except: [
+            'api/waitlist',
+        ]);
+    })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->renderable(function (ValidationException $e, $request) {
             return response()->json([
