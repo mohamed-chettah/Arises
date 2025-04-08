@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\WaitlistRequest;
+use App\Services\WaitlistService;
 use App\Services\WebsiteService;
 use Illuminate\Http\JsonResponse;
 
@@ -12,9 +13,9 @@ class WaitlistController
     {
         $validated = $request->validated();
         try {
-             WebsiteService::findOrCreate($validated);
+             WaitlistService:: create($validated);
 
-            return response()->json("Ajout avec succès", 201);
+            return response()->json("Ajout à la liste d'attente réussi", 201);
         }
         catch (\Throwable $e) {
             return response()->json("Erreur lors de l'ajout à la liste d'attente", 500);

@@ -15,11 +15,38 @@ const state = reactive<Partial<Schema>>({
 })
 
 const toast = useToast()
+
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  await toast.add({title: 'Success', description: 'The form has been submitted.', color: 'success'})
-  // TODO CALL API TO SUBMIT FORM AND PENSER A VERIFIER L'origine dans le back (arises.app)
+  try {
+    await useFetch('/api/waitlist', {
+      method: 'POST',
+      body: {
+        email: state.email,
+        name: state.name
+      }
+    })
+
+    toast.add({
+      title: 'Success',
+      description: 'You have been added to the waitlist!',
+      color: 'green'
+    })
+
+    // Optionnel : reset le formulaire
+    state.email = ''
+    state.name = ''
+
+  } catch (error) {
+    console.error(error)
+    toast.add({
+      title: 'Error',
+      description: 'Something went wrong. Please try again later.',
+      color: 'red'
+    })
+  }
 }
 </script>
+
 
 <template>
   <UForm :schema="schema" :state="state" class="w-full flex flex-col gap-2 mt-5" @submit="onSubmit">

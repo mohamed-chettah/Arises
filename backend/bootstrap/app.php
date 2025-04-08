@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckOrigin;
 use App\Http\Middleware\EnsureEmailIsVerified;
 use App\Http\Middleware\JwtAuthMiddleware;
 use Illuminate\Foundation\Application;
@@ -23,7 +24,8 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'verified' => EnsureEmailIsVerified::class,
-            'jwt' => JwtAuthMiddleware::class
+            'jwt' => JwtAuthMiddleware::class,
+            'check.origin' => CheckOrigin::class,
         ]);
 
         $middleware->append(StartSession::class);

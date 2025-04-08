@@ -13,6 +13,10 @@ use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 
+Route::group(['throttle:10,1'], function () {
+    Route::post('/waitlist', [WaitlistController::class, 'store'])->name('waitlist.store');
+});
+
 Route::group(['throttle:60,1'], function () {
     // Google OAuth
     Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle']);
@@ -62,9 +66,6 @@ Route::group(['throttle:60,1'], function () {
             return response()->json(['message' => 'Erreur lors du refresh', 'error' => $e->getMessage()], 500);
         }
     });
-
-    Route::post('/waitlist', [WaitlistController::class, 'store'])
-        ->name('waitlist.store');
 });
 
 Route::middleware(['jwt','throttle:60,1'])->group(function () {
