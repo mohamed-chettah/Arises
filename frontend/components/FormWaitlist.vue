@@ -26,6 +26,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       }
     })
 
+    console.log(error)
     if (error && status.value !== 200 || status.value !== 201) {
       toast.add({
         title: 'Error',
