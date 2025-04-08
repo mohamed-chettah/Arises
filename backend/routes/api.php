@@ -91,6 +91,9 @@ Route::middleware(['jwt','throttle:60,1'])->group(function () {
 
 });
 
+Route::get('/test', function (Request $request) {
+    return response()->json(['message' => 'ok']);
+})->name('test');
 
 // AUTH ROUTES
 
