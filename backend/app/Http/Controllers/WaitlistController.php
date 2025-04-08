@@ -11,7 +11,7 @@ class WaitlistController
     public function store(WaitlistRequest $request): JsonResponse
     {
         $validated = $request->validated();
-        dd($validated);
+
         try {
              WaitlistService:: create($validated);
 
