@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('waitlist', function (Blueprint $table) {
+        Schema::create('waitlists', function (Blueprint $table) {
             $table->id();
             $table->string('email', 70)->unique();
             $table->string('name', 50)->nullable();
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_websites');
+        Schema::dropIfExists('waitlists');
     }
 };
