@@ -53,6 +53,9 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       color: 'error'
     })
   }
+
+  state.email = ''
+  state.name = ''
 }
 </script>
 
