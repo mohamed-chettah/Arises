@@ -8,6 +8,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Validation\ValidationException;
+use Sentry\Laravel\Integration;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -43,7 +44,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 'errors' => $e->errors(),
             ], 422);
         });
-
+        Integration::handles($exceptions);
         // Gestion des exceptions pour les routes non trouvées
         $exceptions->renderable(function (NotFoundHttpException $e, $request) {
             return response()->json([

@@ -10,13 +10,14 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "ext-dom": "*",
+        "ext-libxml": "*",
         "laravel/framework": "^11.31",
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.18",
         "laravel/tinker": "^2.9",
-        "tymon/jwt-auth": "*",
-        "ext-dom": "*",
-        "ext-libxml": "*"
+        "sentry/sentry-laravel": "^4.13",
+        "tymon/jwt-auth": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
