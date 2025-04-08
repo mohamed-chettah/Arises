@@ -18,7 +18,7 @@ const toast = useToast()
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   try {
-    await useFetch('/api/waitlist', {
+    await useFetch('https://backend.arises.app/api/waitlist', {
       method: 'POST',
       body: {
         email: state.email,
