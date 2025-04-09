@@ -7,10 +7,11 @@ RUN apk add --no-cache \
     unzip \
     sqlite-dev \
     libzip-dev \
+    libpq-dev \
     zip \
     build-base \
     linux-headers \
-    && docker-php-ext-install pdo pdo_sqlite zip bcmath sockets \
+    && docker-php-ext-install pdo pdo_sqlite pdo_pgsql pgsql zip bcmath sockets \
     && apk del build-base linux-headers
 
 # Copier Composer depuis son image officielle
@@ -27,8 +28,6 @@ RUN composer install --no-interaction --optimize-autoloader
 
 # Donner les permissions nécessaires
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
-
-RUN docker-php-ext-install pdo_mysql
 
 # Exposer le port
 EXPOSE 5005
