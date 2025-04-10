@@ -15,6 +15,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 Route::group(['throttle:10,1'], function () {
     Route::post('/waitlist', [WaitlistController::class, 'store'])->name('waitlist.store');
+    Route::post('/mail-waitlist', [WaitlistController::class, 'store'])->name('waitlist.store');
 });
 
 Route::group(['throttle:60,1'], function () {

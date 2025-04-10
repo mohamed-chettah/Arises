@@ -22,4 +22,19 @@ class WaitlistController
             return response()->json("Erreur lors de l'ajout à la liste d'attente", 500);
         }
     }
+
+    public function mailVerification(WaitlistRequest $request): JsonResponse
+    {
+        $validated = $request->validated();
+
+        try {
+            WaitlistService::mailVerification($validated);
+
+            return response()->json("Mail de vérification envoyé", 201);
+        }
+        catch (\Throwable $e) {
+            \Sentry\captureException($e);
+            return response()->json("Erreur lors de l'envoi du mail de vérification", 500);
+        }
+    }
 }

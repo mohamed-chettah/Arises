@@ -18,7 +18,7 @@ class GoogleController extends Controller
     public function redirectToGoogle(): JsonResponse
     {
         // Obtenir l'URL de redirection générée par Socialite
-        $url = Socialite::driver('google')->redirect()->getTargetUrl();
+        $url = Socialite::driver('google')->stateless()->redirect()->getTargetUrl();
 
         return response()->json(['url' => $url]);
     }
