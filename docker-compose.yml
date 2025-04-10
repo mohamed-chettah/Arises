@@ -12,3 +12,22 @@ services:
         delay: 5s
       restart_policy:
         condition: on-failure
+
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    working_dir: /app
+    environment:
+      - NUXT_PORT=3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - laravel-net
+networks:
+  laravel-net:
+    driver: bridge
+
