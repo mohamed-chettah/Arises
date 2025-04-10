@@ -18,6 +18,13 @@ useHead({
       type: 'text/javascript'
     }
   ],
+  link: [
+    {
+      rel: 'preload',
+      as: 'image',
+      href: '/images/img.png'
+    }
+  ]
 });
 
 

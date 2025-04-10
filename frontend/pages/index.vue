@@ -16,7 +16,7 @@ import Navbar from "~/components/Navbar.vue";
 
 <style>
 .background {
-  background: url('public/images/img.png') 80% / cover no-repeat;
+  background: url('/images/img.png') 80% / cover no-repeat;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
