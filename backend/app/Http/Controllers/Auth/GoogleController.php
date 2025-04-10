@@ -43,12 +43,6 @@ class GoogleController extends Controller
                     'google_id' => $googleUser->getId(),
                     'avatar' => $googleUser->getAvatar(),
                 ]);
-
-                $datas = [
-                    'user_id' => $user->id,
-                    'website_id' => 3
-                ];
-                UserWebsiteService::create($datas);
             }
 
             $token = JWTAuth::fromUser($user);
