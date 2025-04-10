@@ -59,5 +59,17 @@ jobs:
           script: |
             docker pull moha210/backend:latest
             docker pull moha210/frontend:latest
-            docker service update --image moha210/backend:latest arises_backend
-            docker service update --image moha210/frontend:latest arises_frontend
+
+            docker service update \
+              --image moha210/backend:latest \
+              --update-parallelism 1 \
+              --update-delay 5s \
+              --update-order start-first \
+              arises_backend
+
+            docker service update \
+              --image moha210/frontend:latest \
+              --update-parallelism 1 \
+              --update-delay 5s \
+              --update-order start-first \
+              arises_frontend
