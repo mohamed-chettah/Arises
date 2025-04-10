@@ -23,6 +23,7 @@ class WaitlistController
         }
     }
 
+
 //    public function mailVerification(WaitlistRequest $request): JsonResponse
 //    {
 //        $validated = $request->validated();
