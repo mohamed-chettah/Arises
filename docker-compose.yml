@@ -14,19 +14,19 @@ services:
         condition: on-failure
 
   frontend:
-    build:
-      context: ./frontend
-    container_name: frontend
-    working_dir: /app
-    environment:
-      - NUXT_PORT=3000
+    image: moha210/frontend:latest
     ports:
       - "3000:3000"
-    depends_on:
-      - backend
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 5s
+      restart_policy:
+        condition: on-failure
     networks:
       - laravel-net
+
 networks:
   laravel-net:
-    driver: bridge
-
+    driver: overlay
