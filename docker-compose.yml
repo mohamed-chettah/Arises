@@ -13,7 +13,6 @@ services:
       restart_policy:
         condition: on-failure
 
-
   frontend:
     build:
       context: ./frontend

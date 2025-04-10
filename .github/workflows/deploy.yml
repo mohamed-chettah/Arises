@@ -27,6 +27,13 @@ jobs:
           context: "./backend"
           tags: moha210/backend:latest
 
+      - name: Build and push frontend
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          context: "./frontend"
+          tags: moha210/frontend:latest
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -51,4 +58,6 @@ jobs:
           port: 22
           script: |
             docker pull moha210/backend:latest
+            docker pull moha210/frontend:latest
             docker service update --image moha210/backend:latest arises_backend
+            docker service update --image moha210/frontend:latest arises_frontend
