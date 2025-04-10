@@ -50,7 +50,5 @@ jobs:
           key: ${{ secrets.VPS_KEY }}
           port: 22
           script: |
-            cd ~/arises
-            git pull origin main
-            docker compose down
-            docker compose up -d --build
+            docker pull moha210/backend:latest
+            docker service update --image moha210/backend:latest arises_backend
