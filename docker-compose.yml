@@ -6,7 +6,10 @@ services:
     expose:
       - "5005"
     ports:
-      - "5005:5005"
+      - target: 5005
+        published: 5005
+        protocol: tcp
+        mode: host
     deploy:
       replicas: 1
       update_config:
