@@ -61,7 +61,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 <template>
   <UForm :schema="schema" :state="state" class="w-full flex flex-col gap-2 mt-5" @submit="onSubmit">
 
-    <UInput  icon="i-ri-mail-fill" v-model="state.email" class="input" type="email" required placeholder="Email Address"/>
+    <UInput  icon="i-ri-mail-line" v-model="state.email" class="input" type="email" required placeholder="Email Address"/>
 
     <UInput icon="i-ri-user-line"  v-model="state.name" type="text" class="input" required placeholder="Name"/>
 

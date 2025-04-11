@@ -34,7 +34,3 @@ services:
         order: start-first
       restart_policy:
         condition: on-failure
-
-networks:
-  default:
-    driver: overlay
