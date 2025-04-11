@@ -3,6 +3,8 @@ version: "3.8"
 services:
   backend:
     image: moha210/backend:latest
+    expose:
+      - "5005"
     ports:
       - "5005:5005"
     deploy:

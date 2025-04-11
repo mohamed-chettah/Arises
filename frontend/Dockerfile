@@ -1,23 +1,37 @@
-# Utilisation de l'image Node.js
-FROM node:20-alpine
+# ---- STAGE 1 : BUILD ----
+FROM node:20-alpine AS builder
 
-# Définition du dossier de travail
 WORKDIR /app
 
-# Copier les fichiers package.json et package-lock.json
+# Copier uniquement les fichiers relatifs aux dépendances
 COPY package*.json ./
 
-# Installer les dépendances
+# Installer toutes les dépendances (y compris devDependencies)
 RUN npm install
 
-# Copier tout le projet
+# Copier l'intégralité du code
 COPY . .
 
-# Builder l'app Nuxt
+# Construire le projet Nuxt
 RUN npm run build
 
-# Exposer le port utilisé par Nuxt (en mode serveur)
+# ---- STAGE 2 : RUNTIME ----
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copier le dossier .output (résultat du build Nuxt) depuis l'étape builder
+COPY --from=builder /app/.output ./.output
+
+# Copier le node_modules si tu as besoin de dépendances au runtime (pas toujours nécessaire pour Nuxt 3)
+COPY --from=builder /app/node_modules ./node_modules
+
+# Copier les fichiers de config (package.json, etc.) si besoin
+COPY --from=builder /app/package*.json ./
+
+# On indique qu'on est en environnement de production
+ENV NODE_ENV=production
+
 EXPOSE 3000
 
-# Lancer l'app Nuxt
 CMD ["node", ".output/server/index.mjs"]

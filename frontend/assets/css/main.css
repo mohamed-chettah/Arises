@@ -35,9 +35,8 @@
 
 .cta{
     @apply border-t border-t-[#A480F2]/70 cursor-pointer text-center flex justify-center rounded-[8px] text-white;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
 }
 
 .input {
-    @apply border-6 border-[#A480F2]/30 rounded-xl focus:outline-none focus:border-[#A480F2]
+    @apply border-6 border-[#A480F2]/30 rounded-xl focus:outline-none focus:border-[#A480F2] backdrop-blur-xl
 }
