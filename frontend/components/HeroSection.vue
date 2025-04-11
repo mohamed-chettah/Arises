@@ -8,7 +8,7 @@ import FormWaitlist from "~/components/FormWaitlist.vue";
 
     <div class="flex flex-col justify-center gap-3 items-center">
       <UBadge
-          icon="i-lucide-zap"
+          icon="i-ri-magic-line"
           size="sm"
           class="border border-white/10 bg-white/5 backdrop-blur-sm text-white px-4 py-1 rounded-xl font-medium tracking-wide"
           color="primary"

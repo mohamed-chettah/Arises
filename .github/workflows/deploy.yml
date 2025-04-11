@@ -59,18 +59,4 @@ jobs:
           script: |
             docker pull moha210/backend:latest
             docker pull moha210/frontend:latest
-            
-            docker service update \
-              --image moha210/backend:latest \
-              --env-file /root/arises/backend/.env \
-              --update-parallelism 1 \
-              --update-delay 5s \
-              --update-order start-first \
-              arises_backend
-
-            docker service update \
-              --image moha210/frontend:latest \
-              --update-parallelism 1 \
-              --update-delay 5s \
-              --update-order start-first \
-              arises_frontend
+            docker stack deploy -c ~/arises/docker-compose.yml arises

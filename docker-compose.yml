@@ -4,9 +4,10 @@ services:
   backend:
     image: moha210/backend:latest
     ports:
-      - "5005:5005"
-    volumes:
-      - /root/arises/backend/.env:/var/www/.env
+      - target: 5005
+        published: 5005
+        protocol: tcp
+        mode: ingress
     deploy:
       replicas: 1
       update_config:
@@ -15,13 +16,16 @@ services:
         order: start-first
       restart_policy:
         condition: on-failure
-    networks:
-      - laravel-net
+    env_file:
+      - /root/arises/backend/.env
 
   frontend:
     image: moha210/frontend:latest
     ports:
-      - "3000:3000"
+      - target: 3000
+        published: 3000
+        protocol: tcp
+        mode: ingress
     deploy:
       replicas: 1
       update_config:
@@ -30,9 +34,7 @@ services:
         order: start-first
       restart_policy:
         condition: on-failure
-    networks:
-      - laravel-net
 
 networks:
-  laravel-net:
+  default:
     driver: overlay
