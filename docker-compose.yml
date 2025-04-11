@@ -3,13 +3,8 @@ version: "3.8"
 services:
   backend:
     image: moha210/backend:latest
-    expose:
-      - "5005"
     ports:
-      - target: 5005
-        published: 5005
-        protocol: tcp
-        mode: host
+      - "5005:5005"
     deploy:
       replicas: 1
       update_config:
@@ -18,6 +13,8 @@ services:
         order: start-first
       restart_policy:
         condition: on-failure
+    networks:
+      - laravel-net
 
   frontend:
     image: moha210/frontend:latest
