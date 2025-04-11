@@ -5,6 +5,8 @@ services:
     image: moha210/backend:latest
     ports:
       - "5005:5005"
+    volumes:
+      - /root/arises/backend/.env:/var/www/.env
     deploy:
       replicas: 1
       update_config:
