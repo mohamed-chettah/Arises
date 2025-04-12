@@ -59,6 +59,8 @@ class GoogleController extends Controller
             return redirect()->away("chrome-extension:/fjjenhlhpcdimhbdbfachdhndiiejgjo/views/oauth.html?token=$authKey");
 
         } catch (\Exception $e) {
+            // Log the error to Sentry
+            \Sentry\captureException($e);
             return response()->json([
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()

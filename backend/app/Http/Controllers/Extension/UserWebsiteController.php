@@ -55,6 +55,8 @@ class UserWebsiteController
             UserWebsiteService::delete($id);
         }
         catch (\Exception $e) {
+            // Log the error to Sentry
+            \Sentry\captureException($e);
             abort(500, $e->getMessage());
         }
     }
@@ -70,6 +72,8 @@ class UserWebsiteController
                 'favicon' => $favicon,
             ];
         } catch (\Exception $e) {
+            // Log the error to Sentry
+            \Sentry\captureException($e);
             return [
                 'website_url'     => $url,
                 'error'   => $e->getMessage(),

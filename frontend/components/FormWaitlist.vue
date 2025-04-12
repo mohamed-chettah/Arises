@@ -65,8 +65,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
     <UInput icon="i-heroicons-user"  v-model="state.name" type="text" class="input" required placeholder="Name"/>
 
-    <UButton type="submit" class="bg-[#A480F2] hover:bg-[#A480F2]/70 cta w-full inter">
-      Get Notified ->
+    <UButton type="submit" trailing-icon="i-heroicons-arrow-long-right-16-solid" class="bg-[#A480F2] hover:bg-[#A480F2]/70 cta w-full inter">
+      Get Notified
     </UButton>
   </UForm>
 </template>
