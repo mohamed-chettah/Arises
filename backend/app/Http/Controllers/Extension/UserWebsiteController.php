@@ -15,8 +15,13 @@ class UserWebsiteController
 
     public function index(): JsonResponse
     {
-        $websiteList = UserWebsiteService::getAllWebsiteUser();
-        return response()->json($websiteList, 200);
+        try {
+            $websiteList = UserWebsiteService::getAllWebsiteUser();
+            return response()->json($websiteList, 200);
+        } catch (\Exception $e) {
+            \Sentry\captureException($e);
+            return response()->json(['error' => 'Erreur interne'], 500);
+        }
     }
 
     public function store(StoreWebsiteRequest $request): JsonResponse
