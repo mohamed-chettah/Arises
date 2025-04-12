@@ -13,7 +13,7 @@ jobs:
       id-token: write
     defaults:
       run:
-        working-directory: /frontend
+        working-directory: frontend
 
     steps:
       - uses: actions/checkout@v4
@@ -40,5 +40,5 @@ jobs:
         uses: nuxt-hub/action@v1
         id: deploy
         with:
-          project-key: arises-m8j0
-          directory: /frontend/dist
+          project-key: arises-frontend-y1n1
+          directory: frontend/dist
