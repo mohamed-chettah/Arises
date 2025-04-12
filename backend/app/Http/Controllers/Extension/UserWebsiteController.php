@@ -21,33 +21,40 @@ class UserWebsiteController
 
     public function store(StoreWebsiteRequest $request): JsonResponse
     {
-        $validated = $request->validated();
+        try {
+            $validated = $request->validated();
 
-        $websiteCount = UserWebsiteService::countWebsiteUser();
-        if($websiteCount >= 20){
-            return response()->json(['error' => 'Vous avez atteint le nombre maximum de site web.'], 400);
+            $websiteCount = UserWebsiteService::countWebsiteUser();
+            if ($websiteCount >= 20) {
+                return response()->json(['error' => 'Vous avez atteint le nombre maximum de site web.'], 400);
+            }
+
+            $websiteInfo = $this->fetchFavicon($validated['website_url']);
+            $websiteInfo['website_name'] = ucfirst($validated['title']);
+
+            if (isset($websiteInfo['error'])) {
+                return response()->json(['error' => $websiteInfo['error']], 400);
+            }
+
+            if (!$websiteInfo['favicon']) {
+                return response()->json(['error' => 'Impossible de récupérer la favicon de la page.'], 400);
+            }
+
+            $website = WebsiteService::findOrCreate($websiteInfo);
+            UserWebsiteService::findOrCreate(['website_id' => $website->id]);
+
+            $websiteList = UserWebsiteService::getAllWebsiteUser();
+            return response()->json($websiteList, 201);
+        } catch (\Throwable $e) {
+            \Sentry\captureException($e);
+            return response()->json([
+                'error' => 'Erreur interne',
+                'message' => $e->getMessage(),
+                'trace' => $e->getTrace()
+            ], 500);
         }
-
-        $websiteInfo = $this->fetchFavicon($validated['website_url']);
-
-        $websiteInfo['website_name'] = ucfirst($validated['title']);
-
-        if(isset($websiteInfo['error'])){
-            return response()->json(['error' => $websiteInfo['error']], 400);
-        }
-
-        if (!$websiteInfo['favicon']) {
-            return response()->json(['error' => 'Impossible de récupérer la favicon de la page.'], 400);
-        }
-
-        $website = WebsiteService::findOrCreate($websiteInfo);
-
-        UserWebsiteService::findOrCreate(['website_id' => $website->id]);
-
-        // Send List of website of the user
-        $websiteList = UserWebsiteService::getAllWebsiteUser();
-        return response()->json($websiteList, 201);
     }
+
 
     public function destroy($id): void
     {

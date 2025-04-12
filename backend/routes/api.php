@@ -38,7 +38,7 @@ Route::group(['throttle:60,1'], function () {
         try {
             DB::beginTransaction();
 
-            // Si vous effectuez d'autres opérations avant de supprimer...
+
             Cache::forget("auth:$authKey");
             DB::commit();
             return response()->json($data);
