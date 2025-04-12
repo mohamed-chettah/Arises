@@ -61,9 +61,9 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 <template>
   <UForm :schema="schema" :state="state" class="w-full flex flex-col gap-2 mt-5" @submit="onSubmit">
 
-    <UInput  icon="i-ri-mail-line" v-model="state.email" class="input" type="email" required placeholder="Email Address"/>
+    <UInput  icon="i-heroicons-envelope" v-model="state.email" class="input" type="email" required placeholder="Email Address"/>
 
-    <UInput icon="i-ri-user-line"  v-model="state.name" type="text" class="input" required placeholder="Name"/>
+    <UInput icon="i-heroicons-user"  v-model="state.name" type="text" class="input" required placeholder="Name"/>
 
     <UButton type="submit" class="bg-[#A480F2] hover:bg-[#A480F2]/70 cta w-full inter">
       Get Notified ->
