@@ -17,12 +17,15 @@ class WebsiteService
 
     public static function findOrCreate(array $data)
     {
-        $website = Website::whereIn('website_url', $data['website_url'])->first();
+        $url = $data['website_url'];
 
-        if ($website) {
-            return $website;
+        $existing = Website::where('website_url', 'LIKE', $url . '%')
+            ->orWhereRaw('? LIKE website_url || \'%\'', [$url])
+            ->first();
+
+        if ($existing) {
+            return $existing;
         }
-
         return self::create($data);
     }
 }
