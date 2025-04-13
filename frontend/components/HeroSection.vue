@@ -43,8 +43,11 @@ import FormWaitlist from "~/components/FormWaitlist.vue";
       </UButton>
     </a>
 
-    <UCard class="w-full" variant="subtle">
-    </UCard>
+    <div class="w-full border-6 bg-transparent border-[#A480F2]/30 rounded-xl focus:outline-none focus:border-[#A480F2] backdrop-blur-xl backdrop-blur-xl">
+      <video controls autoplay muted loop class="w-full h-full rounded-lg">
+        <source src="/video/arises-extension.mp4" type="video/mp4" />
+      </video>
+    </div>
   </div>
 
   <Footer />

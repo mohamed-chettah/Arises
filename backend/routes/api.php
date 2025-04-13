@@ -14,12 +14,12 @@ use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 
-Route::group(['throttle:60,1'], function () {
+Route::group(['throttle:10,1'], function () {
     Route::post('/waitlist', [WaitlistController::class, 'store'])->name('waitlist.store');
 //    Route::post('/mail-waitlist', [WaitlistController::class, 'store'])->name('waitlist.store');
 });
 
-Route::group(['throttle:60,1'], function () {
+Route::group(['throttle:20,1'], function () {
     // Google OAuth
     Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle']);
     Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
@@ -80,7 +80,7 @@ Route::group(['throttle:60,1'], function () {
     });
 });
 
-Route::middleware(['jwt','throttle:60,1'])->group(function () {
+Route::middleware(['jwt','throttle:20,1'])->group(function () {
     Route::get('/is-connected', function (Request $request) {
         return response()->json(['isConnected' => true] ,200);
     });
@@ -101,6 +101,6 @@ Route::middleware(['jwt','throttle:60,1'])->group(function () {
         ->name('logout');
 });
 
-Route::get('/test', function (Request $request) {
-    return response()->json(['message' => 'ok']);
-})->name('test');
+//Route::get('/test', function (Request $request) {
+//    return response()->json(['message' => 'ok']);
+//})->name('test');
