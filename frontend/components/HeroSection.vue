@@ -7,7 +7,6 @@ import FormWaitlist from "~/components/FormWaitlist.vue";
 
 
     <div class="flex flex-col justify-center gap-3 items-center">
-      <div class="glowing-border">
         <UBadge
             icon="i-heroicons-moon"
             size="sm"
@@ -17,7 +16,6 @@ import FormWaitlist from "~/components/FormWaitlist.vue";
         >
           Inspired by Solo Leveling
         </UBadge>
-      </div>
 
       <h1 class="bank-gothic-bold text-white text-[28px] sm:text-[40px] xl:leading-tight leading-wide text-center">
         Your smart AI calendar<br> to <span class="bg-[#435EF2]/30 px-3 py-1 rounded-lg">Plan Better</span> and
@@ -53,33 +51,6 @@ import FormWaitlist from "~/components/FormWaitlist.vue";
 </template>
 
 <style scoped>
-.glowing-border {
-  position: relative;
-  display: inline-block;
-}
-
-.glowing-border::before {
-  content: "";
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
-  border-radius: inherit;  /* Pour que le pseudo-élément suive la forme arrondie du badge */
-  background: linear-gradient(45deg, #ff0000, #ffea00, #00ff90, #00d0ff, #ea00ff);
-  z-index: -1;
-  filter: blur(8px);
-  animation: rotate 4s linear infinite;
-}
-
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 </style>
 
 

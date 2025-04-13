@@ -20,17 +20,12 @@ services:
       - /root/arises/backend/.env
 
   frontend:
-    image: moha210/frontend:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nuxt-app
     ports:
-      - target: 3000
-        published: 3000
-        protocol: tcp
-        mode: ingress
-    deploy:
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 5s
-        order: start-first
-      restart_policy:
-        condition: on-failure
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+    restart: unless-stopped
