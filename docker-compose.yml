@@ -2,28 +2,21 @@ version: "3.8"
 
 services:
   backend:
-    image: moha210/backend:latest
+    build:
+      context: ./backend
+    container_name: backend
+    working_dir: /var/www
     ports:
-      - target: 5005
-        published: 5005
-        protocol: tcp
-        mode: ingress
-    deploy:
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 5s
-        order: start-first
-      restart_policy:
-        condition: on-failure
+      - "5005:5005"
     env_file:
-      - /root/arises/backend/.env
+      - ./backend/.env
 
   frontend:
     build:
-      context: .
+      context: ./frontend
       dockerfile: Dockerfile
-    container_name: nuxt-app
+    container_name: frontend
+    working_dir: /app
     ports:
       - "3000:3000"
     environment:
