@@ -44,6 +44,11 @@ class UserWebsiteService
 
     public static function countWebsiteUser()
     {
-        return UserWebsite::where('user_id', Auth::id())->count();
+        try {
+            return UserWebsite::where('user_id', Auth::id())->count();
+        } catch (\Exception $e) {
+            \Sentry\captureException($e);
+            return 0;
+        }
     }
 }
