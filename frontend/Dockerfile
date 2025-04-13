@@ -12,6 +12,8 @@ RUN npm install
 # Copier l'intégralité du code
 COPY . .
 
+ENV NODE_OPTIONS="--max-old-space-size=1024"
+
 # Construire le projet Nuxt
 RUN npm run build
 
