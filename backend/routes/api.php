@@ -37,8 +37,6 @@ Route::group(['throttle:20,1'], function () {
 
         try {
             DB::beginTransaction();
-
-
             Cache::forget("auth:$authKey");
             DB::commit();
             return response()->json($data);
