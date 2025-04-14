@@ -28,23 +28,16 @@ Route::group(['throttle:20,1'], function () {
 
     Route::get('/auth/status/{authKey}', function ($authKey): JsonResponse {
 
-        $authKey = urldecode($authKey);
-        $data = Cache::where('key',"auth:$authKey");
+        $cacheKey = "auth:" . urldecode($authKey);
+        $data = Cache::get($cacheKey);
 
         if (!$data) {
             return response()->json(['error' => 'Authentification expirée ou invalide.'], 404);
         }
 
-        try {
-            DB::beginTransaction();
-            Cache::delete("auth:$authKey");
-            DB::commit();
-            return response()->json($data);
-        } catch (\Exception $e) {
-            DB::rollBack(); // On nettoie la transaction avant de renvoyer l'erreur
-            // Vous pouvez logger l'erreur ou renvoyer une réponse d'erreur appropriée
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+        Cache::forget($cacheKey); // Pas de transaction autour
+
+        return response()->json($data);
 
     });
 
