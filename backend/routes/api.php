@@ -29,7 +29,7 @@ Route::group(['throttle:20,1'], function () {
     Route::get('/auth/status/{authKey}', function ($authKey): JsonResponse {
 
         $authKey = urldecode($authKey);
-        $data = Cache::get("auth:$authKey");
+        $data = Cache::where('key',"auth:$authKey");
 
         if (!$data) {
             return response()->json(['error' => 'Authentification expirée ou invalide.'], 404);
@@ -37,7 +37,7 @@ Route::group(['throttle:20,1'], function () {
 
         try {
             DB::beginTransaction();
-            Cache::forget("auth:$authKey");
+            Cache::delete("auth:$authKey");
             DB::commit();
             return response()->json($data);
         } catch (\Exception $e) {
