@@ -23,7 +23,6 @@ class GoogleController extends Controller
         return response()->json(['url' => $url]);
     }
 
-
     public function handleGoogleCallback(): RedirectResponse | JsonResponse
     {
         try {
@@ -56,7 +55,7 @@ class GoogleController extends Controller
             ], now()->addMinutes(20));
 
             // return to the extension
-            return redirect()->away("https://arises.app/oauth?token=$authKey");
+            return redirect()->away("chrome-extension:/aheohjodpllofjdihniljfkppcacpeib/views/oauth.html?token=$authKey");
 
         } catch (\Exception $e) {
             // Log the error to Sentry

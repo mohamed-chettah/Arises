@@ -3,13 +3,7 @@ import Navbar from "~/components/Navbar.vue";
 const route = useRoute();
 const token = route.query.token;
 
-// Transmettre le token à l'extension
-if (import.meta.client && token) {
-  window.postMessage({
-    type: 'OAUTH_ARISES',
-    token: token
-  }, '*');
-}
+window.open("chrome-extension:/aheohjodpllofjdihniljfkppcacpeib/views/oauth.html?token=" + token);
 
 </script>
 
