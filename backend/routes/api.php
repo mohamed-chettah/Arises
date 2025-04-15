@@ -35,7 +35,7 @@ Route::group(['throttle:20,1'], function () {
             return response()->json(['error' => 'Authentification expirée ou invalide.'], 404);
         }
 
-        Cache::forget($cacheKey); // Pas de transaction autour
+        Cache::forget($cacheKey);
 
         return response()->json($data);
 
