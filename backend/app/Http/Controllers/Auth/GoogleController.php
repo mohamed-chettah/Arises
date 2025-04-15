@@ -55,7 +55,7 @@ class GoogleController extends Controller
             ], now()->addMinutes(20));
 
             // return to the extension
-            return redirect()->away("chrome-extension:/fjjenhlhpcdimhbdbfachdhndiiejgjo/views/oauth.html?token=$authKey");
+            return redirect()->away("chrome-extension:/fjjenhlhpcdimhbdbfachdhndiiejgjo/views/oauth.html");
 
         } catch (\Exception $e) {
             // Log the error to Sentry
