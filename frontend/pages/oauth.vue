@@ -3,7 +3,14 @@ import Navbar from "~/components/Navbar.vue";
 const route = useRoute();
 const token = route.query.token;
 
-window.open("chrome-extension:/aheohjodpllofjdihniljfkppcacpeib/views/oauth.html?token=" + token);
+onMounted(() => {
+  setTimeout(() => {
+    const opened = window.open("chrome-extension://aheohjodpllofjdihniljfkppcacpeib/views/oauth.html?token=" + token);
+    if (!opened) {
+      console.warn("Popup bloquée. Tu peux l'ouvrir manuellement.");
+    }
+  }, 100); // <= petit délai permet parfois de bypass le blocage (pas 100% fiable)
+});
 
 </script>
 
