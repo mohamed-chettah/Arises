@@ -77,30 +77,10 @@ import FormWaitlist from "~/components/FormWaitlist.vue";
   animation: pulse 4s infinite;
 }
 
-/* Separator animation */
 .separator-animate {
   animation: expandWidth 1.5s ease-out;
 }
 
-/* Button animation */
-.button-animate {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.button-animate:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(68, 94, 242, 0.3);
-}
-
-/* Video container animation */
-.video-animate {
-  animation: fadeIn 2s ease-out;
-  transition: transform 0.5s ease;
-}
-
-.video-animate:hover {
-  transform: scale(1.01);
-}
 
 /* Fade-in animation for form */
 .fade-in-animate {
