@@ -3,9 +3,14 @@ import Navbar from "~/components/Navbar.vue";
 const route = useRoute();
 const token = route.query.token;
 
-function openExtension() {
-  window.open("chrome-extension://aheohjodpllofjdihniljfkppcacpeib/views/oauth.html?token=" + token);
-}
+onMounted(() => {
+  setTimeout(() => {
+    const opened = window.open("chrome-extension://aheohjodpllofjdihniljfkppcacpeib/views/oauth.html?token=" + token);
+    if (!opened) {
+      console.warn("Popup bloquée. Tu peux l'ouvrir manuellement.");
+    }
+  }, 100); // <= petit délai permet parfois de bypass le blocage (pas 100% fiable)
+});
 
 </script>
 
@@ -22,8 +27,6 @@ function openExtension() {
       <p class="text-sm text-gray-300">
         Minimize distractions, stay on track, and let the extension keep you aligned with your goals. ✨
       </p>
-
-      <button @click="openExtension">Finaliser la connexion</button>
 
     </div>
 
