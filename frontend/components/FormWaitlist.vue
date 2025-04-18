@@ -15,10 +15,13 @@ const state = reactive<Partial<Schema>>({
 })
 
 const toast = useToast()
+const runtimeConfig = useRuntimeConfig()
+
+const apiUrl = runtimeConfig.public.apiBase
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   try {
-      const { data, status, error, refresh, clear } = await useFetch('https://backend.arises.app/api/waitlist', {
+      const { data, status, error, refresh, clear } = await useFetch(apiUrl +'/waitlist', {
       method: 'POST',
       body: {
         email: state.email,

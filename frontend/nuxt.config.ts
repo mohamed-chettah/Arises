@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import {process} from "std-env";
+
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
@@ -11,4 +13,9 @@ export default defineNuxtConfig({
   ui: {
     colorMode: false
   },
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.API_URL
+    }
+  }
 })
