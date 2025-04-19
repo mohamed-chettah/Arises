@@ -15,7 +15,7 @@ import FormWaitlist from "~/components/FormWaitlist.vue";
         Inspired by Solo Leveling
       </UBadge>
 
-      <h1 class="bank-gothic text-white text-[28px] sm:text-[40px] 2xl:text-[45px] xl:leading-tight leading-wide text-center heading-animate">
+      <h1 class="bank-gothic text-white text-[28px] sm:text-[40px] 2xl:text-[48px] xl:leading-tight leading-wide text-center heading-animate">
         Your smart AI calendar<br> to <span class="bg-[#435EF2]/30 px-3 py-1 rounded-lg highlight-animate">Plan Better</span> and
         <br class="xl:hidden block">
         <span class="bg-[#A480F2]/50 px-3 py-1 rounded-lg highlight-animate">Level Up Faster.</span>

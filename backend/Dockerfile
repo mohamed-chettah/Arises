@@ -11,6 +11,7 @@ RUN apk add --no-cache \
     zip \
     build-base \
     linux-headers \
+    entr \
     && docker-php-ext-install pdo pdo_sqlite pdo_pgsql pgsql zip bcmath sockets \
     && apk del build-base linux-headers
 

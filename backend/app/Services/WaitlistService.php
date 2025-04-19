@@ -12,4 +12,6 @@ class WaitlistService
             'name' => $data['name'],
         ]);
     }
+
+
 }

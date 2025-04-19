@@ -15,7 +15,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 
 Route::group(['throttle:10,1'], function () {
-    Route::post('/waitlist', [WaitlistController::class, 'store'])->name('waitlist.store');
+    Route::post('/waitlist', [WaitlistController::class, 'mailVerification'])->name('waitlist.store');
 //    Route::post('/mail-waitlist', [WaitlistController::class, 'store'])->name('waitlist.store');
 });
 
@@ -54,7 +54,7 @@ Route::group(['throttle:20,1'], function () {
             $refreshToken = $request->bearerToken();
 
             if (!$refreshToken) {
-                return response()->json(['message' => 'Refresh token manquant'], 400);
+                return response()->json(['message' => 'Refresh token missing'], 400);
             }
 
             $newToken = JWTAuth::setToken($refreshToken)->refresh();
@@ -64,9 +64,9 @@ Route::group(['throttle:20,1'], function () {
                 'expires_in' => JWTAuth::factory()->getTTL() * 60, // secondes
             ]);
         } catch (TokenInvalidException $e) {
-            return response()->json(['message' => 'Refresh token invalide'], 401);
+            return response()->json(['message' => 'Invalid refresh token'], 401);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Erreur lors du refresh', 'error' => $e->getMessage()], 500);
+            return response()->json(['message' => 'Error at refresh ²   A1q>', 'error' => $e->getMessage()], 500);
         }
     });
 });
