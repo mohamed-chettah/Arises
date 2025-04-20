@@ -14,9 +14,9 @@ use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 
-Route::group(['throttle:10,1'], function () {
-    Route::post('/waitlist', [WaitlistController::class, 'mailVerification'])->name('waitlist.store');
-//    Route::post('/mail-waitlist', [WaitlistController::class, 'store'])->name('waitlist.store');
+Route::group(['throttle:5,1'], function () {
+    Route::post('/waitlist', [WaitlistController::class, 'store'])->name('waitlist.store');
+    Route::post('/verify-mail', [WaitlistController::class, 'verifyMail'])->name('waitlist.verifyMail');
 });
 
 Route::group(['throttle:20,1'], function () {
@@ -24,7 +24,7 @@ Route::group(['throttle:20,1'], function () {
     Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle']);
     Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
-// Cache authentification (récuperation des informations de l'utilisateur)
+    // Cache authentification (récuperation des informations de l'utilisateur)
 
     Route::get('/auth/status/{authKey}', function ($authKey): JsonResponse {
 
@@ -38,7 +38,6 @@ Route::group(['throttle:20,1'], function () {
         Cache::forget($cacheKey);
 
         return response()->json($data);
-
     });
 
     Route::post('/register', [RegisteredUserController::class, 'store'])

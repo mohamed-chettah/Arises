@@ -9,5 +9,8 @@ class Waitlist extends Model
     protected $fillable = [
         'email',
         'name',
+        'verification_token',
+        'verified',
+        'verified_at',
     ];
 }

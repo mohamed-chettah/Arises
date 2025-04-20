@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import FormWaitlist from "~/components/FormWaitlist.vue";
+import VideoShowcase from "~/components/VideoShowcase.vue";
 </script>
 
 <template>
@@ -12,7 +13,7 @@ import FormWaitlist from "~/components/FormWaitlist.vue";
           color="primary"
           variant="solid"
       >
-        Inspired by Solo Leveling
+        Elevate Your Productivity
       </UBadge>
 
       <h1 class="bank-gothic text-white text-[28px] sm:text-[40px] 2xl:text-[48px] xl:leading-tight leading-wide text-center heading-animate">
@@ -32,6 +33,12 @@ import FormWaitlist from "~/components/FormWaitlist.vue";
 
     <USeparator color="primary" class="w-full sm:w-1/2 text-[#A480F2] separator-animate" />
 
+    <h2 class="inter text-white text-lg sm:text-xl text-center">
+      Try our Chrome Extension
+    </h2>
+
+    <VideoShowcase />
+
     <a target="_blank" href="https://chromewebstore.google.com/detail/arises-pomodoro-timer-dis/aheohjodpllofjdihniljfkppcacpeib" class="w-full xl:w-1/3 w-1/2">
       <UButton type="submit" class="bg-[#445EF2] hover:bg-[#445EF2]/80 cta w-full inter">
         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="26" height="26" viewBox="0 0 48 48" style="margin-right: 5px">
@@ -41,11 +48,6 @@ import FormWaitlist from "~/components/FormWaitlist.vue";
       </UButton>
     </a>
 
-    <div class="w-full border-6 bg-transparent border-[#A480F2]/30 rounded-xl focus:outline-none focus:border-[#A480F2] backdrop-blur-xl backdrop-blur-xl">
-      <video controls autoplay muted loop class="w-full h-full rounded-lg">
-        <source src="/video/arises-extension.mp4" type="video/mp4" />
-      </video>
-    </div>
   </div>
 
   <Footer />

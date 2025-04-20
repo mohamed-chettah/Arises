@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\WaitlistRequest;
+use App\Http\Requests\Waitlist\VerificationMailRequest;
+use App\Http\Requests\Waitlist\WaitlistRequest;
 use App\Services\WaitlistService;
 use Illuminate\Http\JsonResponse;
 use Resend\Laravel\Facades\Resend;
 
 class WaitlistController
 {
+
     public function store(WaitlistRequest $request): JsonResponse
     {
         $validated = $request->validated();
@@ -16,28 +18,17 @@ class WaitlistController
         try {
             $validated['verification_token'] = WaitlistService::generateVerificationToken();
 
-            $waitlistUser = WaitlistService::create($validated);
-            WaitlistService::sendMail($validated);
+            WaitlistService::create($validated);
 
-            return response()->json("Verification mail sent", 201);
-        }
-        catch (\Throwable $e) {
-            \Sentry\captureException($e);
-            return response()->json("Error while sending the mail", 500);
-        }
-    }
+            $url = env('FRONTEND_URL') . '/verified-mail?token=' . $validated['verification_token'] . '&mail=' . urlencode($validated['email']);
 
+            $html = view('mails.waitlist_verification', compact('url'))->render();
 
-    public function mailVerification(WaitlistRequest $request): JsonResponse
-    {
-        $validated = $request->validated();
-
-        try {
             Resend::emails()->send([
-                'from' => 'Acme <onboarding@resend.dev>',
-                'to' => [$request->user()->email],
-                'subject' => 'hello world',
-                'html' => ("test"),
+                'from' => 'Arises <contact@arises.app>',
+                'to' => [$validated['email']],
+                'subject' => 'Arises Confirmation',
+                'html' => $html,
             ]);
 
             return response()->json("Verification mail sent", 201);
@@ -48,16 +39,31 @@ class WaitlistController
         }
     }
 
-    public function verifyMail(string $mail): JsonResponse
-    {
-        try {
-            WaitlistService::verifyEmail($mail);
 
-            return response()->json("Email verified", 200);
-        }
-        catch (\Throwable $e) {
+    public function verifyMail(VerificationMailRequest $request): JsonResponse
+    {
+        $validated = $request->validated();
+
+        try {
+            WaitlistService::updateByMailAndToken($validated['mail'], $validated['token']);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Email verified',
+                'already_verified' => false,
+            ], 200);
+        } catch (\Throwable $e) {
             \Sentry\captureException($e);
+
+            if ($e->getMessage() === 'Email already verified') {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Email already verified',
+                    'already_verified' => true,
+                ], 200); // volontairement 200 car c’est pas une vraie erreur
+            }
             return response()->json("Error while verifying email", 500);
         }
     }
+
 }

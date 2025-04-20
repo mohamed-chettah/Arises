@@ -5,7 +5,7 @@
 <template>
 
   <div class="flex justify-center items-center">
-    <NuxtImg class="w-22" src="/images/Arise.svg" />
+    <NuxtImg @click="navigateTo('/')" class="w-22 cursor-pointer" src="/images/Arise.svg" />
   </div>
 
 </template>

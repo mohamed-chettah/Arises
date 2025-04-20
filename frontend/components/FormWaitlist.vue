@@ -18,10 +18,12 @@ const toast = useToast()
 const runtimeConfig = useRuntimeConfig()
 
 const apiUrl = runtimeConfig.public.apiBase
+const loading = ref(false)
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   try {
-      const { data, status, error, refresh, clear } = await useFetch(apiUrl +'/waitlist', {
+    loading.value = true
+    const { data, status, error, refresh, clear } = await useFetch(apiUrl +'/waitlist', {
       method: 'POST',
       body: {
         email: state.email,
@@ -29,6 +31,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       }
     })
 
+    loading.value = false
     if (error.value) {
       toast.add({
         title: 'Error',
@@ -40,7 +43,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
     toast.add({
       title: 'Success',
-      description: 'You have been added to the waitlist!',
+      description: 'Verification email sent. Check your inbox to confirm your subscription to the waitlist',
       color: 'success'
     })
 
@@ -64,11 +67,11 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 <template>
   <UForm :schema="schema" :state="state" class="w-full flex flex-col gap-2 mt-5" @submit="onSubmit">
 
-    <UInput  icon="i-heroicons-envelope" v-model="state.email" class="input" type="email" required placeholder="Email Address"/>
+    <UInput icon="i-heroicons-envelope" v-model="state.email" class="input" type="email" required placeholder="Email Address" autocomplete="email"/>
 
-    <UInput icon="i-heroicons-user"  v-model="state.name" type="text" class="input" required placeholder="Name"/>
+    <UInput icon="i-heroicons-user"  v-model="state.name" type="text" class="input" required placeholder="Name" autocomplete="name"/>
 
-    <UButton type="submit" trailing-icon="i-heroicons-arrow-long-right-16-solid" class="bg-[#A480F2] hover:bg-[#A480F2]/70 cta w-full inter">
+    <UButton type="submit" loading-icon="" trailing-icon="i-heroicons-arrow-long-right-16-solid" class="bg-[#A480F2] hover:bg-[#A480F2]/70 cta w-full inter" :loading="loading">
       Get Notified
     </UButton>
   </UForm>
