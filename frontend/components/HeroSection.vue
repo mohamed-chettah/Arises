@@ -9,7 +9,7 @@ import ChromeButton from "~/components/ChromeButton.vue";
     <!-- Hero -->
     <div class="flex flex-col justify-center gap-5 items-center">
       <h1
-          class="bank-gothic text-white text-[20px] sm:text-[32px] lg:text-[38px] xl:text-[50px] 2xl:text-[60px] leading-tight text-center heading-animate"
+          class="bank-gothic leading-[2] text-white text-xl sm:text-[32px] lg:text-[38px] xl:text-[50px] 2xl:text-[60px] sm:leading-[1.5] text-center heading-animate"
       >
         Your smart AI calendar<br />
         <span class="bg-[#435EF2]/30 px-3 py-1 rounded-lg highlight-animate"
@@ -24,7 +24,7 @@ import ChromeButton from "~/components/ChromeButton.vue";
 
       <!-- Subtitle -->
       <p
-          class="inter text-white/80 text-md sm:text-lg text-center max-w-[30rem] mt-5 fade-in-animate"
+          class="inter text-white/80 text-sm sm:text-lg text-center max-w-[30rem] mt-5 fade-in-animate"
       >
         Ask. Accept. Achieve. Arises schedules the right tasks so every day moves you up the ladder.
       </p>
@@ -46,7 +46,7 @@ import ChromeButton from "~/components/ChromeButton.vue";
 
     <div class="size-6 animate-bounce ...">
       <UIcon
-          class="text-[#A480F2] text-4xl animate-bounce"
+          class="text-[#A480F2] sm:text-4xl text-2xl animate-bounce"
           name="i-heroicons-arrow-down" />
     </div>
 
