@@ -49,7 +49,7 @@
       <h2 class="text-2xl font-semibold mt-8 mb-2">7. Contact</h2>
       <p class="mb-4">
         If you have any questions about these Terms, please contact us at
-        <a href="mailto:support@arises.app" class="underline text-purple-400">contact@mc-studio.eu</a>.
+        <a href="mailto:contact@arises.app" class="underline text-purple-400">contact@arises.app</a>.
       </p>
 
       <p class="mt-12 text-sm text-gray-400">© 2025 Arises. All rights reserved.</p>

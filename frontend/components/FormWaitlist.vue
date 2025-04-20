@@ -33,6 +33,14 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
     loading.value = false
     if (error.value) {
+      // if(error.value?.errors.email) {
+      //   toast.add({
+      //     title: 'Error',
+      //     description: error.value?.errors.email[0],
+      //     color: 'warning'
+      //   })
+      // }
+
       toast.add({
         title: 'Error',
         description: 'Something went wrong. Please try again later.',

@@ -38,7 +38,7 @@
 
       <h2 class="text-2xl font-semibold mt-8 mb-2">4. Your Rights</h2>
       <p class="mb-4">
-        You can request to access, modify, or delete your personal data at any time. Simply contact us at <a href="mailto:contact@mc-studio.eu" class="underline text-purple-400">contact@mc-studio.eu</a>.
+        You can request to access, modify, or delete your personal data at any time. Simply contact us at <a href="mailto:contact@arises.app" class="underline text-purple-400">contact@arises.app</a>.
       </p>
 
       <h2 class="text-2xl font-semibold mt-8 mb-2">5. Cookies & Local Storage</h2>
@@ -51,7 +51,7 @@
         We may update this privacy policy in the future. If we make significant changes, we will notify you via email or directly in the app.
       </p>
 
-      <p class="mt-8">If you have any questions or concerns, feel free to contact us at <a href="mailto:contact@mc-studio.eu" class="underline text-purple-400">contact@mc-studio.eu</a>.</p>
+      <p class="mt-8">If you have any questions or concerns, feel free to contact us at <a href="mailto:contact@arises.app" class="underline text-purple-400">contact@arises.app</a>.</p>
 
       <p class="mt-12 text-sm text-gray-400">© 2025 Arises. All rights reserved.</p>
     </div>

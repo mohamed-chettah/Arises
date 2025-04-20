@@ -38,4 +38,11 @@ class WaitlistService
             'verified_at' => now(),
         ]);
     }
+
+    public static function checkIfEmailExists(string $email): void
+    {
+        if (Waitlist::where('email', $email)->exists()) {
+            throw new \Exception('Email already exists');
+        }
+    }
 }

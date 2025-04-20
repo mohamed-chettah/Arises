@@ -13,7 +13,7 @@
     <NuxtLink to="/privacy" class="inter text-white  bank-gothic">Privacy</NuxtLink>
   </div>
 
-  <p class="text-center text-white bank-gothic mt-5">Arises 2025 © All rights reserved </p>
+  <p class="text-center text-white bank-gothic mt-5">© Arises 2025</p>
 </footer>
 </template>
 
