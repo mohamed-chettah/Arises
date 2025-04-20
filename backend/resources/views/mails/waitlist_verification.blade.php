@@ -41,18 +41,31 @@
 
                 <!-- Bouton -->
                 <tr>
-                    <td style="padding:5px;">
-                        <a href="{{ $url }}" style="background:#9878E8; color:#ffffff; text-decoration:none;
-                           font-size:14px; font-weight:400; padding:12px; border-radius:8px; display:inline-block;">
+                    <td style="padding:0 0 32px;">
+                        <a href="{{ $url }}" style="
+                            background-color: #9878E8;
+                            color: #ffffff;
+                            text-decoration: none;
+                            font-size: 14px;
+                            font-weight: 400;
+                            padding: 12px;
+                            border-radius: 8px;
+                            display: inline-block;
+                            border-top: 1px solid rgba(164, 128, 242, 0.7);
+                            text-align: center;
+                            cursor: pointer;
+                        ">
                             Confirm my email
                         </a>
                     </td>
                 </tr>
 
+
                 <!-- Lien brut -->
                 <tr>
                     <td style="font-size:11px; color:#888888;">
-                        Or copy this link into your browser:<br>
+                        <p style="font-size:11px; color:#888888;">Or copy this link into your browser: </p>
+                            <br>
                         <span>{{ $url }}</span>
                     </td>
                 </tr>
