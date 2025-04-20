@@ -23,42 +23,42 @@
                 </tr>
 
                 <!-- Séparateur -->
-                <tr><td><hr style="border:none; border-top:2px solid #9878E8; margin:0 0 32px;"></td></tr>
+                <tr><td><hr style="border:none; border-top:1px solid #9878E8; margin:0 0 32px;"></td></tr>
 
                 <!-- Titre -->
                 <tr>
                     <td style="font-size:24px; font-weight:600;color:#ffffff; padding:0 0 16px;">
-                        Welcome to Arises 👋
+                        Welcome to Arises
                     </td>
                 </tr>
 
                 <!-- Texte principal -->
                 <tr>
                     <td style="font-size:15px; line-height:1.5; color:#dddddd; padding:0 0 28px;">
-                        You're almost in! Confirm your email to secure your spot on the waitlist and be one of the first to try Arises.
+                        You're almost in ! Confirm your email to secure your spot on the waitlist and be one of the first to try Arises.
                     </td>
                 </tr>
 
                 <!-- Bouton -->
                 <tr>
-                    <td style="padding:0 0 32px;">
+                    <td style="padding:5px;">
                         <a href="{{ $url }}" style="background:#9878E8; color:#ffffff; text-decoration:none;
-                           font-size:14px; font-weight:600; padding:12px 28px; border-radius:8px; display:inline-block;">
-                            Confirm My Email
+                           font-size:14px; font-weight:400; padding:12px; border-radius:8px; display:inline-block;">
+                            Confirm my email
                         </a>
                     </td>
                 </tr>
 
                 <!-- Lien brut -->
                 <tr>
-                    <td style="font-size:12px; color:#FFFFFF; word-break:break-all;">
+                    <td style="font-size:11px; color:#888888;">
                         Or copy this link into your browser:<br>
                         <span>{{ $url }}</span>
                     </td>
                 </tr>
 
                 <!-- Séparateur -->
-                <tr><td><hr style="border:none; border-top:2px solid #9878E8; margin:32px 0;"></td></tr>
+                <tr><td><hr style="border:none; border-top:1px solid #9878E8; margin:32px 0;"></td></tr>
 
                 <!-- Disclaimer -->
                 <tr>
@@ -69,7 +69,7 @@
                 </tr>
 
                 <!-- Séparateur bas -->
-                <tr><td><hr style="border:none; border-top:2px solid #9878E8; margin:32px 0;"></td></tr>
+                <tr><td><hr style="border:none; border-top:1px solid #9878E8; margin:32px 0;"></td></tr>
 
             </table>
             <!-- Fin conteneur -->
