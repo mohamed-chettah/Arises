@@ -9,14 +9,14 @@ import ChromeButton from "~/components/ChromeButton.vue";
     <!-- Hero -->
     <div class="flex flex-col justify-center gap-5 items-center">
       <h1
-          class="bank-gothic leading-[2] text-white text-xl sm:text-[32px] lg:text-[38px] xl:text-[50px] 2xl:text-[60px] sm:leading-[1.5] text-center heading-animate"
+          class="bank-gothic leading-[1.6] text-white text-2xl sm:text-[32px] lg:text-[38px] xl:text-[50px] 2xl:text-[60px] sm:leading-[1.5] text-center heading-animate"
       >
         Your smart AI calendar<br />
         <span class="bg-[#435EF2]/30 px-3 py-1 rounded-lg highlight-animate"
         >Plan better.</span
         >
         and
-        <br class="lg:hidden block" />
+        <br class="lg:hidden sm:block" />
         <span class="bg-[#A480F2]/50 px-3 py-1 rounded-lg highlight-animate"
         >Level up faster.</span
         >
