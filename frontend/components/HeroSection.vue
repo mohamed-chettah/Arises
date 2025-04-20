@@ -44,6 +44,12 @@ import ChromeButton from "~/components/ChromeButton.vue";
         class="w-full text-[#A480F2] separator-animate"
     />
 
+    <p
+        class="inter text-white/80 text-sm sm:text-lg text-center max-w-[30rem] fade-in-animate"
+    >
+      Try the Chrome extension
+    </p>
+
     <div class="size-6 animate-bounce ...">
       <UIcon
           class="text-[#A480F2] sm:text-4xl text-2xl animate-bounce"
