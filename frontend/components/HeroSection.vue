@@ -45,7 +45,7 @@ import ChromeButton from "~/components/ChromeButton.vue";
     />
 
     <p
-        class="inter text-white/80 text-sm sm:text-lg text-center max-w-[30rem] fade-in-animate"
+        class="inter text-white text-sm sm:text-lg text-center max-w-[30rem] fade-in-animate"
     >
       Try the Chrome extension
     </p>
