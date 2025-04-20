@@ -15,7 +15,7 @@
 
     <!-- Video -->
     <video controls autoplay muted loop class="w-full">
-      <source src="/video/arises-extension.mp4" type="video/mp4" />
+      <source src="/video/arises-extension-v2.mp4" type="video/mp4" />
     </video>
   </div>
 </template>
