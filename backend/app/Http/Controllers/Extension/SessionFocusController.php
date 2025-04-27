@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Extension;
 
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\SessionFocus;
@@ -97,6 +98,8 @@ class SessionFocusController
         }
 
         $session->save();
+
+        // TODO - Add XP to user and update user rank if necessary (make a service for this)
 
         return response()->json([
             'message' => $session->is_valid ? 'Session successfully validated.' : 'Session invalidated due to irregularities.',
