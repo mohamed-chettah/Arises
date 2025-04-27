@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SessionFocus extends Model
 {
+    protected $table = 'session_focus';
+
     protected $fillable = [
         'user_id',
         'started_at',

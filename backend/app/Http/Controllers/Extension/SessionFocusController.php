@@ -12,18 +12,26 @@ class SessionFocusController
 {
     public function start(Request $request): JsonResponse
     {
+        $params = $request->validate([
+            'expected_duration' => 'required|integer|min:5|max:90', // 1 second to 1 hour
+        ]);
+
         $existing = SessionFocus::where('user_id', Auth::id())
             ->where('status', 'active')
             ->first();
 
         if ($existing) {
-            return response()->json(['message' => 'A focus session is already active.'], 409);
+            $existing->update([
+                'is_valid' => false,
+                'status' => 'finished',
+                'finished_at' => now(),
+            ]);
         }
 
         $session = SessionFocus::create([
             'user_id' => Auth::id(),
             'started_at' => now(),
-            'expected_duration' => 25 * 60, // 25 minutes in seconds
+            'expected_duration' => $params['expected_duration'] * 60, // Convert to seconds
             'status' => 'active',
         ]);
 
@@ -80,10 +88,10 @@ class SessionFocusController
 
         $session->finished_at = $now;
         $session->status = 'finished';
-        $session->is_valid = $difference <= 10;
+        $session->is_valid = $difference <= 30; // 30 seconds tolerance
 
         if ($session->is_valid) {
-            $session->xp_earned = ($realDuration / $session->expected_duration) * 100; // 100 XP for full session
+            $session->xp_earned = ($realDuration / $session->expected_duration) * 10;
         } else {
             $session->xp_earned = 0;
         }
