@@ -19,4 +19,6 @@ Route::middleware(['jwt','throttle:20,1'])->group(function () {
     });
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+
+    Route::post('/user', [AuthenticatedSessionController::class, 'edit']);
 });

@@ -60,4 +60,6 @@ Route::group(['throttle:20,1'], function () {
             return response()->json(['message' => 'Error at refresh ²   A1q>', 'error' => $e->getMessage()], 500);
         }
     });
+
+
 });

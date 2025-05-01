@@ -51,7 +51,7 @@ class GoogleController extends Controller
             Cache::put("auth:$authKey", [
                 'token' => $token,
                 'expires_in' => JWTAuth::factory()->getTTL() * 60,
-                'user' => $user->only(['id', 'name', 'email', 'avatar'])
+                'user' => $user->only(['id', 'name', 'email', 'avatar','username','rank','xp'])
             ], now()->addMinutes(20));
 
             // return to the extension

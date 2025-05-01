@@ -8,9 +8,17 @@ use Illuminate\Http\Request;
 use App\Models\SessionFocus;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Services\UserProgressionService;
 
 class SessionFocusController
 {
+    private $progressionService;
+
+    public function __construct(UserProgressionService $progressionService)
+    {
+        $this->progressionService = $progressionService;
+    }
+
     public function start(Request $request): JsonResponse
     {
         $params = $request->validate([
@@ -83,27 +91,37 @@ class SessionFocusController
         }
 
         $now = now();
-        $realDuration = $now->diffInSeconds(Carbon::parse($session->started_at)) - $session->total_paused_time;
+        $realDuration = $now->diffInSeconds(Carbon::parse($session->started_at));
+        if($session->total_paused_time) {
+            $realDuration -= $session->total_paused_time;
+        }
 
-        $difference = abs($realDuration - $session->expected_duration);
+        $difference = abs($realDuration ) - $session->expected_duration;
 
         $session->finished_at = $now;
         $session->status = 'finished';
-        $session->is_valid = $difference <= 30; // 30 seconds tolerance
+        $session->is_valid = $difference <= 180; // 180 seconds tolerance
 
         if ($session->is_valid) {
-            $session->xp_earned = ($realDuration / $session->expected_duration) * 10;
+            $session->xp_earned = abs(($realDuration / $session->expected_duration) * 10);
+            $session->xp_earned = (int) $session->xp_earned;
         } else {
             $session->xp_earned = 0;
         }
 
         $session->save();
 
-        // TODO - Add XP to user and update user rank if necessary (make a service for this)
+        // Ajouter l'XP au user et mettre à jour son rang
+        $user = User::find(Auth::id());
+        $progressionData = $this->progressionService->addXpToUser($user, $session->xp_earned);
 
         return response()->json([
             'message' => $session->is_valid ? 'Session successfully validated.' : 'Session invalidated due to irregularities.',
-            'xp_earned' => $session->xp_earned
+            'xp_earned' => $session->xp_earned,
+            'current_xp' => $progressionData['current_xp'],
+            'new_rank' => $progressionData['new_rank'],
+            'next_rank_xp' => $progressionData['next_rank_xp'],
+            'rank_changed' => $progressionData['rank_changed']
         ]);
     }
 
