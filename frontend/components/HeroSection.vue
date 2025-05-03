@@ -2,24 +2,50 @@
 import FormWaitlist from "~/components/FormWaitlist.vue";
 import VideoShowcase from "~/components/VideoShowcase.vue";
 import ChromeButton from "~/components/ChromeButton.vue";
+
+import { ref, onMounted } from 'vue'
+
+
+
+
+const variants = [
+  {
+    text: 'Plan better.',
+    bg: 'bg-[#435EF2]/30'
+  },
+  {
+    text: 'Level up faster.',
+    bg: 'bg-[#A480F2]/50'
+  },
+  {
+    text: 'Rise with purpose',
+    bg: 'bg-[#435EF2]/30'
+  },
+]
+
+const currentIndex = ref(0)
+
+onMounted(() => {
+  setInterval(() => {
+    currentIndex.value = (currentIndex.value + 1) % variants.length
+  }, 3000)
+})
 </script>
 
 <template>
-  <div class="flex items-center justify-center flex-col gap-12 mt-10 px-4">
+  <div class="flex items-center justify-center flex-col gap-12 mt-14 px-4">
     <!-- Hero -->
     <div class="flex flex-col justify-center gap-5 items-center">
       <h1
           class="inter leading-[1.8] text-white text-2xl sm:text-[32px] lg:text-[38px] xl:text-[50px] 2xl:text-[60px] sm:leading-[1.5] text-center heading-animate"
       >
-        Your smart AI calendar<br />
-        <span class="bg-[#435EF2]/30 px-3 py-1 rounded-lg highlight-animate"
-        >Plan better.</span
+        Your smart AI calendar helps <br />
+        to
+        <span
+            :class="`${variants[currentIndex].bg} px-2 text-center rounded-lg transition-all duration-700 ease-in-out fade-text`"
         >
-        and
-        <br class="md:hidden sm:block" />
-        <span class="bg-[#A480F2]/50 px-3 py-1 rounded-lg highlight-animate"
-        >Level up faster.</span
-        >
+        {{ variants[currentIndex].text }}
+      </span>
       </h1>
 
       <!-- Subtitle -->
@@ -60,10 +86,13 @@ import ChromeButton from "~/components/ChromeButton.vue";
 
     <ChromeButton />
   </div>
-
-  <Footer />
 </template>
 
 <style scoped>
-
+.fade-text {
+  text-align: center;
+  min-width: 240px; /* fixe la largeur pour éviter les "sauts" */
+  display: inline-block;
+  transition: all 0.6s ease;
+}
 </style>

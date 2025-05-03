@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Extension;
 
+use App\Models\Ranking;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -137,5 +138,54 @@ class SessionFocusController
         }
 
         return $session;
+    }
+
+    public function getDailyRanking(): JsonResponse
+    {
+        $rankings = SessionFocus::select('user_id', 'xp_earned', 'expected_duration', 'status')
+            ->where('status', 'finished')
+            ->whereDate('finished_at', Carbon::today())
+            ->orderByDesc('xp_earned')
+            ->get()
+            ->map(function ($session) {
+                return [
+                    'user_id' => $session->user_id,
+                    'xp_earned' => $session->xp_earned,
+                    'expected_duration' => $session->expected_duration,
+                    'status' => $session->status,
+                ];
+            });
+
+        $rankings = $rankings->groupBy('user_id')->map(function ($sessions) {
+            $totalXp = $sessions->sum('xp_earned');
+            $totalExpectedDuration = $sessions->sum('expected_duration');
+            $status = $sessions->first()->status;
+
+            return [
+                'xp_earned' => $totalXp,
+                'expected_duration' => $totalExpectedDuration,
+                'status' => $status,
+            ];
+        });
+
+        $rankings = $rankings->sortByDesc('xp_earned')->values()->all();
+        $rankings = array_map(function ($ranking, $index) {
+            $ranking['rank'] = $index + 1;
+            return $ranking;
+        }, $rankings, array_keys($rankings));
+
+        foreach ($rankings as $key => $ranking) {
+            $user = User::find($ranking['user_id']);
+            if ($user) {
+                $rankings[$key]['user'] = [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'avatar' => $user->avatar,
+                    'rank' => array_search($user->rank, array_keys(Ranking::RANKS)),
+                ];
+            }
+        }
+
+        return response()->json($rankings);
     }
 }

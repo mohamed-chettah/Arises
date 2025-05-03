@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Extension\SessionFocusController;
 use App\Http\Controllers\WaitlistController;
 use Illuminate\Support\Facades\Route;
 
@@ -7,4 +8,5 @@ use Illuminate\Support\Facades\Route;
 Route::group(['throttle:5,1'], function () {
     Route::post('/waitlist', [WaitlistController::class, 'store'])->name('waitlist.store');
     Route::post('/verify-mail', [WaitlistController::class, 'verifyMail'])->name('waitlist.verifyMail');
+    Route::get('/focus/ranking', [SessionFocusController::class, 'getDailyRanking']);
 });

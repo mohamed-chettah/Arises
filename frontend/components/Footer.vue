@@ -3,7 +3,7 @@
 </script>
 
 <template>
-<footer class=" pb-5">
+<footer class="pb-5">
 
   <div class="flex justify-center text-md mt-20 gap-4">
     <NuxtLink to="/terms" class="inter text-white">Terms</NuxtLink>

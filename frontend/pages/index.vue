@@ -9,6 +9,8 @@ import Navbar from "~/components/Navbar.vue";
     <Navbar />
 
     <HeroSection />
+
+    <Footer />
   </section>
 
 </template>
