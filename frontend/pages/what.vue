@@ -14,17 +14,20 @@ import Navbar from "~/components/Navbar.vue";
         Arises is your ally in the battle against distraction and procrastination.
       </p>
 
+      <br>
+
       <p>
         It starts with a <strong>browser extension</strong> that blocks distractions and turns your tasks into a gamified experience —
         rewarding focus and daily consistency.
       </p>
-
+      <br>
       <p>
         Then comes the <strong>real game-changer</strong> — the productivity companion.
         An assistant you can actually chat with.
         You say what you want to achieve — it builds the plan, schedules your sessions, and adapts in real time to keep you moving forward.
       </p>
 
+      <br>
       <p>
         Arises is not just a tool. It’s a system to help you act, evolve, and rise.
         <br>
