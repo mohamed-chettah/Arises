@@ -44,11 +44,6 @@ class ArisesAiController extends Controller
             'role' => 'assistant',
             'content' => $response
         ]);
-
-        // TODO on stocke en bdd la réponse du chat
-
-
-
         return response()->json([
             'ai_response' => $response
         ]);
