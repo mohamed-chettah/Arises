@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Route;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
-Route::middleware(['jwt','throttle:20,1'])->group(function () {
-    Route::post('/ask', [ArisesAiController::class, 'ask'])
-        ->name('ask');
+Route::prefix('arises-ai')->middleware(['jwt','throttle:20,1'])->group(function () {
+    Route::post('/ask', [ArisesAiController::class, 'ask']);
 });

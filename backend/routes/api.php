@@ -15,3 +15,6 @@ require __DIR__ . '/extension/api_focus.php';
 
 // Routes User Website (sites web de l'utilisateur)
 require __DIR__ . '/extension/api_user_website.php';
+
+// Routes Arises Ai
+require __DIR__ . '/saas/api_arises_ai.php';
