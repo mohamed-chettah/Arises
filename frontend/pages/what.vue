@@ -4,12 +4,12 @@ import Navbar from "~/components/Navbar.vue";
 </script>
 
 <template>
-  <section class="background-image text-white">
+  <section class="background-image text-white sm:px-0 px-4">
 
     <Navbar />
-    <h1 class="bank-gothic mt-20 text-4xl md:text-5xl font-bold mb-6">What is Arises?</h1>
+    <h1 class="bank-gothic mt-20 text-4xl md:text-5xl font-bold mb-6 ">What is Arises?</h1>
 
-    <div class="max-w-2xl text-lg md:text-xl text-gray-300 space-y-6 pb-16">
+    <div class="max-w-2xl text-lg md:text-xl text-gray-300 flex  flex-col gap-[0.5px] pb-16">
       <p>
         Arises is your ally in the battle against distraction and procrastination.
       </p>
