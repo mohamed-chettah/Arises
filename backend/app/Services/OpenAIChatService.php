@@ -11,7 +11,7 @@ class OpenAIChatService
     protected string $apiUrl = 'https://api.openai.com/v1/chat/completions';
     protected string $model = 'gpt-4o';
 
-    public function ask(string $userPrompt, Collection $history , array $calendar = []): ?string
+    public function ask(string $userPrompt, Collection $history , array $calendar = []): array
     {
         // 1. Construction du tableau de messages
         $messages = [
@@ -46,11 +46,10 @@ class OpenAIChatService
                   ]
                 }
 
-                5. sinon le format doit etre
-                {
-                  \"message\": \"Texte lisible et les créneaux proposés\",
-                  \"slots\": []
-                }
+          4. Lorsque tu réponds, **ta réponse DOIT TOUJOURS être au format JSON valide** contenant **exactement deux champs** :
+            - `message` : un texte lisible destiné à l’utilisateur (motivations, instructions, propositions...).
+            - `slots` : un tableau contenant les créneaux proposés, ou un tableau vide si ce n’est pas encore le moment.
+
 
                 4. Si aucune planification n'est possible, explique-le dans \"response\" et ne renvoie pas de \"slots\".
 
@@ -62,7 +61,23 @@ class OpenAIChatService
                     - tu dois donc mettre un message à la fin tu peux accepter ou refuser le créneau proposé directement dans le calendrier.
 
 
-                Réponds toujours en JSON uniquement, sans texte avant ni après."
+                🚨 Tu dois TOUJOURS retourner un objet JSON brut.
+
+                ❌ Ne jamais encapsuler ta réponse dans des balises ```json``` ou tout autre bloc de code.
+
+                ✅ Réponds uniquement avec :
+                {
+                'message': '...',
+                'slots'': [...]
+                }
+
+                faut toujours avoir un message et un tableau de slots.-
+
+                Aucune mise en forme Markdown. Aucune ligne en plus. Juste un JSON pur.
+                🚨 N’utilise jamais les guillemets triples (''') ou des balises de code comme '```json.
+                Tu dois répondre avec du JSON pur, brut, sans entête ni balise. "
+
+
             ]
         ];
 
@@ -99,9 +114,24 @@ class OpenAIChatService
 
         if ($response->failed()) {
             logger()->error('OpenAI API failed', ['response' => $response->body()]);
-            return null;
+            return [];
         }
 
-        return $response->json('choices.0.message.content');
+        $responseText = $response->json('choices.0.message.content');
+
+        // Supprimer les éventuels """ ou ```json ou autres entourages
+        $cleaned = trim($responseText, "\" \n\r\t");
+        $cleaned = preg_replace('/^```json|^```|```$/', '', $cleaned); // retire ```json ou ```
+
+        // Tenter le décodage
+        $data = json_decode($cleaned, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            logger()->error('Invalid JSON from OpenAI', ['raw' => $responseText]);
+            return [];
+        }
+
+        dd($data);
+        return $data;
     }
 }

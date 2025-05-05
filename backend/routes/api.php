@@ -18,3 +18,6 @@ require __DIR__ . '/extension/api_user_website.php';
 
 // Routes Arises Ai
 require __DIR__ . '/saas/api_arises_ai.php';
+
+// Routes du calendrier
+require __DIR__ . '/saas/api_calendar.php';

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import FormWaitlist from "~/components/FormWaitlist.vue";
-import VideoShowcase from "~/components/VideoShowcase.vue";
-import ChromeButton from "~/components/ChromeButton.vue";
+import FormWaitlist from "~/components/landing/FormWaitlist.vue";
+import VideoShowcase from "~/components/landing/VideoShowcase.vue";
+import ChromeButton from "~/components/landing/ChromeButton.vue";
 
 import { ref, onMounted } from 'vue'
 

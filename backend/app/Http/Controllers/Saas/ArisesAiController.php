@@ -41,7 +41,6 @@ class ArisesAiController extends Controller
         $history = $this->chatService->getLastMessage();
 
         $response = $this->openAIChatService->ask($validated["question"], $history, $calendar);
-        $response = json_decode($response, true);
 
         $this->chatService->create([
             'user_id' => auth()->id(),
