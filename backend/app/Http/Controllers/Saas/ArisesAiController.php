@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Saas;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Saas\OpenAiRequest;
+use App\Models\Chat;
 use App\Services\ChatService;
 use App\Services\OpenAIChatService;
 
@@ -25,28 +26,33 @@ class ArisesAiController extends Controller
         // et on va chercher le calendrier de l'utilisateur pour le passer en params
         //
 
-        // on recupere aussi la question de l'utilisateur
-
-        // TODO on stocke en bdd le message du user
         $this->chatService->create([
             'user_id' => auth()->id(),
             'role' => 'user',
             'content' => $validated["question"]
         ]);
 
+
+        // en fonction de start et end
         $calendar = [
             // Récupère ton calendrier depuis DB ou autre (google calendar)
         ];
 
-        $response = $this->openAIChatService->ask($validated["question"], $calendar);
+        $history = $this->chatService->getLastMessage();
+
+        $response = $this->openAIChatService->ask($validated["question"], $history, $calendar);
+        $response = json_decode($response, true);
+
         $this->chatService->create([
             'user_id' => auth()->id(),
             'role' => 'assistant',
-            'content' => $response
+            'content' => $response['message']
         ]);
         return response()->json([
             'ai_response' => $response
         ]);
     }
+
+
 
 }

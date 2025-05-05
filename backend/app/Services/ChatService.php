@@ -14,4 +14,33 @@ class ChatService
         ]);
     }
 
+    public function getLastUserMessage()
+    {
+        return Chat::find(auth()->id())
+            ->where('role', 'user')
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get()
+            ->reverse();
+    }
+
+    public function getLastAssistantMessage()
+    {
+        return Chat::find(auth()->id())
+            ->where('role', 'assistant')
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get()
+            ->reverse();
+    }
+
+    public function getLastMessage()
+    {
+        return Chat::where('user_id', auth()->id())
+            ->orderByDesc('created_at')
+            ->limit(5)
+            ->get()
+            ->reverse();
+    }
+
 }
