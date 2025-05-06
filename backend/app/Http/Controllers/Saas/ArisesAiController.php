@@ -6,14 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Saas\OpenAiRequest;
 use App\Models\Chat;
 use App\Services\ChatService;
+use App\Services\GoogleCalendarService;
 use App\Services\OpenAIChatService;
 
 class ArisesAiController extends Controller
 {
     protected OpenAIChatService $openAIChatService;
     protected ChatService $chatService;
-    public function __construct(OpenAIChatService $openAIChatService, ChatService $chatService)
+    public function __construct(OpenAIChatService $openAIChatService,
+                                ChatService $chatService,
+                                GoogleCalendarService $googleCalendarService)
     {
+        parent::__construct($googleCalendarService);
         $this->chatService = $chatService;
         $this->openAIChatService = $openAIChatService;
     }
@@ -33,10 +37,7 @@ class ArisesAiController extends Controller
         ]);
 
 
-        // en fonction de start et end
-        $calendar = [
-            // Récupère ton calendrier depuis DB ou autre (google calendar)
-        ];
+        $calendar = $this->googleCalendarService->listEvents($validated['start'], $validated['end']);
 
         $history = $this->chatService->getLastMessage();
 

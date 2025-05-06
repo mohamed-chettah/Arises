@@ -89,15 +89,24 @@ class OpenAIChatService
             ];
         }
 
-//
-//        // 3. Ajouter la nouvelle question avec le calendrier et dates
-//        $calendarJson = json_encode($calendar, JSON_PRETTY_PRINT);
-//
-//        if ($start && $end) {
-//            $planningRequest .= " entre {$start} et {$end}";
-//        }
-//
-//        $planningRequest .= " ? Voici mon agenda :\n\n" . $calendarJson;
+        $formattedCalendar = collect($calendar['items'] ?? [])
+            ->map(function ($event) {
+                return [
+                    'title' => $event['summary'] ?? '',
+                    'start' => $event['start']['dateTime'] ?? null,
+                    'end' => $event['end']['dateTime'] ?? null,
+                ];
+            })
+            ->filter(fn ($e) => $e['start'] && $e['end']) // Ne garder que les valides
+            ->values()
+            ->all();
+
+
+        $messages[] = [
+            'role' => 'system',
+            'content' => "Voici l'emploi du temps de l'utilisateur :\n\n" . json_encode($formattedCalendar)
+        ];
+
 
         $messages[] = [
             'role' => 'user',

@@ -15,8 +15,8 @@ class OpenAiRequest extends FormRequest
     {
         return [
             'question' => 'required|string|max:255',
-            'start' => 'required|date_format:Y-m-d',
-            'end' => 'required|date_format:Y-m-d',
+            'start' => 'required|date',
+            'end' => 'required|date|after:start',
         ];
     }
 

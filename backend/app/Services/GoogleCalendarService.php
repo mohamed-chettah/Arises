@@ -2,33 +2,37 @@
 
 namespace App\Services;
 
-use App\Models\Chat;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Http;
 
 class GoogleCalendarService
 {
-    protected string $apiBaseUrl = 'https://www.googleapis.com/calendar/v3';
     protected string $calendarId = 'primary'; // ou ton calendrier ID exact
+    protected string $apiBaseUrl = 'https://www.googleapis.com/calendar/v3';
 
-    public function listEvents(string $accessToken, string $start, string $end): array
+    public function listEvents(string $start, string $end): array
     {
-        if (!$accessToken) {
-            throw new \Exception('Missing access token');
-        }
+        $accessToken = env('GOOGLE_CALENDAR_API_KEY', '');
 
-        if (!$start || !$end) {
-            throw new \Exception('Missing required parameters');
+        if (!$accessToken) {
+            return ["missing access token", 500];
         }
 
         $response = Http::withToken($accessToken)
-            ->get("{$this->apiBaseUrl}/calendars/{$this->calendarId}/events", [
+            ->get("$this->apiBaseUrl/calendars/$this->calendarId/events", [
                 'timeMin' => $start,
                 'timeMax' => $end,
-                'singleEvents' => true,
+                'singleEvents' => 'true',
                 'orderBy' => 'startTime',
             ]);
 
-        return $response->json();
+        return [$response->json(), $response->status()];
+    }
+
+    public function createEvent(string $accessToken, array $eventData): array
+    {
+        $response = Http::withToken($accessToken)
+            ->post("{$this->apiBaseUrl}/calendars/{$this->calendarId}/events", $eventData);
+
+        return [$response->json(), $response->status()];
     }
 }
