@@ -131,7 +131,6 @@ class OpenAIChatService
             return [];
         }
 
-        dd($data);
         return $data;
     }
 }

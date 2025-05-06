@@ -25,13 +25,6 @@ class CalendarController
             return response()->json(['error' => 'Missing required parameters'], 422);
         }
 
-        $response = Http::withToken($accessToken)
-            ->get("$this->apiBaseUrl/calendars/$this->calendarId/events", [
-                'timeMin' => $start,
-                'timeMax' => $end,
-                'singleEvents' => 'true', // ✅ corrigé ici
-                'orderBy' => 'startTime',
-            ]);
 
         return response()->json($response->json(), $response->status());
     }

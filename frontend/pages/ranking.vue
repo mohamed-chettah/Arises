@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import Navbar from "~/components/landing/Navbar.vue";
-import type { TableColumn } from '@nuxt/ui'
+import Footer from "~/components/landing/Footer.vue";
 
 const data = ref([
   {
