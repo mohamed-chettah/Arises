@@ -25,7 +25,7 @@ const props = defineProps({
   <div class="flex flex-col gap-2">
     <div class="padding inline-flex justify-start items-center gap-3.5" :class="active ? 'bg-purple/20 rounded-[8px]' : ''">
       <UIcon :name="icon" class="text-grey w-[22px] h-[22px]"></UIcon>
-      <div class="text-center justify-start text-grey inter">{{ title }}</div>
+      <div class="text-center text-[16px] justify-start text-grey inter">{{ title }}</div>
     </div>
   </div>
 
