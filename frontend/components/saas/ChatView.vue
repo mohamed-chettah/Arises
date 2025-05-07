@@ -2,7 +2,7 @@
   <!-- Scrollable chat history -->
   <div
       ref="chatBox"
-      class="border-[1px] border-purple/20 bg-purple/20 flex flex-col gap-4 overflow-y-auto scrollbar-thin scrollbar-thumb-purple/40 scrollbar-track-transparent h-full p-6 rounded-lg"
+      class="border-[1px] border-purple/20 bg-purple/20 flex flex-col gap-4 overflow-y-auto scrollbar-thin scrollbar-thumb-purple/40 scrollbar-track-transparent  p-6 rounded-lg"
   >
     <template v-for="m in messages" :key="m.id">
       <div
@@ -13,7 +13,7 @@
             : 'bg-[#26204d] text-gray-200 self-start',
         ]"
       >
-        {{ m.content }}
+        <p class="text-xs">{{ m.content }}</p>
       </div>
     </template>
   </div>

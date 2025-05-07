@@ -1,24 +1,31 @@
 <template>
   <div class="flex min-h-screen bg-background">
     <!-- nav / sidebar -->
-    <SideBar class="w-64 shrink-0" />
+    <div class="flex">
+      <SideBar class="w-64 shrink-0" />
+    </div>
 
 
-    <div class="flex-1 p-6">
+    <div class="flex-1">
+
+      <Header />
       <!-- Welcome heading -->
-      <h1 class="text-white bank-gothic text-2xl mb-6">Welcome Mohamed !</h1>
 
-      <!-- Content grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <!-- Chat column -->
-        <div class="flex flex-col gap-5 rounded-xl overflow-hidden">
-          <ChatView :messages="messages" class="flex-1" />
-          <ChatInput @send="addMessage" />
+      <div class="py-8 px-20">
+        <h1 class="text-white bank-gothic text-2xl mb-6">Welcome Mohamed !</h1>
+
+        <!-- Content grid -->
+        <div class="grid grid-cols-3 gap-6 ">
+          <!-- Chat column -->
+
+          <ChatView :messages="messages" class="flex-1 col-span-1" />
+
+          <!-- Calendar column -->
+          <CalendarView class="col-span-2" />
         </div>
-
-        <!-- Calendar column -->
-        <CalendarView />
+        <ChatInput class="my-5" @send="addMessage" />
       </div>
+
     </div>
   </div>
 </template>
@@ -29,6 +36,7 @@ import ChatView from '~/components/saas/ChatView.vue'
 import ChatInput from '~/components/saas/ChatInput.vue'
 import CalendarView from '~/components/saas/CalendarView.vue'
 import SideBar from "~/components/saas/SideBar.vue";
+import Header from "~/components/saas/Header.vue";
 
 interface Message { id: string; role: 'user' | 'assistant'; content: string }
 const messages = ref<Message[]>([

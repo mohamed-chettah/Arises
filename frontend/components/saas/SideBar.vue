@@ -3,16 +3,16 @@ import LinkSideBar from "~/components/ui/LinkSideBar.vue";
 </script>
 
 <template>
-  <section class="h-screen bg-background border-r border-r-[1px] border-grey-calendar flex flex-col">
+  <section class="min-h-screen bg-background border-r border-r-[1px] border-grey-calendar flex flex-col">
 
     <!-- Logo / nom -->
-    <div class="p-6">
-      <div class="w-56 inline-flex justify-between items-center">
+    <div class="flex flex-col items-center py-3">
+      <div class="w-[240px] inline-flex justify-between items-center">
         <div class="flex justify-start items-center gap-3.5">
-          <div class="w-9 h-8 px-1.5 py-2.5 bg-purple/20 rounded-lg inline-flex flex-col justify-center items-center gap-2.5">
+          <div class="w-9 h-8 py-2.5 bg-purple/20 rounded-lg inline-flex flex-col justify-center items-center gap-2.5">
             <div class="text-center justify-start text-white text-sm font-bold bank-gothic">MC</div>
           </div>
-          <div class="text-center justify-start text-white text-base font-bold bank-gothic">Mohamed C</div>
+          <div class="text-center justify-start text-[14px] text-white font-bold bank-gothic">Mohamed C</div>
         </div>
         <div class="w-5 h-5 relative overflow-hidden">
           <UIcon name="i-heroicons-chevron-down" class="text-grey"></UIcon>
@@ -21,10 +21,10 @@ import LinkSideBar from "~/components/ui/LinkSideBar.vue";
     </div>
 
     <!-- Partie centrale + footer -->
-    <div class="flex flex-col justify-between flex-1 border-t border-t-[1px] border-grey-calendar pt-5">
+    <div class="flex flex-col justify-between flex-1 border-t border-t-[1px] border-grey-calendar pt-2">
 
       <!-- Liens -->
-      <div class="flex flex-col items-center gap-3">
+      <div class="flex flex-col items-center gap-1">
         <LinkSideBar title="Home" icon="i-lucide-house" link="/" :active="true" />
         <LinkSideBar title="Tasks" icon="i-lucide-gallery-horizontal-end" link="/" />
         <LinkSideBar title="Integrations" icon="i-lucide-puzzle" link="/" />

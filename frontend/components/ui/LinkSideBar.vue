@@ -23,9 +23,9 @@ const props = defineProps({
 
 <template>
   <div class="flex flex-col gap-2">
-    <div class="padding inline-flex justify-start items-center gap-3.5" :class="active ? 'bg-purple/20 rounded-[8px]' : ''">
-      <UIcon :name="icon" class="text-grey w-[22px] h-[22px]"></UIcon>
-      <div class="text-center text-[16px] justify-start text-grey inter">{{ title }}</div>
+    <div class="padding inline-flex justify-start items-center gap-3" :class="active ? 'bg-purple/20 rounded-[8px]' : ''">
+      <UIcon :name="icon" :class="active ? 'text-white'  : ''" class="text-grey w-[18px] h-[18px]"></UIcon>
+      <p :class="active ? 'text-white'  : ''" class="text-center text-[14px] justify-start text-grey inter">{{ title }}</p>
     </div>
   </div>
 
