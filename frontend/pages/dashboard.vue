@@ -5,25 +5,23 @@
       <SideBar class="w-64 shrink-0" />
     </div>
 
-
     <div class="flex-1">
 
       <Header />
       <!-- Welcome heading -->
 
-      <div class="py-8 px-20">
+      <div class="py-8 px-26">
         <h1 class="text-white bank-gothic text-2xl mb-6">Welcome Mohamed !</h1>
 
         <!-- Content grid -->
         <div class="grid grid-cols-3 gap-6 ">
           <!-- Chat column -->
-
-          <ChatView :messages="messages" class="flex-1 col-span-1" />
+          <ChatView :messages="messages" :loading="loading" class="flex-1 col-span-1" />
 
           <!-- Calendar column -->
           <CalendarView class="col-span-2" />
         </div>
-        <ChatInput class="my-5" @send="addMessage" />
+        <ChatInput class="mt-5" @send="addMessage" :loading="loading" />
       </div>
 
     </div>
@@ -45,20 +43,48 @@ const messages = ref<Message[]>([
     role: 'assistant',
     content: 'Hello, how can I assist you today?'
   },
-  {
-    id: '2',
-    role: 'user',
-    content: 'Can you help me with my schedule?'
-  },
-  {
-    id: '3',
-    role: 'assistant',
-    content: 'Sure! What do you need help with?'
-  }
 ])
 
-function addMessage(text: string) {
+const runtimeConfig = useRuntimeConfig()
+const apiUrl = runtimeConfig.public.apiBase
+const loading= ref(false)
+
+async function addMessage(text: string) {
   messages.value.push({ id: Date.now().toString(), role: 'user', content: text })
-  // 👉 integrate backend call then push assistant reply
+
+  // TODO call to laravel
+  try {
+    loading.value = true
+    const { data, status, error, refresh, clear } = await useFetch(apiUrl +'/arises-ai/ask', {
+      method: 'POST',
+      headers: {
+        authorization : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUwMDUvYXBpL2xvZ2luIiwiaWF0IjoxNzQ2NjQ5MjE2LCJleHAiOjE3NDY2NTY0MTcsIm5iZiI6MTc0NjY0OTIxNywianRpIjoicjRLSzhUSDRmU0xlY1hueCIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.GR9DXMce3pBQrHD637RVABrAVq1wupMgfB_1Ro6NqMg",
+      },
+      body: {
+        question: text,
+        start: "2025-05-01T00:00:00Z",
+        end: "2025-05-31T23:59:59Z",
+      }
+    })
+
+    console.log(data)
+    // todo pousser la réponse dans le chat
+    if(data.value.ai_response?.message){
+      messages.value.push({ id: Date.now().toString(), role: 'assistant', content: data.value.ai_response?.message })
+    } else {
+      messages.value.push({ id: Date.now().toString(), role: 'assistant', content: "Sorry, I couldn't find any information." })
+    }
+
+
+    loading.value = false
+    if (error.value) {
+      return
+    }
+  } catch (error) {
+    console.error(error)
+  }
+  finally {
+    loading.value = false
+  }
 }
 </script>

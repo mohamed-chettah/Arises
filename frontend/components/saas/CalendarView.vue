@@ -1,21 +1,21 @@
 <template>
-  <div class="border-[1px] border-purple/20  rounded-lg p-4 w-full flex flex-col">
+  <div class="border-[1px] border-purple/20  rounded-lg p-3 w-full flex flex-col">
 
     <!-- Pseudocode -->
     <table class="overflow-y-auto scrollbar-thin scrollbar-thumb-purple/40 scrollbar-track-transparent ">
       <thead>
       <tr>
         <th></th> <!-- vide pour l'heure -->
-        <th v-for="day in weekDays" class="text-sm text-grey pb-2">{{ day.label }}</th>
+        <th v-for="day in weekDays" class="text-sm text-grey pb-2 font-medium">{{ day.label }}</th>
       </tr>
       </thead>
       <tbody>
       <tr v-for="hour in hours" :key="hour" class="rounded-lg ">
-        <td class="rounded-lg  pr-2 text-right text-xs">{{ hour }}:00</td>
+        <td class="rounded-lg  w-10 pr-2 text-right text-xs text-grey">{{ hour }}:00</td>
         <td
             v-for="day in weekDays"
             :key="day.iso"
-            class="rounded-lg relative border border-gray-800 h-[60px]"
+            class="rounded-lg relative border border-grey-calendar h-[60px]"
         >
           <div
               v-for="event in eventsAt(day.iso, hour)"
@@ -49,14 +49,14 @@ interface Event {
 
 
 const events = ref<Event[]>([
-  { id: '1', title: 'Intro PHP and setting up env', start: '2025-05-12T07:00:00', color: 'bg-purple/40' },
-  { id: '2', title: 'Monday Wake‑Up Hour', start: '2025-05-12T08:00:00', color: 'bg-blue-600/40' },
-  { id: '3', title: 'Financial Update', start: '2025-05-12T10:00:00', color: 'bg-yellow-600/40' },
+  { id: '1', title: 'Intro PHP and setting up env', start: '2025-05-6T07:00:00', color: 'bg-purple/40' },
+  { id: '2', title: 'Monday Wake‑Up Hour', start: '2025-05-08T08:00:00', color: 'bg-blue-600/40' },
+  { id: '3', title: 'Financial Update', start: '2025-05-09T10:00:00', color: 'bg-yellow-600/40' },
   { id: '4', title: 'Variables, conditions & loops', start: '2025-05-13T11:00:00', color: 'bg-purple-600/40' },
-  { id: '5', title: 'Meeting with a client', start: '2025-05-16T08:00:00', color: 'bg-pink-600/40' },
-  { id: '6', title: 'Webinar: Figma', start: '2025-05-16T11:00:00', color: 'bg-green-600/40' },
-  { id: '7', title: 'Lunch with John', start: '2025-05-15T12:00:00', color: 'bg-teal-600/40' },
-  { id: '8', title: 'Workout with John', start: '2025-05-13T13:00:00', color: 'bg-teal-800/40' }
+  { id: '5', title: 'Meeting with a client', start: '2025-05-05T08:00:00', color: 'bg-pink-600/40' },
+  { id: '6', title: 'Webinar: Figma', start: '2025-05-04T11:00:00', color: 'bg-green-600/40' },
+  { id: '7', title: 'Lunch with John', start: '2025-05-09T12:00:00', color: 'bg-teal-600/40' },
+  { id: '8', title: 'Workout with John', start: '2025-05-12T13:00:00', color: 'bg-teal-800/40' }
 ])
 
 function eventsAt(isoDate: string, hour: number) {
@@ -72,7 +72,7 @@ function getEvent(){
 }
 
 // current week start (Sunday)
-const current = ref(dayjs('2025-05-12'))
+const current = ref(dayjs('2025-05-07'))
 
 const hours = Array.from({ length: 7 }, (_, i) => 7 + i) // 7‑19
 

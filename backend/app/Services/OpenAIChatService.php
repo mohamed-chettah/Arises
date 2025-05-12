@@ -13,73 +13,50 @@ class OpenAIChatService
 
     public function ask(string $userPrompt, Collection $history , array $calendar = []): array
     {
-        // 1. Construction du tableau de messages
         $messages = [
             [
                 'role' => 'system',
-                'content' => "Tu es un assistant personnel spécialisé en productivité et en accompagnement. Ton objectif est d'aider l'utilisateur à atteindre ses objectifs en lui proposant des plannings personnalisés selon son emploi du temps.
+                'content' => "You are a productivity assistant. Your job is to help the user reach goals by asking questions and proposing planning slots based on their agenda.
 
+        ⚠️ Always follow these strict rules:
 
-                Voici les règles que tu dois toujours suivre :
+        1. Ask ONE question at a time.
+           Question order:
+           - Current level?
+           - Specific goal?
+           - Deadline?
+           - Preferences (morning/evening, duration)?
 
-                1. **Pose une seule question à la fois** à l'utilisateur. Ne jamais poser plusieurs questions dans un seul message.
+        2. NEVER ask for the agenda — it will always be provided in the conversation.
 
-                2. Les questions doivent suivre un ordre logique :
-                   - Quel est ton niveau actuel ?
-                   - Quel est ton objectif précis ?
-                   - As-tu un délai ou une deadline ?
-                   - As-tu des contraintes ou préférences (matin/soir, durée) ?
+        3. After 2-3 answers, ask: 'Do you want a personalized plan?'
 
-                ❗ Tu n’as **jamais besoin de demander son emploi du temps**, car celui-ci te sera fourni automatiquement.
+        4. If the user agrees, analyze the agenda and return a planning **in this EXACT format**:
+        {
+          \"message\": \"Your readable answer with motivation and emojis\",
+          \"slots\": [
+            {
+              \"title\": \"Session name\",
+              \"start\": \"2025-05-06T10:00:00\",
+              \"end\": \"2025-05-06T11:00:00\"
+            }
+          ]
+        }
 
-                3. **Après 2 ou 3 réponses**, propose un planning **en demandant clairement si l’utilisateur souhaite que tu lui proposes un plan personnalisé**.
+        ⚠️ Always return:
+        {
+          \"message\": \"...\",
+          \"slots\": [...]
+        }
 
-                4. Si l’utilisateur répond oui, tu dois analyser l’agenda fourni (dans les messages précédents) et proposer un planning au format suivant :
-              {
-                  \"message\": \"Texte lisible et les créneaux proposés\",
-                  \"slots\": [
-                    {
-                      \"title\": \"Nom de la session\",
-                      \"start\": \"2025-05-06T10:00:00\",
-                      \"end\": \"2025-05-06T11:00:00\"
-                    }
-                  ]
-                }
+        - `message`: must ALWAYS be present.
+        - `slots`: either proposed sessions or an empty array.
+        - NO Markdown, NO triple quotes, NO extra text, just RAW JSON.
 
-          4. Lorsque tu réponds, **ta réponse DOIT TOUJOURS être au format JSON valide** contenant **exactement deux champs** :
-            - `message` : un texte lisible destiné à l’utilisateur (motivations, instructions, propositions...).
-            - `slots` : un tableau contenant les créneaux proposés, ou un tableau vide si ce n’est pas encore le moment.
-
-
-                4. Si aucune planification n'est possible, explique-le dans \"response\" et ne renvoie pas de \"slots\".
-
-                Quand tu proposes un planning, tu dois :
-                - Commencer par une phrase motivante ou engageante.
-                    - Proposer 2 à 3 sessions maximum pour commencer.
-                    - Formater ça clairement dans 'response' avec des emojis et une structure facile à afficher côté UI.
-                    - Chaque session proposée est à considérer comme un créneau *en attente d'acceptation*.
-                    - tu dois donc mettre un message à la fin tu peux accepter ou refuser le créneau proposé directement dans le calendrier.
-
-
-                🚨 Tu dois TOUJOURS retourner un objet JSON brut.
-
-                ❌ Ne jamais encapsuler ta réponse dans des balises ```json``` ou tout autre bloc de code.
-
-                ✅ Réponds uniquement avec :
-                {
-                'message': '...',
-                'slots'': [...]
-                }
-
-                faut toujours avoir un message et un tableau de slots.-
-
-                Aucune mise en forme Markdown. Aucune ligne en plus. Juste un JSON pur.
-                🚨 N’utilise jamais les guillemets triples (''') ou des balises de code comme '```json.
-                Tu dois répondre avec du JSON pur, brut, sans entête ni balise. "
-
-
+        🛑 Your response MUST ALWAYS be valid JSON with `message` and `slots` fields. Reply only in English."
             ]
         ];
+
 
         // 2. Ajouter historique s'il existe
         foreach ($history as $message) {
@@ -107,7 +84,6 @@ class OpenAIChatService
             'content' => "Voici l'emploi du temps de l'utilisateur :\n\n" . json_encode($formattedCalendar)
         ];
 
-
         $messages[] = [
             'role' => 'user',
             'content' => $userPrompt
@@ -126,11 +102,24 @@ class OpenAIChatService
             return [];
         }
 
+        // 5. Vérification de la réponse
+        if (!isset($response['choices'][0]['message']['content'])) {
+            logger()->error('Invalid response from OpenAI', ['response' => $response->body()]);
+            return [];
+        }
         $responseText = $response->json('choices.0.message.content');
 
         // Supprimer les éventuels """ ou ```json ou autres entourages
-        $cleaned = trim($responseText, "\" \n\r\t");
-        $cleaned = preg_replace('/^```json|^```|```$/', '', $cleaned); // retire ```json ou ```
+        // Nettoyage fiable du JSON brut même s'il est encadré par des """ ou texte inutile
+        $cleaned = trim($responseText);
+        $match = [];
+
+        if (preg_match('/\{.*\}/s', $cleaned, $match)) {
+            $cleaned = $match[0]; // On récupère uniquement le JSON brut
+        } else {
+            logger()->error('Unable to extract JSON from GPT response', ['raw' => $responseText]);
+            return [];
+        }
 
         // Tenter le décodage
         $data = json_decode($cleaned, true);

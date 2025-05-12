@@ -30,6 +30,12 @@ class ArisesAiController extends Controller
         // et on va chercher le calendrier de l'utilisateur pour le passer en params
         //
 
+        if(!auth()->user()){
+            return response()->json([
+                'message' => 'Unauthorized'
+            ], 401);
+        }
+
         $this->chatService->create([
             'user_id' => auth()->id(),
             'role' => 'user',
@@ -42,6 +48,12 @@ class ArisesAiController extends Controller
         $history = $this->chatService->getLastMessage();
 
         $response = $this->openAIChatService->ask($validated["question"], $history, $calendar);
+
+        if(!$response || empty($response['message'])) {
+            return response()->json([
+                'ai_response' => 'Error while processing your request. Please try again later.',
+            ], 500);
+        }
 
         $this->chatService->create([
             'user_id' => auth()->id(),
