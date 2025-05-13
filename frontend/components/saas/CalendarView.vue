@@ -3,12 +3,14 @@
 import { ref, computed } from 'vue'
 import dayjs from 'dayjs'
 
+
 const props = defineProps({
   slots: {
     type: Array as () => Event[],
     default: () => []
   }
 })
+const toast = useToast()
 
 interface Event {
   id?: number
@@ -18,7 +20,6 @@ interface Event {
   color?: string
   choice?: boolean
 }
-
 
 const events = ref<Event[]>([
   { id: 1, title: 'Intro PHP and setting up env', start: '2025-05-6T07:00:00', color: 'bg-blue/40' },
@@ -51,17 +52,17 @@ const weekDays = computed(() => {
 })
 
 watch(() => props.slots, (newSlots) => {
-  events.value.push(...newSlots.map((slot: any) => {
-    return {
+  newSlots.map((slot: any) => {
+    events.value.push({
       id: events.value.length + 1,
       title: slot.title,
       start: slot.start,
       end: slot.end,
       color: slot.color,
-      choice: slot.choice,
-    }
+      choice: true,
+    })
   })
-  )
+  console.log(events.value)
 })
 
 function confirmEvent(id: number){
@@ -70,6 +71,10 @@ function confirmEvent(id: number){
     event.choice = false
     event.color = 'bg-green-600/40'
   }
+  toast.add({
+    title: 'Event confirmed',
+    description: `You have confirmed the event: ${event?.title}`,
+  } as any)
 }
 
 function removeEvent(id: number){

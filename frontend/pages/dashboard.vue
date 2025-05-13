@@ -12,7 +12,7 @@ const messages = ref<Message[]>([
   {
     id: '1',
     role: 'assistant',
-    content: 'Hello, how can I assist you today?'
+    content: 'Hello, how can I assist you in your life ?'
   },
 ])
 
