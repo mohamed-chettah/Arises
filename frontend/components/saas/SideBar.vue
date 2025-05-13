@@ -33,13 +33,13 @@ import LinkSideBar from "~/components/ui/LinkSideBar.vue";
       </div>
 
       <!-- Footer en bas -->
-      <div class="border-t border-t-[1px] border-grey-calendar py-5">
-        <a href="https://chrome.google.com/webstore" target="_blank" class="hover:underline">
-          <span class="flex items-center flex-row justify-center gap-2 text-grey inter">
-             <LinkSideBar title="Try Chrome Extension" icon="i-lucide-chrome" link="/" />
-          </span>
-        </a>
-      </div>
+<!--      <div class="border-t border-t-[1px] border-grey-calendar py-5">-->
+<!--        <a href="https://chrome.google.com/webstore" target="_blank" class="hover:underline">-->
+<!--          <span class="flex items-center flex-row justify-center gap-2 text-grey inter">-->
+<!--             <LinkSideBar title="Try Chrome Extension" icon="i-lucide-chrome" link="/" />-->
+<!--          </span>-->
+<!--        </a>-->
+<!--      </div>-->
 
     </div>
   </section>

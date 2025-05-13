@@ -14,13 +14,13 @@
         class="custom-scrollbar overflow-y-auto max-h-[480px] flex-1 bg-transparent resize-none outline-none text-sm text-gray-200 placeholder-gray-500 overflow-y-auto scrollbar-thin scrollbar-thumb-purple/40 scrollbar-track-transparent "
     />
 
-    <button
+    <UButton
         type="submit"
         :disabled="loading"
+        :loading="loading"
+        icon="i-lucide-square-arrow-up"
         class="cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-md bg-blue hover:bg-purple/20 text-sm text-gray-200"
-    >
-      <UIcon name="i-lucide-square-arrow-up" class="w-4 h-4" />
-    </button>
+    />
   </form>
 </template>
 

@@ -30,7 +30,7 @@ class OpenAIChatService
 
         3. After 2-3 answers, ask: 'Do you want a personalized plan?'
 
-        4. If the user agrees, analyze the agenda and return a planning **in this EXACT format**:
+        4. If the user agrees, analyze the agenda and return a planning with different task (2 line per task for the title) and use different hours **in this EXACT format**:
         {
           \"message\": \"Your readable answer with motivation and emojis\",
           \"slots\": [
@@ -41,6 +41,8 @@ class OpenAIChatService
             }
           ]
         }
+
+        5. Be motivating and positive.
 
         ⚠️ Always return:
         {
