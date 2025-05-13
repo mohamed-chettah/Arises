@@ -33,26 +33,22 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex items-center justify-center flex-col gap-12 mt-14 px-4">
+  <div class="flex-grow flex items-center justify-center flex-col gap-12 mt-14 px-4">
     <!-- Hero -->
     <div class="flex flex-col justify-center gap-5 items-center">
       <h1
           class="inter leading-[1.8] text-white text-2xl sm:text-[32px] lg:text-[38px] xl:text-[50px] 2xl:text-[60px] sm:leading-[1.5] text-center heading-animate"
       >
-        Your smart AI calendar helps <br />
-        to
-        <span
-            :class="`${variants[currentIndex].bg} px-2 text-center rounded-lg transition-all duration-700 ease-in-out fade-text`"
-        >
-        {{ variants[currentIndex].text }}
-      </span>
+        Ask. Accept. Achieve.
+        <br>
+        Climb faster, one scheduled task at a time.
       </h1>
 
       <!-- Subtitle -->
       <p
           class="inter text-white/80 text-sm sm:text-lg text-center max-w-[30rem] mt-5 fade-in-animate"
       >
-        Ask. Accept. Achieve. Arises schedules the right tasks so every day moves you up the ladder.
+        Arises schedules the right tasks so every day moves you up the ladder.
       </p>
     </div>
 
@@ -65,26 +61,6 @@ onMounted(() => {
       <FormWaitlist />
     </div>
 
-    <USeparator
-        color="primary"
-        class="w-full text-[#A480F2] separator-animate"
-    />
-
-    <p
-        class="inter text-white text-sm sm:text-lg text-center max-w-[30rem] fade-in-animate"
-    >
-      Try the Chrome extension
-    </p>
-
-    <div class="size-6 animate-bounce ...">
-      <UIcon
-          class="text-[#A480F2] sm:text-4xl text-2xl animate-bounce"
-          name="i-heroicons-arrow-down" />
-    </div>
-
-    <VideoShowcase />
-
-    <ChromeButton />
   </div>
 </template>
 

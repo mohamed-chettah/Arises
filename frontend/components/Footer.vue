@@ -21,7 +21,7 @@
 
   <div class="flex justify-between">
     <p class="inter text-white">© Arises 2025</p>
-    <a href="https://mc-studio.eu" class="text-sm inter text-white">Made By MC Studio</a>
+    <a href="https://mc-studio.eu" target="_blank" class="text-sm inter text-white">Made By MC Studio</a>
   </div>
 </footer>
 </template>

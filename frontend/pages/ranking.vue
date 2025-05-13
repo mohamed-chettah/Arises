@@ -79,6 +79,29 @@ const data = ref([
               loading loading-color="primary" loading-animation="carousel"  :data="data" class="text-white w-[70%] " />
     </div>
 
+    <div class="flex flex-col justify-center items-center mt-5 gap-8">
+      <USeparator
+          color="primary"
+          class="w-full text-[#A480F2] separator-animate"
+      />
+
+      <p
+          class="inter text-white text-sm sm:text-lg text-center max-w-[30rem] fade-in-animate"
+      >
+        Try the Chrome extension
+      </p>
+
+      <div class="size-6 animate-bounce ...">
+        <UIcon
+            class="text-[#A480F2] sm:text-4xl text-2xl animate-bounce"
+            name="i-heroicons-arrow-down" />
+      </div>
+
+      <VideoShowcase />
+
+      <ChromeButton />
+
+    </div>
 
 
     <Footer />
