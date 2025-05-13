@@ -50,9 +50,7 @@ class ArisesAiController extends Controller
         $response = $this->openAIChatService->ask($validated["question"], $history, $calendar);
 
         if(!$response || empty($response['message'])) {
-            return response()->json([
-                'ai_response' => 'Error while processing your request. Please try again later.',
-            ], 500);
+            return response()->json('Error while processing your request. Please try again later.', 500);
         }
 
         $this->chatService->create([
@@ -60,9 +58,7 @@ class ArisesAiController extends Controller
             'role' => 'assistant',
             'content' => $response['message']
         ]);
-        return response()->json([
-            'ai_response' => $response
-        ]);
+        return response()->json($response, 200);
     }
 
 

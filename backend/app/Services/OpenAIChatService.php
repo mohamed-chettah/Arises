@@ -24,7 +24,6 @@ class OpenAIChatService
            Question order:
            - Current level?
            - Specific goal?
-           - Deadline?
            - Preferences (morning/evening, duration)?
 
         2. NEVER ask for the agenda — it will always be provided in the conversation.
@@ -56,7 +55,6 @@ class OpenAIChatService
         🛑 Your response MUST ALWAYS be valid JSON with `message` and `slots` fields. Reply only in English."
             ]
         ];
-
 
         // 2. Ajouter historique s'il existe
         foreach ($history as $message) {
@@ -93,7 +91,8 @@ class OpenAIChatService
         $response = Http::withToken(env('OPENAI_API_KEY'))
             ->post($this->apiUrl, [
                 'model' => $this->model,
-                'temperature' => 0.7,
+                'temperature'    => 0.2,
+                'response_format'=> ['type' => 'json_object'],
                 'messages' => $messages
             ]);
 

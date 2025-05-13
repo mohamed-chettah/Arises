@@ -58,7 +58,7 @@ async function addMessage(text: string) {
     const { data, status, error, refresh, clear } = await useFetch(apiUrl +'/arises-ai/ask', {
       method: 'POST',
       headers: {
-        authorization : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUwMDUvYXBpL2xvZ2luIiwiaWF0IjoxNzQ2NjQ5MjE2LCJleHAiOjE3NDY2NTY0MTcsIm5iZiI6MTc0NjY0OTIxNywianRpIjoicjRLSzhUSDRmU0xlY1hueCIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.GR9DXMce3pBQrHD637RVABrAVq1wupMgfB_1Ro6NqMg",
+        authorization : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUwMDUvYXBpL2xvZ2luIiwiaWF0IjoxNzQ3MTU2NzY3LCJleHAiOjE3NDcxNjM5NjcsIm5iZiI6MTc0NzE1Njc2NywianRpIjoia1VDUlUwUEhhdnBmNlJzNiIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.2qOtJNa2yf0qbl3xXImKRSe8KE3M4DuHEVMryxmuAS0",
       },
       body: {
         question: text,
@@ -67,12 +67,15 @@ async function addMessage(text: string) {
       }
     })
 
-    console.log(data)
-    // todo pousser la réponse dans le chat
-    if(data.value.ai_response?.message){
-      messages.value.push({ id: Date.now().toString(), role: 'assistant', content: data.value.ai_response?.message })
+    if(data.value?.message){
+      messages.value.push({ id: Date.now().toString(), role: 'assistant', content: data.value?.message })
     } else {
       messages.value.push({ id: Date.now().toString(), role: 'assistant', content: "Sorry, I couldn't find any information." })
+    }
+
+    // todo placer les slots dans le calendrier
+    if(data.value?.slots){
+
     }
 
 
