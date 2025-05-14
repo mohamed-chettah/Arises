@@ -37,6 +37,7 @@ class ChatService
     public function getLastMessage()
     {
         return Chat::where('user_id', auth()->id())
+            ->where('created_at', '<=', now()->subMinutes(5))
             ->orderByDesc('created_at')
             ->limit(5)
             ->get()

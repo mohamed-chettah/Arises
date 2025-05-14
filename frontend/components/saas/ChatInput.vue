@@ -9,6 +9,7 @@
     <textarea
         v-model="text"
         rows="1"
+        autoresize
         @keydown.enter="handleSend"
         placeholder="Talk with Arises AI"
         class="custom-scrollbar overflow-y-auto max-h-[480px] flex-1 bg-transparent resize-none outline-none text-sm text-gray-200 placeholder-gray-500 overflow-y-auto scrollbar-thin scrollbar-thumb-purple/40 scrollbar-track-transparent "

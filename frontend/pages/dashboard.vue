@@ -24,13 +24,12 @@ const slots= ref([])
 async function addMessage(text: string) {
   messages.value.push({ id: Date.now().toString(), role: 'user', content: text })
 
-  // TODO call to laravel
   try {
     loading.value = true
     const { data, status, error, refresh, clear } = await useFetch(apiUrl +'/arises-ai/ask', {
       method: 'POST',
       headers: {
-        authorization : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUwMDUvYXBpL2xvZ2luIiwiaWF0IjoxNzQ3MTY0NjI2LCJleHAiOjE3NDcxNzE4MjYsIm5iZiI6MTc0NzE2NDYyNiwianRpIjoiVWJxUjZMQ1hWcXEydFE2YiIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.sze1gRviR-VH4kRbdqYKwDD34T6_U90IlkUEt24JWEk",
+        authorization : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUwMDUvYXBpL2xvZ2luIiwiaWF0IjoxNzQ3MjIxMTc2LCJleHAiOjE3NDcyMjgzNzYsIm5iZiI6MTc0NzIyMTE3NiwianRpIjoiTkxOalhQSVBtWjVlYTJ5UCIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.iva9ZycRY_KuQVxunp6dwhhzhaQ7XCsRJSQ-eQ6jD90",
       },
       body: {
         question: text,
@@ -84,11 +83,9 @@ async function addMessage(text: string) {
     </div>
 
     <div class="flex-1">
-
       <Header />
-      <!-- Welcome heading -->
 
-      <div class="py-8 px-26">
+      <div class="py-8 px-20">
         <h1 class="text-white bank-gothic text-2xl mb-6">Welcome Mohamed !</h1>
 
         <!-- Content grid -->

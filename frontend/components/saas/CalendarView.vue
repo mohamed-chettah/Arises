@@ -1,8 +1,6 @@
-
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import dayjs from 'dayjs'
-
 
 const props = defineProps({
   slots: {
@@ -10,10 +8,11 @@ const props = defineProps({
     default: () => []
   }
 })
+
 const toast = useToast()
 
 interface Event {
-  id?: number
+  id: number
   title: string
   start: string // ISO date
   end?: string
@@ -38,7 +37,7 @@ function eventsAt(isoDate: string, hour: number) {
     return date.format('YYYY-MM-DD') === isoDate && date.hour() === hour
   })
 }
-// current week start (Sunday)
+
 const current = ref(dayjs('2025-05-07'))
 
 const hours = Array.from({ length: 7 }, (_, i) => 7 + i) // 7‑19
@@ -62,10 +61,10 @@ watch(() => props.slots, (newSlots) => {
       choice: true,
     })
   })
-  console.log(events.value)
 })
 
 function confirmEvent(id: number){
+  if(!id) return
   const event = events.value.find(event => event.id === id)
   if (event) {
     event.choice = false
@@ -74,6 +73,7 @@ function confirmEvent(id: number){
   toast.add({
     title: 'Event confirmed',
     description: `You have confirmed the event: ${event?.title}`,
+    icon: 'i-lucide-check',
   } as any)
 }
 
@@ -83,7 +83,7 @@ function removeEvent(id: number){
 </script>
 
 <template>
-  <div class="border-[1px] border-purple/20  rounded-lg p-3 w-full flex flex-col">
+  <div class="border-[1px] border-purple/20 rounded-lg p-3 w-full flex flex-col">
 
     <!-- Pseudocode -->
     <table class="overflow-y-auto scrollbar-thin scrollbar-thumb-purple/40 scrollbar-track-transparent ">
@@ -95,7 +95,7 @@ function removeEvent(id: number){
       </thead>
       <tbody>
       <tr v-for="hour in hours" :key="hour" class="rounded-lg ">
-        <td class="rounded-lg  w-10 pr-2 text-right text-xs text-grey">{{ hour }}:00</td>
+        <td class="rounded-lg w-10 pr-2 text-right text-xs text-grey">{{ hour }}:00</td>
         <td
             v-for="day in weekDays"
             :key="day.iso"
@@ -104,10 +104,10 @@ function removeEvent(id: number){
           <div
               v-for="event in eventsAt(day.iso, hour)"
               :key="event.id"
-              class="rounded-lg absolute inset-0 p-1 text-[10px] text-white rounded-md"
-              :class="event.color"
+              class="w-full font-semibold rounded-lg absolute inset-0 p-1 text-[10px] rounded-md border-l-4 flex flex-col justify-between"
+              :class="event.choice ? 'text-purple border-l-purple bg-purple/40' : 'text-[#3B7F92] border-l-[#3B7F92] bg-[#CCEBF2]'"
           >
-            {{ event.title }}
+            <p>{{ event.title }}</p>
             <div v-if="event.choice">
               <UButton @click="confirmEvent(event.id)" class="cursor-pointer" icon="i-lucide-check" size="xs" color="primary" variant="solid"></UButton>              <UButton icon="x" class="absolute right-1 top-1 bg-red/40 text-white rounded-full p-1" />
               <UButton @click="removeEvent(event.id)" class="cursor-pointer" icon="i-lucide-x" size="xs" color="primary" variant="solid"></UButton>              <UButton icon="x" class="absolute right-1 top-1 bg-red/40 text-white rounded-full p-1" />

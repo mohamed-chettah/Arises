@@ -42,7 +42,6 @@ class ArisesAiController extends Controller
             'content' => $validated["question"]
         ]);
 
-
         $calendar = $this->googleCalendarService->listEvents($validated['start'], $validated['end']);
 
         $history = $this->chatService->getLastMessage();
