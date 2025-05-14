@@ -22,13 +22,17 @@ interface Event {
 
 const events = ref<Event[]>([
   { id: 1, title: 'Intro PHP and setting up env', start: '2025-05-6T07:00:00', color: 'bg-blue/40' },
-  { id: 2, title: 'Monday Wake‑Up Hour', start: '2025-05-08T08:00:00', color: 'bg-blue-600/40' },
+  { id: 2, title: 'Thursday Daily Meet', start: '2025-05-08T09:00:00', color: 'bg-blue-600/40' },
+  { id: 2, title: 'Padel with Mark', start: '2025-05-05T13:00:00', color: 'bg-blue-600/40' },
   { id: 3, title: 'Financial Update', start: '2025-05-09T10:00:00', color: 'bg-yellow-600/40' },
+  { id: 3, title: 'Meeting with Sarah', start: '2025-05-09T08:00:00', color: 'bg-yellow-600/40' },
+  { id: 3, title: 'Meeting with a client', start: '2025-05-07T11:00:00', color: 'bg-yellow-600/40' },
   { id: 4, title: 'Variables, conditions & loops', start: '2025-05-13T11:00:00', color: 'bg-purple-600/40' },
   { id: 5, title: 'Meeting with a client', start: '2025-05-05T08:00:00', color: 'bg-pink-600/40' },
   { id: 6, title: 'Webinar: Figma', start: '2025-05-04T11:00:00', color: 'bg-green-600/40' },
   { id: 7, title: 'Lunch with John', start: '2025-05-09T12:00:00', color: 'bg-teal-600/40' },
-  { id: 8, title: 'Workout with John', start: '2025-05-12T13:00:00', color: 'bg-teal-800/40' }
+  { id: 8, title: 'Workout with John', start: '2025-05-12T13:00:00', color: 'bg-teal-800/40' },
+  { id: 8, title: 'Workout with Pierre', start: '2025-05-07T13:00:00', color: 'bg-teal-800/40' }
 ])
 
 function eventsAt(isoDate: string, hour: number) {

@@ -22,13 +22,11 @@ class OpenAIChatService
 
         1. Ask ONE question at a time.
            Question order:
-           - Current level?
-           - Specific goal?
            - Preferences (morning/evening, duration)?
 
         2. NEVER ask for the agenda — it will always be provided in the conversation.
 
-        3. After 2-3 answers, ask: 'Do you want a personalized plan?'
+        3. After 2-3 answers, ask: 'Do you want a personalized plan? and when you give the plan the slots, say you can now choose to accept or refuse the plan.'
 
         4. If the user agrees, analyze the agenda and return a planning with different task (2 line per task for the title and max 20 caracters) and use different hours not always the same (between 8 pm and 13 am) **in this EXACT format**:
         {
@@ -43,6 +41,8 @@ class OpenAIChatService
         }
 
         5. Be motivating and positive.
+
+        6. the slots must be in the future and not in the past and has to be related to the user question and goal
 
         ⚠️ Always return:
         {

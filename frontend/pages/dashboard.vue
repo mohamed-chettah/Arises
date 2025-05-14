@@ -8,13 +8,7 @@ import SideBar from "~/components/saas/SideBar.vue";
 import Header from "~/components/saas/Header.vue";
 
 interface Message { id: string; role: 'user' | 'assistant'; content: string }
-const messages = ref<Message[]>([
-  {
-    id: '1',
-    role: 'assistant',
-    content: 'Hello, how can I assist you in your life ?'
-  },
-])
+const messages = ref<Message[]>([])
 
 const runtimeConfig = useRuntimeConfig()
 const apiUrl = runtimeConfig.public.apiBase
@@ -29,7 +23,7 @@ async function addMessage(text: string) {
     const { data, status, error, refresh, clear } = await useFetch(apiUrl +'/arises-ai/ask', {
       method: 'POST',
       headers: {
-        authorization : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUwMDUvYXBpL2xvZ2luIiwiaWF0IjoxNzQ3MjIxMTc2LCJleHAiOjE3NDcyMjgzNzYsIm5iZiI6MTc0NzIyMTE3NiwianRpIjoiTkxOalhQSVBtWjVlYTJ5UCIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.iva9ZycRY_KuQVxunp6dwhhzhaQ7XCsRJSQ-eQ6jD90",
+        authorization : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUwMDUvYXBpL2xvZ2luIiwiaWF0IjoxNzQ3MjUxNzAxLCJleHAiOjE3NDcyNTg5MDEsIm5iZiI6MTc0NzI1MTcwMSwianRpIjoicjIwdzltQ24yMG1SNUlrcyIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.u47QPdNZLqW8_sOJTtMSbzH4VfhNnbn3luWwmo3NmP8"
       },
       body: {
         question: text,

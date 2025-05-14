@@ -43,7 +43,7 @@
 }
 
 .input {
-    @apply border-6 border-[#A480F2]/30 rounded-xl focus:outline-none focus:border-[#A480F2] backdrop-blur-xl
+    @apply border-6 border-[#A480F2]/30 rounded-lg focus:outline-none focus:border-[#A480F2] backdrop-blur-xl
 }
 
 .background-image {
