@@ -69,8 +69,8 @@ onMounted(() => {
 
       <ChromeButton />
 
-      <Footer />
-    </div>
 
+    </div>
+    <Footer />
   </section>
 </template>

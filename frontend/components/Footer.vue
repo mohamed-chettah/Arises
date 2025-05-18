@@ -13,7 +13,7 @@
     <a href="https://mc-studio.eu" target="_blank" class="text-sm inter text-white">Made By MC Studio</a>
   </div>
 
-  <USeparator class="mb-5 mt-10 text-[#A480F2] "  />
+  <USeparator class="mb-5 mt-10 text-[#A480F2]" color="primary" />
 
   <div class="flex justify-between">
     <p class="inter text-white text-sm">© Arises 2025</p>
