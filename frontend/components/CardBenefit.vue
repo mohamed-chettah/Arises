@@ -21,7 +21,7 @@ const props = defineProps({
     <NuxtImg class="w-[350px]" :src="image" />
 
     <h3 class="space-grotesk text-[#A480F2] text-[20px] font-bold mt-4">{{ title }}</h3>
-    <p class="inter text-white text-[12px] mt-2 w-56">{{ description }}</p>
+    <p class="inter text-white 2xl:text-[14px] text-[12px] mt-2 2xl:w-62 w-56">{{ description }}</p>
   </div>
 </template>
 

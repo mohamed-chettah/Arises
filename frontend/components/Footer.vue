@@ -3,7 +3,7 @@
 </script>
 
 <template>
-<footer class="pb-5 mt-40 bg-[#A480F2]/20 p-10 rounded-xl">
+<footer class="pb-5 mt-40 bg-[#A480F2]/20 p-10 rounded-xl mx-5">
 
 
   <div class="flex items-center justify-between">
