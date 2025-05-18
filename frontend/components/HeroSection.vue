@@ -35,7 +35,7 @@ onMounted(() => {
 <template>
   <div class="flex-grow flex items-center justify-center flex-col gap-12 mt-14 px-4">
     <!-- Hero -->
-    <div class="flex flex-col justify-center gap-5 items-center">
+    <div id="form-waitlist"  class="flex flex-col justify-center gap-5 items-center">
       <h1
           class="space-grotesk leading-[1.8] text-white text-3xl sm:text-[32px] lg:text-[38px] xl:text-[50px] 2xl:text-[60px] sm:leading-[1.5] text-center heading-animate"
       >

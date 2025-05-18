@@ -10,7 +10,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class=" w-full border-6 bg-transparent border-[#A480F2]/30 rounded-xl focus:outline-none focus:border-[#A480F2] backdrop-blur-xl backdrop-blur-xl">
+  <div class=" 2xl:w-[90%] mx-auto w-full border-6 bg-transparent border-[#A480F2]/30 rounded-xl focus:outline-none focus:border-[#A480F2] backdrop-blur-xl backdrop-blur-xl">
     <!-- Video showcase -->
     <div class="bg-[#16213e] px-4 py-2 flex items-center ">
       <div class="flex gap-2">

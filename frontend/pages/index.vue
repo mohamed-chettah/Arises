@@ -9,8 +9,8 @@ import VideoShowcase from "~/components/VideoShowcase.vue";
 
     <Navbar />
 
-    <div class="flex flex-col gap-[80px]">
-      <HeroSection />
+    <div class="flex flex-col gap-[70px]">
+      <HeroSection  />
 
       <VideoShowcase url="/video/arises-mvp.mp4" />
 

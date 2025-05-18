@@ -7,7 +7,7 @@ const cards = [
   },
   {
     title: 'Calendar',
-    description: 'Add goals, tasks, and sessions directly to your calendar.',
+    description: 'Arises AI add goals, tasks, and sessions directly to your calendar.',
     image: '/images/calendar.svg'
   },
   {
@@ -20,7 +20,7 @@ const cards = [
 
 <template>
 
-  <section  class="mt-[200px]">
+  <section  class="sm:mt-[200px] mt-[150px]">
     <h3 class="space-grotesk sm:text-4xl text-3xl text-center text-white">From idea to achievement</h3>
 
     <div class="w-full mt-16 flex lg:flex-row flex-col items-center justify-center gap-10">
