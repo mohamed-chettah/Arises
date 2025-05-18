@@ -37,11 +37,11 @@ onMounted(() => {
     <!-- Hero -->
     <div class="flex flex-col justify-center gap-5 items-center">
       <h1
-          class="inter leading-[1.8] text-white text-2xl sm:text-[32px] lg:text-[38px] xl:text-[50px] 2xl:text-[60px] sm:leading-[1.5] text-center heading-animate"
+          class="space-grotesk leading-[1.8] text-white text-2xl sm:text-[32px] lg:text-[38px] xl:text-[50px] 2xl:text-[60px] sm:leading-[1.5] text-center heading-animate"
       >
         Ask. Accept. Achieve.
         <br>
-        Climb faster, one scheduled task at a time.
+        Plan better, Level up faster
       </h1>
 
       <!-- Subtitle -->

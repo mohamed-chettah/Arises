@@ -69,7 +69,7 @@ const data = ref([
 
     <div class="flex gap-8 flex-col items-center justify-center ">
 
-      <h1 class="text-center bank-gothic text-white mt-16 text-4xl font-bold mb-6"> Daily Ranking </h1>
+      <h1 class="text-center space-grotesk text-white mt-16 text-4xl font-bold mb-6"> Daily Ranking </h1>
 
       <UTable  :ui="{
     base: 'text-white rounded-lg ',

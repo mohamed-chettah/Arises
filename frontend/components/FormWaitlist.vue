@@ -80,8 +80,9 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     <UInput icon="i-heroicons-user"  v-model="state.name" type="text" class="input" required placeholder="Name" autocomplete="name"/>
 
     <UButton type="submit" loading-icon="" trailing-icon="i-heroicons-arrow-long-right-16-solid" class="bg-[#A480F2] hover:bg-[#A480F2]/70 cta w-full inter" :loading="loading">
-      Get Notified
+      Get into the waitlist
     </UButton>
+    <p class="text-xs text-white text-center">The first 50 users will gain an access to the beta</p>
   </UForm>
 </template>
 

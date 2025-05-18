@@ -7,7 +7,7 @@ import Navbar from "~/components/Navbar.vue";
     <Navbar />
 
     <main class="flex-grow">
-      <h1 class="bank-gothic mt-20 text-4xl md:text-5xl font-bold mb-6">What is Arises?</h1>
+      <h1 class="space-grotesk mt-20 text-4xl md:text-5xl font-bold mb-6">What is Arises?</h1>
 
       <div class="max-w-2xl text-lg md:text-xl text-gray-300 flex flex-col gap-4 pb-16">
         <p>
