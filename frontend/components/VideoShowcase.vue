@@ -1,9 +1,16 @@
 <script setup lang="ts">
 
+const props = defineProps({
+  url: {
+    type: String,
+    default: '/video/arises-extension-v2.mp4'
+  }
+})
+
 </script>
 
 <template>
-  <div class="xl:w-[110%] w-full border-6 bg-transparent border-[#A480F2]/30 rounded-xl focus:outline-none focus:border-[#A480F2] backdrop-blur-xl backdrop-blur-xl">
+  <div class=" w-full border-6 bg-transparent border-[#A480F2]/30 rounded-xl focus:outline-none focus:border-[#A480F2] backdrop-blur-xl backdrop-blur-xl">
     <!-- Video showcase -->
     <div class="bg-[#16213e] px-4 py-2 flex items-center ">
       <div class="flex gap-2">
@@ -15,7 +22,7 @@
 
     <!-- Video -->
     <video controls autoplay muted loop class="w-full">
-      <source src="/video/arises-extension-v2.mp4" type="video/mp4" />
+      <source :src="url" type="video/mp4" />
     </video>
   </div>
 </template>

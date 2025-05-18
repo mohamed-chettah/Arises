@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 import Navbar from "~/components/Navbar.vue";
+import VideoShowcase from "~/components/VideoShowcase.vue";
 </script>
 
 <template>
@@ -8,7 +9,15 @@ import Navbar from "~/components/Navbar.vue";
 
     <Navbar />
 
-    <HeroSection />
+    <div class="flex flex-col gap-[80px]">
+      <HeroSection />
+
+      <VideoShowcase url="/video/arises-mvp.mp4" />
+
+    </div>
+
+    <BenefitApp/>
+
 
     <Footer />
   </section>
