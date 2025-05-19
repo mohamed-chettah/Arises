@@ -15,7 +15,7 @@ import VideoBackground from "~/components/VideoBackground.vue";
     <div class="flex flex-col gap-[70px]">
       <HeroSection  />
 
-      <VideoShowcase url="/video/video.mp4" />
+      <VideoShowcase url="/video/arises-mvpp.mp4" />
 
     </div>
 
