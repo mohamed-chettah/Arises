@@ -87,10 +87,10 @@ const data = ref([
 <!--    </div>-->
 
     <div class="flex flex-col justify-center items-center mt-5 gap-8">
-      <USeparator
-          color="primary"
-          class="w-full text-[#A480F2] separator-animate"
-      />
+<!--      <USeparator-->
+<!--          color="primary"-->
+<!--          class="w-full text-[#A480F2] separator-animate"-->
+<!--      />-->
 
       <p
           class="inter text-white text-sm sm:text-lg text-center max-w-[30rem] fade-in-animate"
