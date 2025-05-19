@@ -3,6 +3,7 @@
 </script>
 
 <template>
+
   <div class="min-h-screen bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] text-white p-6 md:p-12">
     <div class="max-w-4xl mx-auto">
       <h1 class="text-3xl md:text-4xl font-bold mb-6">Privacy Policy</h1>

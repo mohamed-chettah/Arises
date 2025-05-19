@@ -7,6 +7,11 @@ import VideoShowcase from "~/components/VideoShowcase.vue";
 <template>
   <section class="background-image">
 
+    <video autoplay muted loop class="back-video">
+      <source src="/video/aurora.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+
     <Navbar />
 
     <div class="flex flex-col gap-[70px]">

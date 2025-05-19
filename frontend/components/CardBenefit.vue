@@ -17,7 +17,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="bg-[#1D1340] p-4 rounded-[8px]">
+  <div class="bg-[#1D1340]/70 p-4 rounded-[8px]">
     <NuxtImg class="w-[350px]" :src="image" />
 
     <h3 class="space-grotesk text-[#A480F2] text-[20px] font-bold mt-4">{{ title }}</h3>

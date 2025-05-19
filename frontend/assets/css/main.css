@@ -23,6 +23,9 @@
 }
 
 .background-image {
-    background: url('/images/img.svg') 100% / cover no-repeat;
-    @apply pt-5 2xl:px-64 xl:px-42 lg:px-24 sm:px-10 bg-[#000000] min-h-screen h-full
+    @apply pt-5 2xl:px-64 xl:px-42 lg:px-24 sm:px-10 min-h-screen h-full
+}
+
+.back-video {
+    @apply absolute top-0 left-0 w-full h-full object-cover -z-10 fixed w-[100vw] h-[100vh] bg-cover bg-center
 }

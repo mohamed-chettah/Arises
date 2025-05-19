@@ -21,5 +21,7 @@ jobs:
           script: |
             cd ~/arises
             git pull origin main
-#            docker compose -f docker-compose.yml pull
-#            docker compose -f docker-compose.yml up -d --build
+            docker compose -f docker-compose.yml down --remove-orphans
+            docker system prune -a --volumes -f
+            docker builder prune -a -f
+            docker compose -f docker-compose.yml up -d --build
