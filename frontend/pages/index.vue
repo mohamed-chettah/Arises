@@ -12,7 +12,7 @@ import VideoShowcase from "~/components/VideoShowcase.vue";
     <div class="flex flex-col gap-[70px]">
       <HeroSection  />
 
-      <VideoShowcase url="/video/arises-mvp.mp4" />
+      <VideoShowcase url="/video/video.mp4" />
 
     </div>
 
