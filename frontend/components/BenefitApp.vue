@@ -23,7 +23,7 @@ const cards = [
   <section class="sm:mt-[200px] mt-[150px]">
     <h3 class="space-grotesk sm:text-4xl text-3xl text-center text-white">From idea to achievement</h3>
 
-    <div class="w-full mx-2 mt-16 flex lg:flex-row flex-col items-center justify-center gap-10">
+    <div class="mt-16 sm:mx-0 mx-5 flex lg:flex-row flex-col items-center justify-center gap-10">
       <div v-for="card in cards">
         <CardBenefit :title="card.title" :description="card.description" :image="card.image" />
       </div>

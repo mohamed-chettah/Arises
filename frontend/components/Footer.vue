@@ -3,14 +3,14 @@
 </script>
 
 <template>
-<footer class="pb-5 mt-40 bg-[#A480F2]/20 p-10 rounded-xl sm:mx-0 mx-5">
+<footer class="pb-5 mt-40 bg-[#A480F2]/20 p-10 rounded-xl sm:mx-0 mx-2">
 
 
-  <div class="flex items-center justify-between">
-    <UButton type="submit" href="#form-waitlist" class="bg-gradient-to-r from-[#A480F2] via-[#9977E2] to-[#5F4A8C] hover:bg-[#A480F2]/70 cta inter" >
+  <div class="flex sm:flex-row flex-col gap-4 items-center justify-between">
+    <UButton type="submit" href="#form-waitlist" class="cta bg-gradient-to-r from-[#A480F2] via-[#9977E2] to-[#5F4A8C] hover:bg-[#A480F2]/70 inter text-center sm:text-sm text-xs" >
       Join the Waitlist
     </UButton>
-    <a href="https://mc-studio.eu" target="_blank" class="text-sm inter text-white">Made By MC Studio</a>
+    <a href="https://mc-studio.eu" target="_blank" class="sm:text-sm text-xs inter text-white">Made By MC Studio</a>
   </div>
 
   <USeparator class="mb-5 mt-10 text-[#A480F2]" color="primary" />
