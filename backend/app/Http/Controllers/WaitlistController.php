@@ -6,6 +6,7 @@ use App\Http\Requests\Waitlist\VerificationMailRequest;
 use App\Http\Requests\Waitlist\WaitlistRequest;
 use App\Services\WaitlistService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 use Resend\Laravel\Facades\Resend;
 
 class WaitlistController
@@ -24,7 +25,8 @@ class WaitlistController
 
             $html = view('mails.waitlist_verification', compact('url'))->render();
 
-            dd($html); // TODO remove this line
+            Log::info($html);
+
             Resend::emails()->send([
                 'from' => 'Arises <contact@arises.app>',
                 'to' => [$validated['email']],
