@@ -2,15 +2,13 @@
 
 import Navbar from "~/components/Navbar.vue";
 import VideoShowcase from "~/components/VideoShowcase.vue";
+import VideoBackground from "~/components/VideoBackground.vue";
 </script>
 
 <template>
   <section class="background-image">
 
-    <video autoplay muted loop class="back-video">
-      <source src="/video/aurora.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
+    <VideoBackground />
 
     <Navbar />
 

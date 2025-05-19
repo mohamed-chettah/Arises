@@ -21,7 +21,7 @@ const props = defineProps({
     </div>
 
     <!-- Video -->
-    <video controls autoplay muted loop class="w-full">
+    <video controls autoplay muted loop playsinline class="w-full">
       <source :src="url" type="video/mp4" />
     </video>
   </div>

@@ -1,16 +1,12 @@
 <script setup lang="ts">
 
 import Navbar from "~/components/Navbar.vue";
+import VideoBackground from "~/components/VideoBackground.vue";
 </script>
 <template>
   <section class="flex flex-col min-h-screen background-image text-white sm:px-0 px-4">
 
-
-    <video autoplay muted loop class="back-video">
-      <source src="/video/aurora.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-
+    <VideoBackground />
     <Navbar />
 
     <main class="flex-grow">
