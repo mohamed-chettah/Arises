@@ -24,6 +24,7 @@ class WaitlistController
 
             $html = view('mails.waitlist_verification', compact('url'))->render();
 
+            dd($html); // TODO remove this line
             Resend::emails()->send([
                 'from' => 'Arises <contact@arises.app>',
                 'to' => [$validated['email']],
