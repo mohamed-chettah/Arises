@@ -7,25 +7,25 @@ docker rm -f $(docker ps -aq) 2>/dev/null || true
 kubectl delete deployment --all -n arises
 kubectl delete service --all -n arises
 
-# Build des images
-echo "Building Docker images..."
-echo "Building frontend image..."
-cd frontend
-docker build -t arises-frontend:latest .
-cd ..
+# Vérifier que les images existent
+echo "Checking for required images..."
+if ! docker images | grep -q "arises-frontend"; then
+    echo "Building frontend image..."
+    cd frontend
+    docker build -t arises-frontend:latest .
+    cd ..
+fi
 
-echo "Building backend image..."
-cd backend
-docker build -t arises-backend:latest .
-cd ..
+if ! docker images | grep -q "arises-backend"; then
+    echo "Building backend image..."
+    cd backend
+    docker build -t arises-backend:latest .
+    cd ..
+fi
 
 # Vérifier que les images sont bien créées
 echo "Verifying images..."
 docker images | grep arises
-
-# Supprimer les anciennes images
-echo "Removing old images..."
-docker rmi frontend:latest backend:latest 2>/dev/null || true
 
 # Appliquer les configurations Kubernetes
 echo "Applying Kubernetes configurations..."
