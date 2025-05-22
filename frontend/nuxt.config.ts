@@ -2,8 +2,11 @@
 import {process} from "std-env";
 
 export default defineNuxtConfig({
-  compatibilityDate: '2024-11-01',
-  devtools: { enabled: true },
+  ssr: true,
+  nitro: {
+    preset: 'node-server',
+  },
+  devtools: { enabled: false },
   modules: ['@nuxt/ui', '@nuxt/image'],
   css: ['~/assets/css/main.css'],
   pages: true,
@@ -17,5 +20,5 @@ export default defineNuxtConfig({
     public: {
       apiBase: process.env.API_URL
     }
-  }
+  },
 })
