@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Nettoyer les anciens déploiements
+echo "Cleaning up old deployments..."
+kubectl delete deployment --all -n arises
+kubectl delete service --all -n arises
+
 # Build des images
 echo "Building Docker images..."
 docker build -t frontend:latest ./frontend
