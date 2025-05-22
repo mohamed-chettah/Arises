@@ -2,6 +2,7 @@ services:
   backend:
     build:
       context: ./backend
+    image: arises-backend:latest
     container_name: backend
     working_dir: /var/www
     ports:
@@ -13,6 +14,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    image: arises-frontend:latest
     container_name: frontend
     working_dir: /app
     ports:

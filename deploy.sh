@@ -10,22 +10,22 @@ kubectl delete service --all -n arises
 # Build des images
 echo "Building Docker images..."
 echo "Building frontend image..."
-docker build -t arises-frontend:latest ./frontend
-if [ $? -ne 0 ]; then
-    echo "Error building frontend image"
-    exit 1
-fi
+cd frontend
+docker build -t arises-frontend:latest .
+cd ..
 
 echo "Building backend image..."
-docker build -t arises-backend:latest ./backend
-if [ $? -ne 0 ]; then
-    echo "Error building backend image"
-    exit 1
-fi
+cd backend
+docker build -t arises-backend:latest .
+cd ..
 
 # Vérifier que les images sont bien créées
 echo "Verifying images..."
 docker images | grep arises
+
+# Supprimer les anciennes images
+echo "Removing old images..."
+docker rmi frontend:latest backend:latest 2>/dev/null || true
 
 # Appliquer les configurations Kubernetes
 echo "Applying Kubernetes configurations..."
