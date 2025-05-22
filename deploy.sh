@@ -7,21 +7,9 @@ docker rm -f $(docker ps -aq) 2>/dev/null || true
 kubectl delete deployment --all -n arises
 kubectl delete service --all -n arises
 
-# Vérifier que les images existent
-echo "Checking for required images..."
-if ! docker images | grep -q "arises-frontend"; then
-    echo "Building frontend image..."
-    cd frontend
-    docker build -t arises-frontend:latest .
-    cd ..
-fi
-
-if ! docker images | grep -q "arises-backend"; then
-    echo "Building backend image..."
-    cd backend
-    docker build -t arises-backend:latest .
-    cd ..
-fi
+# Build des images avec Docker Compose
+echo "Building Docker images..."
+docker compose build
 
 # Vérifier que les images sont bien créées
 echo "Verifying images..."

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: arises
+  name: arises-service
   namespace: arises
 spec:
   selector:

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: arises
+  name: arises-app
   namespace: arises
 spec:
   replicas: 2
