@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# Nettoyer les anciens déploiements
-echo "Cleaning up old deployments..."
+# Nettoyer les conteneurs et déploiements existants
+echo "Cleaning up existing containers and deployments..."
+docker compose down --remove-orphans
+docker rm -f $(docker ps -aq) 2>/dev/null || true
 kubectl delete deployment --all -n arises
 kubectl delete service --all -n arises
 
