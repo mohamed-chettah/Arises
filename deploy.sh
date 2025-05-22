@@ -7,8 +7,8 @@ kubectl delete service --all -n arises
 
 # Build des images
 echo "Building Docker images..."
-docker build -t frontend:latest ./frontend
-docker build -t backend:latest ./backend
+docker build -t arises-frontend:latest ./frontend
+docker build -t arises-backend:latest ./backend
 
 # Appliquer les configurations Kubernetes
 echo "Applying Kubernetes configurations..."
