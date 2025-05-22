@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: frontend:latest
+        image: arises-frontend:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
@@ -46,7 +46,7 @@ spec:
           value: "http://localhost:5005"
 
       - name: backend
-        image: backend:latest
+        image: arises-backend:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5005
