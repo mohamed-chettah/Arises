@@ -7,9 +7,9 @@ docker build -t backend:latest ./backend
 
 # Appliquer les configurations Kubernetes
 echo "Applying Kubernetes configurations..."
-kubectl apply -f k8s/
+kubectl apply -f k8s/ -n arises
 
 # Vérifier le statut du déploiement
 echo "Checking deployment status..."
-kubectl get pods
-kubectl get services 
+kubectl get pods -n arises
+kubectl get services -n arises 

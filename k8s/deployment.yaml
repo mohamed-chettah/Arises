@@ -5,7 +5,7 @@ metadata:
   labels:
     app: arises
 spec:
-  replicas: 2  # On garde 2 réplicas pour le zero downtime
+  replicas: 2
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -22,7 +22,7 @@ spec:
       containers:
       - name: frontend
         image: frontend:latest
-        imagePullPolicy: Never
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
         readinessProbe:
@@ -46,7 +46,7 @@ spec:
 
       - name: backend
         image: backend:latest
-        imagePullPolicy: Never
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5005
         readinessProbe:
