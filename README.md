@@ -41,7 +41,7 @@ Inspired by RPG-leveling systems, Arises aims to transform productivity into an 
 
 ```bash
 # Clone the repo
-git clone https://github.com/yourusername/arises.git
+git clone https://github.com/mohamedevweb/Arises.git
 
 # Frontend
 cd frontend
