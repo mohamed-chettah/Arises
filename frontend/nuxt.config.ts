@@ -2,7 +2,7 @@
 import {process} from "std-env";
 
 export default defineNuxtConfig({
-  compatibilityDate: '2024-11-01',
+  compatibilityDate: '2025-05-26',
   devtools: { enabled: false },
   modules: ['@nuxt/ui', '@nuxt/image', '@pinia/nuxt'],
   css: ['~/assets/css/main.css'],

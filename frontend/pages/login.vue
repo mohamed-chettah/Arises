@@ -1,11 +1,13 @@
 <script setup lang="ts">
-
-console.log(useRuntimeConfig())
-
+import LoginForm from "~/components/saas/auth/LoginForm.vue";
 </script>
 
 <template>
-testS
+  <div class="flex min-h-screen bg-background">
+
+    <LoginForm class="w-64 shrink-0" />
+
+  </div>
 </template>
 
 <style scoped>

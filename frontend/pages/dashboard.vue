@@ -1,11 +1,11 @@
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import ChatView from '~/components/saas/ChatView.vue'
-import ChatInput from '~/components/saas/ChatInput.vue'
-import CalendarView from '~/components/saas/CalendarView.vue'
-import SideBar from "~/components/saas/SideBar.vue";
-import Header from "~/components/saas/Header.vue";
+import ChatView from '~/components/saas/dashboard/ChatView.vue'
+import ChatInput from '~/components/saas/dashboard/ChatInput.vue'
+import CalendarView from '~/components/saas/dashboard/CalendarView.vue'
+import SideBar from "~/components/saas/layout/SideBar.vue";
+import Header from "~/components/saas/layout/Header.vue";
+import type {Slot} from "vue";
 
 interface Message { id: string; role: 'user' | 'assistant'; content: string }
 const messages = ref<Message[]>([])
@@ -13,17 +13,19 @@ const messages = ref<Message[]>([])
 const runtimeConfig = useRuntimeConfig()
 const apiUrl = runtimeConfig.public.apiBase
 const loading = ref(false)
-const slots= ref([])
+const slots = ref(<Slot[]>[])
 
 async function addMessage(text: string) {
   messages.value.push({ id: Date.now().toString(), role: 'user', content: text })
 
+  const token = localStorage.getItem('token')
+
   try {
     loading.value = true
-    const { data, status, error, refresh, clear } = await useFetch(apiUrl +'/arises-ai/ask', {
+    const { data, status, error, refresh, clear } = await useFetch<{ message ?: string, slots ?: [] }>(apiUrl +'/arises-ai/ask', {
       method: 'POST',
       headers: {
-        authorization : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUwMDUvYXBpL2xvZ2luIiwiaWF0IjoxNzQ3MjUxNzAxLCJleHAiOjE3NDcyNTg5MDEsIm5iZiI6MTc0NzI1MTcwMSwianRpIjoicjIwdzltQ24yMG1SNUlrcyIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.u47QPdNZLqW8_sOJTtMSbzH4VfhNnbn3luWwmo3NmP8"
+        authorization : "Bearer " + token,
       },
       body: {
         question: text,
@@ -40,7 +42,6 @@ async function addMessage(text: string) {
 
     // todo placer les slots dans le calendrier
     if(data.value?.slots){
-      console.log(data.value?.slots)
       slots.value = data.value?.slots.map((slot: any) => {
         return {
           title: slot.title,
@@ -78,19 +79,21 @@ async function addMessage(text: string) {
 
     <div class="flex-1">
       <Header />
-
-      <div class="py-8 px-20">
-        <h1 class="text-white bank-gothic text-2xl mb-6">Welcome Mohamed !</h1>
+<!--      <h1 class="text-white bank-gothic text-2xl mb-6 pt-8 px-5">Welcome Mohamed !</h1>-->
+      <div class="pt-2 px-2">
 
         <!-- Content grid -->
         <div class="grid grid-cols-3 gap-6 ">
           <!-- Chat column -->
-          <ChatView :messages="messages" :loading="loading" class="flex-1 col-span-1" />
+          <div class="h-full">
+            <ChatView :messages="messages" :loading="loading" class="" />
+            <ChatInput class="mt-5" @send="addMessage" :loading="loading" />
+          </div>
 
           <!-- Calendar column -->
-          <CalendarView :slots="slots" class="col-span-2" />
+          <CalendarView :slot="slots" class="col-span-2" />
         </div>
-        <ChatInput class="mt-5" @send="addMessage" :loading="loading" />
+
       </div>
 
     </div>

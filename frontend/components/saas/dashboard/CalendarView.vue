@@ -1,26 +1,15 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import {ref, computed, type Slot} from 'vue'
 import dayjs from 'dayjs'
+interface Props {
+  slot: Slot[]
+}
 
-const props = defineProps({
-  slots: {
-    type: Array as () => Event[],
-    default: () => []
-  }
-})
+const props = defineProps<Props>()
 
 const toast = useToast()
 
-interface Event {
-  id: number
-  title: string
-  start: string // ISO date
-  end?: string
-  color?: string
-  choice?: boolean
-}
-
-const events = ref<Event[]>([
+const events = ref<Slot[]>([
   { id: 1, title: 'Intro PHP and setting up env', start: '2025-05-6T07:00:00', color: 'bg-blue/40' },
   { id: 2, title: 'Thursday Daily Meet', start: '2025-05-08T09:00:00', color: 'bg-blue-600/40' },
   { id: 2, title: 'Padel with Mark', start: '2025-05-05T13:00:00', color: 'bg-blue-600/40' },
