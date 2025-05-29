@@ -12,6 +12,10 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 
 Route::group(['throttle:20,1'], function () {
+    Route::get('/me', [AuthenticatedSessionController::class, 'me'])
+        ->middleware('auth:api')
+        ->name('me');
+
     Route::post('/register', [RegisteredUserController::class, 'store'])
         ->name('register');
 

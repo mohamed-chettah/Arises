@@ -44,16 +44,12 @@ class GoogleAuthController extends Controller
 
             $token = JWTAuth::fromUser($user);
 
-            $authKey = Str::random(40);
-
-            Cache::put("auth:$authKey", [
-                'token' => $token,
-                'expires_in' => JWTAuth::factory()->getTTL() * 60,
-                'user' => $user->only(['id', 'name', 'email', 'avatar','username','rank','xp'])
-            ], now()->addMinutes(20));
-
             // return to the frontend
-            return redirect()->away(env('FRONTEND_URL') . "/dashboard?token=$authKey");
+            return redirect()->away(env('FRONTEND_URL') . "/dashboard")
+                ->cookie('token', $token, 60, '/', 'localhost', false, true)
+                ->cookie('user', json_encode($user), 60, '/', 'localhost', false, true);
+
+            // TODO ENVOYER UN Refresh Token aussi
 
         } catch (\Exception $e) {
             // Log the error to Sentry

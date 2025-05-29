@@ -88,4 +88,8 @@ class AuthenticatedSessionController extends Controller
         }
 
     }
+
+    public function me(){
+        return true;
+    }
 }

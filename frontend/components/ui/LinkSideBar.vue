@@ -22,11 +22,14 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="flex flex-col gap-2">
-    <div class="padding inline-flex justify-start items-center gap-3" :class="active ? 'bg-purple/20 rounded-[8px]' : ''">
-      <UIcon :name="icon" :class="active ? 'text-white'  : ''" class="text-grey w-[18px] h-[18px]"></UIcon>
-      <p :class="active ? 'text-white'  : ''" class="text-center text-[14px] justify-start text-grey inter">{{ title }}</p>
-    </div>
+  <div class="flex flex-col gap-2 ">
+
+    <NuxtLink :to="link" class="w-full">
+      <div class="padding inline-flex justify-start items-center gap-3 cursor-pointer hover:bg-purple/20 " :class="active ? 'bg-purple/20 rounded-[8px]' : ''">
+        <UIcon :name="icon" :class="active ? 'text-white'  : ''" class="text-grey w-[20px] h-[20px]"></UIcon>
+      </div>
+    </NuxtLink>
+
   </div>
 
 </template>
@@ -34,7 +37,6 @@ const props = defineProps({
 <style scoped>
 .padding {
   display: flex;
-  width: 240px;
   height: 38px;
   padding: 8px 8px 8px 8px;
   align-items: center;

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import {ref, computed, type Slot} from 'vue'
+import {ref, computed} from 'vue'
 import dayjs from 'dayjs'
+import type {Slot} from '~/types/Slot'
 interface Props {
   slot: Slot[]
 }
@@ -33,7 +34,7 @@ function eventsAt(isoDate: string, hour: number) {
 
 const current = ref(dayjs('2025-05-07'))
 
-const hours = Array.from({ length: 7 }, (_, i) => 7 + i) // 7‑19
+const hours = Array.from({ length: 16 }, (_, i) => 7 + i) // 7‑19
 
 const weekDays = computed(() => {
   const start = current.value.startOf('week')
@@ -43,8 +44,8 @@ const weekDays = computed(() => {
   }))
 })
 
-watch(() => props.slots, (newSlots) => {
-  newSlots.map((slot: any) => {
+watch(() => props.slot, (newSlots) => {
+  newSlots.map((slot: Slot) => {
     events.value.push({
       id: events.value.length + 1,
       title: slot.title,
@@ -76,7 +77,7 @@ function removeEvent(id: number){
 </script>
 
 <template>
-  <div class="border-[1px] border-purple/20 rounded-lg p-3 w-full flex flex-col">
+  <div class="border-[1px] border-purple/20 rounded-lg p-3 w-full flex flex-col max-h-[550px] overflow-y-auto">
 
     <!-- Pseudocode -->
     <table class="overflow-y-auto scrollbar-thin scrollbar-thumb-purple/40 scrollbar-track-transparent ">

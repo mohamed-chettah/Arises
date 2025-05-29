@@ -5,7 +5,7 @@ import ChatInput from '~/components/saas/dashboard/ChatInput.vue'
 import CalendarView from '~/components/saas/dashboard/CalendarView.vue'
 import SideBar from "~/components/saas/layout/SideBar.vue";
 import Header from "~/components/saas/layout/Header.vue";
-import type {Slot} from "vue";
+import type {Slot} from "~/types/Slot";
 
 interface Message { id: string; role: 'user' | 'assistant'; content: string }
 const messages = ref<Message[]>([])
@@ -40,22 +40,16 @@ async function addMessage(text: string) {
       messages.value.push({ id: Date.now().toString(), role: 'assistant', content: "Sorry, I couldn't find any information." })
     }
 
-    // todo placer les slots dans le calendrier
     if(data.value?.slots){
-      slots.value = data.value?.slots.map((slot: any) => {
-        return {
-          title: slot.title,
-          start: slot.start,
-          end: slot.end,
-          color: 'bg-purple',
-          choice: true,
-        }
+      data.value?.slots.map((slot: Slot) => {
+        slot.color = 'bg-purple'
+        slot.choice = true
+        slots.value.push(slot)
       })
       console.log(slots.value)
     } else {
       slots.value = []
     }
-
 
     loading.value = false
     if (error.value) {
@@ -74,13 +68,12 @@ async function addMessage(text: string) {
   <div class="flex min-h-screen bg-background">
     <!-- nav / sidebar -->
     <div class="flex">
-      <SideBar class="w-64 shrink-0" />
+      <SideBar class="w-16 shrink-0" />
     </div>
 
-    <div class="flex-1">
-      <Header />
-<!--      <h1 class="text-white bank-gothic text-2xl mb-6 pt-8 px-5">Welcome Mohamed !</h1>-->
-      <div class="pt-2 px-2">
+    <div class="flex-1 px-5 py-5">
+<!--      <Header />-->
+      <div class="pt-2 ">
 
         <!-- Content grid -->
         <div class="grid grid-cols-3 gap-6 ">

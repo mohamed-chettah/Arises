@@ -1,5 +1,21 @@
 <script setup lang="ts">
+import type { DropdownMenuItem } from '@nuxt/ui'
 
+const items = ref<DropdownMenuItem[]>([
+  {
+    label: 'Profile',
+    icon: 'i-lucide-user'
+  },
+  {
+    label: 'Logout',
+    icon: 'i-lucide-cog',
+    onSelect() {
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+      navigateTo('/login')
+    }
+  }
+])
 </script>
 
 <template>
@@ -8,12 +24,21 @@
     <div class="flex flex-row items-center justify-between">
 
       <div class="flex flex-row items-center gap-3 ml-5">
-        <UIcon name="i-lucide-panel-left" class="text-grey w-[18px] h-[18px]"/>
-        <NuxtImg
-            src="/logo_without_text.svg"
-            alt="Logo"
-            class="w-8 h-8"
-        />
+        <UDropdownMenu
+            :items="items"
+            :content="{
+              align: 'start',
+              side: 'bottom',
+              sideOffset: 8
+              }"
+            :ui="{
+                content: 'w-48'
+              }"
+        >
+          <UButton class="cursor-pointer w-9 h-8 py-2.5 bg-purple/20 rounded-lg inline-flex flex-col justify-center items-center gap-2.5" >
+            MC
+          </UButton>
+        </UDropdownMenu>
       </div>
 
       <div>
