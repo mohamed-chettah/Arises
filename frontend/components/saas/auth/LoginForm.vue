@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type {FormSubmitEvent} from "@nuxt/ui";
 import z from "zod";
+import type {User} from "~/types/User";
 
 const runtimeConfig = useRuntimeConfig()
 const apiUrl = runtimeConfig.public.apiBase
@@ -20,7 +21,7 @@ const state = reactive<Partial<Schema>>({
 const toast = useToast()
 
 async function loginWithGoogle(){
-  const { data, error } = await useFetch<{ url: string }>(`${apiUrl}/auth/google`)
+  const { data, error } = await useFetch<{ url: string }>(`${apiUrl}/app/auth/google`)
 
   if (error.value) {
     console.error('Error connecting to Google:', error.value)
@@ -36,7 +37,7 @@ async function loginWithGoogle(){
 }
 
 async function onSubmit(event: FormSubmitEvent<Schema>){
-  const { data, error } = await useFetch<{ token: string }>(`${apiUrl}/login`, {
+  const { data, error } = await useFetch<{ token: string, user: User }>(`${apiUrl}/login`, {
     method: 'POST',
     body: {
       email: state.email,
@@ -51,8 +52,9 @@ async function onSubmit(event: FormSubmitEvent<Schema>){
 
   if (data.value?.token) {
     localStorage.setItem('token', data.value.token)
+    localStorage.setItem('user', JSON.stringify(data.value.user))
     toast.add({ title: 'Success', description: 'Logged in successfully!', color: 'success' })
-    window.location.href = '/dashboard'
+    navigateTo('/dashboard')
   } else {
     toast.add({ title: 'Error', description: 'Login failed. Please try again.', color: 'error' })
   }

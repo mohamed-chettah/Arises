@@ -1,5 +1,23 @@
 <script setup lang="ts">
 import LinkSideBar from "~/components/ui/LinkSideBar.vue";
+
+import type { DropdownMenuItem } from '@nuxt/ui'
+
+const items = ref<DropdownMenuItem[]>([
+  {
+    label: 'Profile',
+    icon: 'i-lucide-user'
+  },
+  {
+    label: 'Logout',
+    icon: 'i-lucide-cog',
+    onSelect() {
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+      navigateTo('/login')
+    }
+  }
+])
 </script>
 
 <template>
@@ -14,8 +32,20 @@ import LinkSideBar from "~/components/ui/LinkSideBar.vue";
           </div>
           <div class="text-center justify-start text-[14px] text-white font-bold bank-gothic">Mohamed C</div>
         </div>
-        <div class="w-5 h-5 relative overflow-hidden">
-          <UIcon name="i-heroicons-chevron-down" class="text-grey"></UIcon>
+        <div class="relative overflow-hidden">
+          <UDropdownMenu
+              :items="items"
+              :content="{
+              align: 'start',
+              side: 'bottom',
+              sideOffset: 8
+              }"
+              :ui="{
+                content: 'w-48'
+              }"
+            >
+            <UButton icon="i-heroicons-chevron-down" class="text-grey bg-transparent cursor-pointer" />
+          </UDropdownMenu>
         </div>
       </div>
     </div>

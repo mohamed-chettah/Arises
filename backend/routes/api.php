@@ -21,3 +21,9 @@ require __DIR__ . '/saas/api_arises_ai.php';
 
 // Routes du calendrier
 require __DIR__ . '/saas/api_calendar.php';
+
+// Routes de l'extension
+require __DIR__ . '/extension/api_auth_extension.php';
+
+// Routes auth du saas
+require __DIR__ . '/saas/api_auth_google.php';
