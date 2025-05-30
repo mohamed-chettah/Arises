@@ -1,10 +1,15 @@
-
 <script setup lang="ts">
 import ChatView from '~/components/saas/dashboard/ChatView.vue'
 import ChatInput from '~/components/saas/dashboard/ChatInput.vue'
 import CalendarView from '~/components/saas/dashboard/CalendarView.vue'
 import SideBar from "~/components/saas/layout/SideBar.vue";
 import type {Slot} from "~/types/Slot";
+
+definePageMeta({
+  middleware: [
+    'auth',
+  ],
+});
 
 interface Message { id: string; role: 'user' | 'assistant'; content: string }
 const messages = ref<Message[]>([])
@@ -16,13 +21,12 @@ const slots = ref(<Slot[]>[])
 
 async function addMessage(text: string) {
   messages.value.push({ id: Date.now().toString(), role: 'user', content: text })
-  console.log(useCookie('token'))
-  if(!useCookie('token').value){
+
+  const token = useCookie('token').value
+  if(!token){
     messages.value.push({ id: Date.now().toString(), role: 'assistant', content: "Please login to continue." })
     return
   }
-
-  const token = useCookie('token').value
 
   try {
     loading.value = true
@@ -50,7 +54,6 @@ async function addMessage(text: string) {
         slot.choice = true
         slots.value.push(slot)
       })
-      console.log(slots.value)
     } else {
       slots.value = []
     }

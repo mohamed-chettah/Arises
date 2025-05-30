@@ -21,11 +21,16 @@ async function loginWithGoogle(){
 
 <template>
 
-  <div class="w-full flex flex-col items-center justify-center min-h-screen bg-background">
-    <div class="w-96 p-6 rounded-lg bg-primary shadow-md">
-      <h2 class="text-2xl font-bold text-center mb-6">Login</h2>
-      <UButton @click="loginWithGoogle" class="cursor-pointer" > Login With Google</UButton>
-      <UButton @click="loginWithGoogle" class="cursor-pointer" > Sign In With Google</UButton>
+  <div class="w-full grid grid-cols-2 gap-4 justify-center items-center min-h-screen bg-background px-42">
+    <div class="w-96 p-6 rounded-lg bg-primary shadow-md col-span-1">
+      <h2 class="text-2xl font-bold text-center mb-6">Welcome in Arises</h2>
+      <UButton @click="loginWithGoogle" class="cursor-pointer" icon="i-mdi-google">
+        Login With Google
+      </UButton>
+    </div>
+
+    <div class="w-96 p-6 rounded-lg bg-primary shadow-md col-span-1">
+      <NuxtImg src="./images/img.png" alt="Login Image" class="w-full h-auto rounded-lg mb-6" />
     </div>
   </div>
 

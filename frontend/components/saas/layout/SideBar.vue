@@ -12,8 +12,10 @@ const items = ref<DropdownMenuItem[]>([
     label: 'Logout',
     icon: 'i-lucide-cog',
     onSelect() {
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
+      const token = useCookie('token')
+      token.value = null
+      const user = useCookie('user')
+      user.value = null
       navigateTo('/login')
     }
   }
@@ -25,25 +27,11 @@ const items = ref<DropdownMenuItem[]>([
 
     <!-- Logo / nom -->
     <div class="flex flex-col items-center py-4">
-      <div class="inline-flex justify-between items-center">
-        <div class="relative overflow-hidden">
-          <UDropdownMenu
-              :items="items"
-              :content="{
-              align: 'start',
-              side: 'bottom',
-              sideOffset: 8
-              }"
-              :ui="{
-                content: 'w-48 cursor-pointer'
-              }"
-          >
-            <UButton class="cursor-pointer hover:bg-purple/20 hover:text-primary w-9 h-8 py-2.5 bg-purple/20 rounded-lg inline-flex flex-col justify-center items-center gap-2.5" >
-              MC
-            </UButton>
-          </UDropdownMenu>
-        </div>
-      </div>
+      <NuxtImg
+          src="/logo_without_text.svg"
+          alt="Logo"
+          class="w-8 h-8"
+      />
     </div>
 
     <!-- Partie centrale + footer -->
@@ -60,6 +48,27 @@ const items = ref<DropdownMenuItem[]>([
 
       <!-- Footer en bas -->
       <div class="border-t border-t-[1px] border-grey-calendar py-5">
+          <div class="flex items-center flex-row justify-center gap-2 text-grey inter mb-5">
+
+          <div class="relative overflow-hidden">
+            <UDropdownMenu
+                :items="items"
+                :content="{
+              align: 'start',
+              side: 'bottom',
+              sideOffset: 8
+              }"
+                :ui="{
+                content: 'w-48 cursor-pointer'
+              }"
+            >
+              <UButton class="cursor-pointer hover:bg-purple/20 hover:text-primary w-9 h-8 py-2.5 bg-purple/20 rounded-lg inline-flex flex-col justify-center items-center gap-2.5" >
+                MC
+              </UButton>
+            </UDropdownMenu>
+          </div>
+        </div>
+
         <a href="https://chromewebstore.google.com/detail/arises-pomodoro-timer-dis/aheohjodpllofjdihniljfkppcacpeib" target="_blank" class="hover:underline">
           <span class="flex items-center flex-row justify-center gap-2 text-grey inter">
              <UIcon class="w-[20px] h-[20px]" name="i-lucide-chrome" link="/" />
