@@ -10,17 +10,27 @@ export const useAuthStore = defineStore('auth', {
 
     },
     actions: {
-        fetchUser() {
+        async fetchUser() {
             try {
-                const { data } = useFetch<{user: User}>(this.apiUrl + '/me', {
+                const { data, status, error, refresh, clear } = await useFetch<{user: User}>(this.apiUrl + '/me', {
                     onRequest({ request, options }) {
                         options.headers.set('Authorization', 'Bearer ' + useCookie('token').value || '');
+                        options.headers.set('Credentials', 'include');
                     },
                 })
+
+                console.log('Fetching user data from API:', this.apiUrl + '/me', data, status, error, refresh, clear)
+
                 if(data.value?.user) {
                     this.user = data.value.user
+                    this.isAuthenticated = true
                 }
-                this.isAuthenticated = true
+
+                else if(status.value != 'success') {
+                    this.user = null
+                    this.isAuthenticated = false
+                    return navigateTo('/login');
+                }
             } catch (error) {
                 this.user = null
                 this.isAuthenticated = false

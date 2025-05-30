@@ -90,6 +90,14 @@ class AuthenticatedSessionController extends Controller
     }
 
     public function me(){
-        return true;
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json(['message' => 'Unauthenticated'], 401);
+        }
+
+        return response()->json([
+            'user' => $user
+        ]);
     }
 }

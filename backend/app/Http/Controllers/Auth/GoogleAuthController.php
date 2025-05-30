@@ -15,7 +15,6 @@ class GoogleAuthController extends Controller
 {
     public function redirectToGoogle(): JsonResponse
     {
-        // Obtenir l'URL de redirection générée par Socialite
         $url = Socialite::driver('google')->stateless()->redirect(env('APP_URL') . '/api/app/auth/google/callback')->getTargetUrl();
 
         return response()->json(['url' => $url]);
@@ -46,8 +45,8 @@ class GoogleAuthController extends Controller
 
             // return to the frontend
             return redirect()->away(env('FRONTEND_URL') . "/dashboard")
-                ->cookie('token', $token, 60, '/', 'localhost', false, true)
-                ->cookie('user', json_encode($user), 60, '/', 'localhost', false, true);
+                ->cookie('token', $token, 60, '/', 'localhost', false, env('APP_ENV') === 'production')
+                ->cookie('user', json_encode($user), 60, '/', 'localhost', false, env('APP_ENV') === 'production');
 
             // TODO ENVOYER UN Refresh Token aussi
 

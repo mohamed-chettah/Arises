@@ -3,7 +3,7 @@ import {process} from "std-env";
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-26',
-  devtools: { enabled: false },
+  devtools: { enabled: true },
   modules: ['@nuxt/ui', '@nuxt/image', '@pinia/nuxt'],
   css: ['~/assets/css/main.css'],
   pages: true,
@@ -17,5 +17,6 @@ export default defineNuxtConfig({
     public: {
       apiBase: process.env.API_URL
     }
-  }
+  },
+  ssr: true,
 })

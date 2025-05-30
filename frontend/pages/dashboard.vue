@@ -4,7 +4,6 @@ import ChatView from '~/components/saas/dashboard/ChatView.vue'
 import ChatInput from '~/components/saas/dashboard/ChatInput.vue'
 import CalendarView from '~/components/saas/dashboard/CalendarView.vue'
 import SideBar from "~/components/saas/layout/SideBar.vue";
-import Header from "~/components/saas/layout/Header.vue";
 import type {Slot} from "~/types/Slot";
 
 interface Message { id: string; role: 'user' | 'assistant'; content: string }
@@ -17,8 +16,13 @@ const slots = ref(<Slot[]>[])
 
 async function addMessage(text: string) {
   messages.value.push({ id: Date.now().toString(), role: 'user', content: text })
+  console.log(useCookie('token'))
+  if(!useCookie('token').value){
+    messages.value.push({ id: Date.now().toString(), role: 'assistant', content: "Please login to continue." })
+    return
+  }
 
-  const token = localStorage.getItem('token')
+  const token = useCookie('token').value
 
   try {
     loading.value = true
@@ -73,6 +77,8 @@ async function addMessage(text: string) {
 
     <div class="flex-1 px-5 py-5">
 <!--      <Header />-->
+      <h1>Welcome Mohamed</h1>
+      <h1>Tuesday, 21 2025</h1>
       <div class="pt-2 ">
 
         <!-- Content grid -->

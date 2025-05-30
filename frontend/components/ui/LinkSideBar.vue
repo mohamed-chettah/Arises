@@ -25,7 +25,7 @@ const props = defineProps({
   <div class="flex flex-col gap-2 ">
 
     <NuxtLink :to="link" class="w-full">
-      <div class="padding inline-flex justify-start items-center gap-3 cursor-pointer hover:bg-purple/20 " :class="active ? 'bg-purple/20 rounded-[8px]' : ''">
+      <div class="padding inline-flex justify-start items-center gap-3 cursor-pointer hover:bg-purple/20 hover:rounded-[8px] " :class="active ? 'bg-purple/20 rounded-[8px]' : ''">
         <UIcon :name="icon" :class="active ? 'text-white'  : ''" class="text-grey w-[20px] h-[20px]"></UIcon>
       </div>
     </NuxtLink>

@@ -38,7 +38,7 @@ const items = ref<DropdownMenuItem[]>([
                 content: 'w-48 cursor-pointer'
               }"
           >
-            <UButton class="cursor-pointer w-9 h-8 py-2.5 bg-purple/20 rounded-lg inline-flex flex-col justify-center items-center gap-2.5" >
+            <UButton class="cursor-pointer hover:bg-purple/20 hover:text-primary w-9 h-8 py-2.5 bg-purple/20 rounded-lg inline-flex flex-col justify-center items-center gap-2.5" >
               MC
             </UButton>
           </UDropdownMenu>
@@ -50,7 +50,7 @@ const items = ref<DropdownMenuItem[]>([
     <div class="flex flex-col justify-between flex-1 border-t border-t-[1px] border-grey-calendar pt-4">
 
       <!-- Liens -->
-      <div class="flex flex-col items-center gap-1">
+      <div class="flex flex-col items-center gap-2">
         <LinkSideBar title="Home" icon="i-lucide-house" link="/" :active="true" />
         <LinkSideBar title="Tasks" icon="i-lucide-gallery-horizontal-end" link="/" />
 <!--        <LinkSideBar title="Integrations" icon="i-lucide-puzzle" link="/" />-->
