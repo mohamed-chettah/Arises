@@ -1,0 +1,8 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+🧠 “Toujours expliquer les concepts complexes simplement”
+
+Si tu utilises un mot ou un concept complexe (comme "injection de dépendances", "container Docker multi-stage", "design pattern", etc.), prends le réflexe de l'expliquer comme si tu étais un professeur à un élève curieux. Utilise des métaphores ou des exemples concrets si possible.

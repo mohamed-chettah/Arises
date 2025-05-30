@@ -1,20 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Space+Grotesk:wght@300..700&display=swap');
 @import "tailwindcss";
 @import "@nuxt/ui";
-
-@font-face {
-    font-family: 'Bank Gothic Light';
-    src: url('/fonts/bank-gothic-light.otf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Bank Gothic Bold';
-    src: url('/fonts/bank-gothic-bold.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
 
 @theme {
     --color-grey: #C0CAD5;
@@ -30,12 +16,11 @@
     font-style: normal;
 }
 
-.bank-gothic{
-    font-family: 'Bank Gothic Light', sans-serif;
-}
-
-.bank-gothic-bold{
-    font-family: 'Bank Gothic Bold', sans-serif;
+.space-grotesk {
+    font-family: "Space Grotesk", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .cta{
@@ -43,13 +28,15 @@
 }
 
 .input {
-    @apply border-6 border-[#A480F2]/30 rounded-lg focus:outline-none focus:border-[#A480F2] backdrop-blur-xl
+    @apply border-6 border-[#A480F2]/30 rounded-xl focus:outline-none focus:border-[#A480F2] backdrop-blur-xl
 }
 
 .background-image {
-    background: url('/images/img.png') 80% / cover no-repeat;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    @apply pt-5 2xl:px-64 xl:px-42 lg:px-24 sm:px-10 bg-[#000000] min-h-screen h-full
+    @apply pt-5 2xl:px-64 xl:px-42 lg:px-24 sm:px-10 min-h-screen h-full
+}
+
+.back-video {
+    @apply fixed top-0 left-0 w-[100vw] h-[100vh] object-cover -z-10 pointer-events-none;
 }
 
 

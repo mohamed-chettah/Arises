@@ -56,7 +56,7 @@ onMounted(() => {
     <div class="flex items-center justify-center flex-col gap-12 mt-10 px-4" v-else>
 
       <div class="text-white text-center flex flex-col gap-5">
-        <h1 class="bank-gothic text-white text-[28px] sm:text-[40px] 2xl:text-[48px] xl:leading-tight leading-wide text-center heading-animate">
+        <h1 class="space-grotesk text-white text-[28px] sm:text-[40px] 2xl:text-[48px] xl:leading-tight leading-wide text-center heading-animate">
           Welcome to the Arises waitlist
         </h1>
 
@@ -69,8 +69,8 @@ onMounted(() => {
 
       <ChromeButton />
 
-      <Footer />
-    </div>
 
+    </div>
+    <Footer />
   </section>
 </template>
