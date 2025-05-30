@@ -45,7 +45,7 @@ const loginWithGoogle = async () => {
         </div>
 
         <!-- Google button -->
-        <UButton class="bg-white border-t border-t-[#A480F2]/70 cursor-pointer text-center flex justify-center rounded-[8px] hover:text-white w-48 cursor-pointer text-black" size="lg" icon="i-mdi-google" @click="loginWithGoogle">
+        <UButton class="bg-white border border-[#A480F2]/70 cursor-pointer text-center flex justify-center rounded-[8px] hover:text-white w-48 cursor-pointer text-black" size="lg" icon="i-mdi-google" @click="loginWithGoogle">
           Login With Google
         </UButton>
 
