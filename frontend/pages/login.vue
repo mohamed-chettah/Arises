@@ -3,7 +3,7 @@ import LoginForm from "~/components/saas/auth/LoginForm.vue";
 
 definePageMeta({
   middleware: [
-    'auth',
+    'login',
   ],
 })
 </script>
