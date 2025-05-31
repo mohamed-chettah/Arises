@@ -15,7 +15,15 @@ class GoogleAuthController extends Controller
 {
     public function redirectToGoogle(): JsonResponse
     {
-        $url = Socialite::driver('google')->stateless()->redirect(env('APP_URL') . '/api/app/auth/google/callback')->getTargetUrl();
+        $url = Socialite::driver('google')
+            ->scopes([
+                'https://www.googleapis.com/auth/calendar',
+            ])
+            ->with([
+                'prompt' => 'consent',      // 🔁 Très important
+                'access_type' => 'offline', // Pour le refresh_token
+            ])
+            ->stateless()->redirect(env('APP_URL') . '/api/app/auth/google/callback')->getTargetUrl();
 
         return response()->json(['url' => $url]);
     }

@@ -9,7 +9,9 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="flex min-h-screen bg-background">
+  <div class="flex min-h-screen">
+
+    <VideoBackground />
 
     <LoginForm class="w-64 shrink-0" />
 

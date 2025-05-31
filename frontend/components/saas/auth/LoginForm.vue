@@ -26,10 +26,10 @@ const loginWithGoogle = async () => {
 
 <template>
   <!-- Page wrapper -->
-  <div class="w-full  flex items-center justify-center bg-background px-4 ">
+  <div class="w-full flex items-center justify-center px-4 ">
 
     <!-- Card container -->
-    <div class="w-full max-w-6xl grid md:grid-cols-2 rounded-[20px] shadow-xl overflow-hidden border border-grey-calendar">
+    <div class="w-full bg-background max-w-6xl grid md:grid-cols-2 rounded-[20px] shadow-xl overflow-hidden border border-grey-calendar">
       <!-- ☁️ Left column : Google Auth only -->
       <div class="flex flex-col justify-between h-full gap-6 py-6 px-10">
 
@@ -37,7 +37,7 @@ const loginWithGoogle = async () => {
           <NuxtImg
               src="/logo_without_text.svg"
               alt="Logo"
-              class="w-8 h-8"
+              class="w-10 h-10"
           />
         </NuxtLink>
         <!-- Logo -->
@@ -45,7 +45,7 @@ const loginWithGoogle = async () => {
         <!-- Heading -->
         <div class="space-y-2">
           <h1 class="text-2xl font-semibold text-white space-grotesk">Welcome Back to Arises</h1>
-          <p class="text-sm text-gray-500">
+          <p class="text-sm text-grey">
             Elevate yourself — gain clarity, master your time, and grow into the person you’re meant to be.
           </p>
         </div>
@@ -67,7 +67,7 @@ const loginWithGoogle = async () => {
       <!-- 🎬 Right column : hero image -->
       <div class="relative hidden md:block m-2 h-full">
         <!-- Product image -->
-        <NuxtImg src="https://cdn.cosmos.so/94403aa9-503d-498e-9551-cb128a307886?format=jpeg" alt="Product image" class="object-cover w-full h-full max-h-[600px] rounded-xl" densities="x1 x2" />
+        <NuxtImg src="https://cdn.cosmos.so/94403aa9-503d-498e-9551-cb128a307886?format=jpeg" alt="Product image" class="object-cover w-full h-full max-h-[550px] rounded-xl" densities="x1 x2" />
 
         <!-- Gradient overlay -->
 
