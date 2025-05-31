@@ -2,6 +2,7 @@
 import {ref, computed} from 'vue'
 import dayjs from 'dayjs'
 import type {Slot} from '~/types/Slot'
+import {useCalendarStore} from "~/store/CalendarStore";
 interface Props {
   slot: Slot[]
 }
@@ -9,6 +10,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const toast = useToast()
+const calendar = useCalendarStore()
 
 const events = ref<Slot[]>([
   { id: 1, title: 'Intro PHP and setting up env', start: '2025-05-6T07:00:00', color: 'bg-blue/40' },
@@ -73,6 +75,14 @@ function confirmEvent(id: number){
 
 function removeEvent(id: number){
   events.value = events.value.filter(event => event.id !== id)
+}
+
+onMounted(() => {
+  // Initial fetch or setup can be done here
+  fetchEvents()
+})
+function fetchEvents(){
+  calendar.getEvent('2025-05-07', '2025-05-30T20:00:00', )
 }
 </script>
 

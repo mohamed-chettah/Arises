@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\GoogleCalendar;
 use Illuminate\Support\Facades\Http;
 
 class GoogleCalendarService
@@ -11,7 +12,7 @@ class GoogleCalendarService
 
     public function listEvents(string $start, string $end): array
     {
-        $accessToken = env('GOOGLE_CALENDAR_API_KEY', '');
+        $accessToken = $this->getCredentials();
 
         if (!$accessToken) {
             return ["missing access token", 500];
@@ -34,5 +35,18 @@ class GoogleCalendarService
             ->post("{$this->apiBaseUrl}/calendars/{$this->calendarId}/events", $eventData);
 
         return [$response->json(), $response->status()];
+    }
+
+    public function getCredentials(): string
+    {
+        $user = auth()->user();
+        $googleCalendar = $this->findByGoogleId($user->google_id);
+
+        return $googleCalendar->access_token;
+    }
+
+    public function findByGoogleId(string $googleId): ?GoogleCalendar
+    {
+        return GoogleCalendar::where('google_id', $googleId)->first();
     }
 }

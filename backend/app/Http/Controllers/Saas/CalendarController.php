@@ -4,22 +4,28 @@ namespace App\Http\Controllers\Saas;
 
 use App\Http\Controllers\Controller;
 use App\Services\GoogleCalendarService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CalendarController extends Controller
 {
-    public function listEvents(Request $request)
+    public function listEvents(Request $request): JsonResponse
     {
-        $start = $request->query('start');
-        $end = $request->query('end');
+        try {
+            $start = $request->query('start');
+            $end = $request->query('end');
 
-        if (!$start || !$end) {
-            return response()->json(['error' => 'Missing required parameters'], 422);
+            if (!$start || !$end) {
+                return response()->json(['error' => 'Missing required parameters'], 422);
+            }
+
+            [$response, $status] = $this->googleCalendarService->listEvents($start, $end);
+
+            return response()->json(['event' => $response, 'status' => $status], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 503);
         }
 
-        [$response, $status] = $this->googleCalendarService->listEvents($start, $end);
-
-        return response()->json($response, $status);
     }
 
     public function createEvent(Request $request)
