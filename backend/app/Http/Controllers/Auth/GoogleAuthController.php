@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\GoogleCalendar;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -20,8 +21,8 @@ class GoogleAuthController extends Controller
                 'https://www.googleapis.com/auth/calendar',
             ])
             ->with([
-                'prompt' => 'consent',      // 🔁 Très important
-                'access_type' => 'offline', // Pour le refresh_token
+                'prompt' => 'consent',
+                'access_type' => 'offline',
             ])
             ->stateless()->redirect(env('APP_URL') . '/api/app/auth/google/callback')->getTargetUrl();
 
@@ -32,6 +33,7 @@ class GoogleAuthController extends Controller
     {
         try {
             $googleUser = Socialite::driver('google')->stateless()->user();
+
 
             if (!$googleUser) {
                 throw new \Exception("Google dont return user data.");
@@ -46,6 +48,14 @@ class GoogleAuthController extends Controller
                     'email_verified_at' => now(),
                     'google_id' => $googleUser->getId(),
                     'avatar' => $googleUser->getAvatar(),
+                ]);
+
+                // Create a new GoogleCalendar entry for the user store the google calendar info
+                GoogleCalendar::create([
+                    'google_id' => $googleUser->getId(),
+                    'access_token' => $googleUser->token,
+                    'refresh_token' => $googleUser->refreshToken,
+                    'expires_in' => $googleUser->expiresIn,
                 ]);
             }
 

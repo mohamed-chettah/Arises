@@ -67,7 +67,7 @@ const loginWithGoogle = async () => {
       <!-- 🎬 Right column : hero image -->
       <div class="relative hidden md:block m-2 h-full">
         <!-- Product image -->
-        <NuxtImg src="https://cdn.cosmos.so/94403aa9-503d-498e-9551-cb128a307886?format=jpeg" alt="Product image" class="object-cover w-full h-full max-h-[550px] rounded-xl" densities="x1 x2" />
+        <NuxtImg src="./images/horizon.jpg" alt="Product image" preload  class="object-cover w-full h-full max-h-[550px] rounded-xl" densities="x1 x2" />
 
         <!-- Gradient overlay -->
 
