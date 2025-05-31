@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import VideoBackground from "~/components/VideoBackground.vue";
+
 const runtimeConfig = useRuntimeConfig()
 const apiUrl = runtimeConfig.public.apiBase
 
@@ -24,29 +26,33 @@ const loginWithGoogle = async () => {
 
 <template>
   <!-- Page wrapper -->
-  <div class="w-full min-h-screen flex items-center justify-center bg-background px-4">
+  <div class="w-full  flex items-center justify-center bg-background px-4 ">
+
     <!-- Card container -->
-    <div class="max-w-6xl w-full min-h-[90%]] grid md:grid-cols-2 rounded-[20px] shadow-xl overflow-hidden shadow-lg">
+    <div class="w-full max-w-6xl grid md:grid-cols-2 rounded-[20px] shadow-xl overflow-hidden border border-grey-calendar">
       <!-- ☁️ Left column : Google Auth only -->
-      <div class="flex flex-col gap-6 py-6 px-10">
+      <div class="flex flex-col justify-between h-full gap-6 py-6 px-10">
+
+        <NuxtLink to="/">
+          <NuxtImg
+              src="/logo_without_text.svg"
+              alt="Logo"
+              class="w-8 h-8"
+          />
+        </NuxtLink>
         <!-- Logo -->
-        <NuxtImg
-            src="/logo_without_text.svg"
-            alt="Logo"
-            class="w-8 h-8"
-        />
 
         <!-- Heading -->
         <div class="space-y-2">
-          <h1 class="text-2xl font-semibold text-white">Welcome Back to Arises</h1>
+          <h1 class="text-2xl font-semibold text-white space-grotesk">Welcome Back to Arises</h1>
           <p class="text-sm text-gray-500">
             Elevate yourself — gain clarity, master your time, and grow into the person you’re meant to be.
           </p>
         </div>
 
         <!-- Google button -->
-        <UButton class="bg-white border border-[#A480F2]/70 cursor-pointer text-center flex justify-center rounded-[8px] hover:text-white w-48 cursor-pointer text-black" size="lg" icon="i-mdi-google" @click="loginWithGoogle">
-          Login With Google
+        <UButton class="text-xs bg-white border-t border-[#A480F2]/70 cursor-pointer text-center flex justify-center rounded-[8px] hover:text-white w-48 cursor-pointer text-black" size="sm" icon="i-mdi-google" @click="loginWithGoogle">
+          Continue with Google
         </UButton>
 
         <!-- Spacing to push footer to bottom -->
@@ -59,19 +65,18 @@ const loginWithGoogle = async () => {
       </div>
 
       <!-- 🎬 Right column : hero image -->
-      <div class="relative hidden md:block">
+      <div class="relative hidden md:block m-2 h-full">
         <!-- Product image -->
-        <NuxtImg src="/images/img.png" alt="Product image" class="object-cover w-full h-full" densities="x1 x2" />
+        <NuxtImg src="https://cdn.cosmos.so/94403aa9-503d-498e-9551-cb128a307886?format=jpeg" alt="Product image" class="object-cover w-full h-full max-h-[600px] rounded-xl" densities="x1 x2" />
 
         <!-- Gradient overlay -->
-        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
 
         <!-- Headline overlay -->
         <div class="absolute bottom-8 left-8 right-8 text-white">
-          <h2 class="text-2xl font-semibold leading-snug">
+          <h2 class="text-2xl font-semibold leading-snug space-grotesk">
             Manage your life like never before
           </h2>
-          <p class="text-sm mt-4">
+          <p class="text-sm mt-4 inter">
             Arises is more than a tool — it's your personal system to take back control of your time, your focus, and your growth.
           </p>
         </div>
