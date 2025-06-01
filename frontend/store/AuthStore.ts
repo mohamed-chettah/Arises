@@ -25,12 +25,12 @@ export const useAuthStore = defineStore('auth', {
                 } else {
                     this.user = null
                     this.isAuthenticated = false
-                    return navigateTo('/login');
+                    return false
                 }
             } catch (error) {
                 this.user = null
                 this.isAuthenticated = false
-                return navigateTo('/login');
+                return false
             }
         }
     },
