@@ -1,25 +1,17 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import dayjs from 'dayjs'
 import type { Slot } from '~/types/Slot'
-import {useCalendarStore} from "~/store/CalendarStore";
+import { useCalendarStore } from "~/store/CalendarStore"
 
 /**
- * Calendar – même look & feel que ta version initiale mais avec Drag & Drop natif.
- *
- * ✔️ Style conservé : bordure violette, table avec scrollbars fines, couleurs & boutons de confirmation
- * ✔️ Drag & Drop : tu peux déplacer les events d’une cellule à l’autre (comme Notion)
- * ✔️ Pas de dépendance externe supplémentaire
+ * 📅 Calendrier simplifié pour debugging
+ * 
+ * ✅ Navigation semaine simple
+ * ✅ Affichage événements Google Calendar
+ * ✅ Format AM/PM
+ * ✅ Code minimal et lisible
  */
-
-interface EventItem {
-  id: number
-  title: string
-  start: string // ISO 8601
-  end?: string
-  color: string
-  choice?: boolean
-}
 
 interface Props {
   slot: Slot[]
@@ -28,159 +20,235 @@ interface Props {
 const props = defineProps<Props>()
 const calendar = useCalendarStore()
 
-onMounted(() => {
-  fetchEvents()
-})
+// État simple
+const currentDate = ref(dayjs())
 
-function fetchEvents(){
-  calendar.getEvent('2025-05-01T00:00:00Z', '2025-05-31T23:59:59Z')
+// Heures 24h
+const displayHours = Array.from({ length: 24 }, (_, i) => i)
+
+// Format AM/PM simple
+function formatHour(hour: number): string {
+  if (hour === 0) return '12:00 AM'
+  if (hour === 12) return '12:00 PM'
+  if (hour < 12) return `${hour}:00 AM`
+  return `${hour - 12}:00 PM`
 }
 
-
-/***********************
- *   ETAT PRINCIPAL    *
- ***********************/
-const events = ref<EventItem[]>([
-  { id: 1, title: 'Intro PHP and setting up env', start: '2025-05-06T07:00:00', color: 'bg-blue/40' },
-  { id: 2, title: 'Thursday Daily Meet',         start: '2025-05-08T09:00:00', color: 'bg-blue-600/40' },
-  { id: 3, title: 'Padel with Mark',              start: '2025-05-05T13:00:00', color: 'bg-blue-600/40' },
-  { id: 4, title: 'Financial Update',             start: '2025-05-09T10:00:00', color: 'bg-yellow-600/40' },
-  { id: 5, title: 'Meeting with Sarah',           start: '2025-05-09T08:00:00', color: 'bg-yellow-600/40' },
-  { id: 6, title: 'Meeting with a client',        start: '2025-05-07T11:00:00', color: 'bg-yellow-600/40' },
-  { id: 7, title: 'Variables, conditions & loops',start: '2025-05-13T11:00:00', color: 'bg-purple-600/40' },
-  { id: 8, title: 'Meeting with a client',        start: '2025-05-05T08:00:00', color: 'bg-pink-600/40' },
-  { id: 9, title: 'Webinar: Figma',               start: '2025-05-04T11:00:00', color: 'bg-green-600/40' },
-  { id: 10, title: 'Lunch with John',             start: '2025-05-09T12:00:00', color: 'bg-teal-600/40' },
-  { id: 11, title: 'Workout with John',           start: '2025-05-12T13:00:00', color: 'bg-teal-800/40' },
-  { id: 12, title: 'Workout with Pierre',         start: '2025-05-07T13:00:00', color: 'bg-teal-800/40' }
-])
-
-/***********************
- *      UTILITIES      *
- ***********************/
-function eventsAt(isoDate: string, hour: number) {
-  return events.value.filter(ev => {
-    const d = dayjs(ev.start)
-    return d.format('YYYY-MM-DD') === isoDate && d.hour() === hour
-  })
-}
-
-const current = ref(dayjs('2025-05-07')) // point de départ ➜ Mer 07/05/2025
-const hours  = Array.from({ length: 16 }, (_, i) => 7 + i) // 07 ➜ 22 h
+// Jours de la semaine
 const weekDays = computed(() => {
-  const start = current.value.startOf('week') // dim. – change en isoWeek si tu veux lundi
+  const start = currentDate.value.startOf('week').add(1, 'day') // Lundi
   return Array.from({ length: 7 }, (_, i) => {
-    const d = start.add(i, 'day')
+    const day = start.add(i, 'day')
     return {
-      iso:   d.format('YYYY-MM-DD'),
-      label: d.format('ddd DD'),
+      iso: day.format('YYYY-MM-DD'),
+      label: day.format('ddd DD'),
+      isToday: day.isSame(dayjs(), 'day')
     }
   })
 })
 
-/***********************
- *   SYNCHRO DES SLOT  *
- ***********************/
-watch(
-    () => props.slot,
-    newSlots => {
-      newSlots.forEach(slot => {
-        events.value.push({
-          id: events.value.length + 1,
-          title: slot.title,
-          start: slot.start,
-          end:   slot.end,
-          color: slot.color ?? 'bg-purple/40',
-          choice: true,
-        })
-      })
-    },
-    { immediate: true, deep: true }
-)
+// Période pour l'API
+const currentPeriod = computed(() => {
+  const start = currentDate.value.startOf('week').add(1, 'day')
+  const end = start.add(6, 'day')
+  return {
+    start: start.toISOString(),
+    end: end.endOf('day').toISOString(),
+    label: `${start.format('DD MMM')} - ${end.format('DD MMM YYYY')}`
+  }
+})
 
-/***********************
- *  DRAG & DROP STATE  *
- ***********************/
-const draggedId = ref<number | null>(null)
-function onDragStart(id: number) { draggedId.value = id }
-function onDrop(dayIso: string, hour: number) {
-  if (draggedId.value === null) return
-  const ev = events.value.find(e => e.id === draggedId.value)
-  if (!ev) return
+// Événements formatés
+const events = computed(() => {
+  return calendar.formattedEvents.map(event => ({
+    ...event,
+    startTime: dayjs(event.start),
+    hour: dayjs(event.start).hour()
+  }))
+})
 
-  // conservez les minutes d’origine pour plus de précision
-  const m = dayjs(ev.start).minute()
-  ev.start = dayjs(`${dayIso}T00:00:00`).hour(hour).minute(m).toISOString()
-  draggedId.value = null
+// Événements pour une cellule
+function getEventsAt(date: string, hour: number) {
+  return events.value.filter(event => {
+    const eventDate = event.startTime.format('YYYY-MM-DD')
+    return eventDate === date && event.hour === hour
+  })
 }
 
-/***********************
- * CONFIRM / SUPPRIMER *
- ***********************/
-function confirmEvent(id: number) {
-  const ev = events.value.find(e => e.id === id)
-  if (!ev) return
-  ev.choice = false
-  ev.color  = 'bg-green-600/40'
+// Navigation simple
+function navigateWeek(direction: 'prev' | 'next') {
+  currentDate.value = direction === 'prev' 
+    ? currentDate.value.subtract(1, 'week')
+    : currentDate.value.add(1, 'week')
 }
-function removeEvent(id: number) {
-  events.value = events.value.filter(e => e.id !== id)
+
+function goToToday() {
+  currentDate.value = dayjs()
 }
+
+// Récupérer les événements
+async function fetchEvents() {
+  await calendar.getEvent(currentPeriod.value.start, currentPeriod.value.end)
+}
+
+// Actions pour les slots IA
+function confirmSlot(slotId: string) {
+  const slot = props.slot.find(s => `slot-${s.id}` === slotId)
+  if (slot) {
+    slot.choice = false
+    slot.color = 'bg-green-500/40'
+  }
+}
+
+function removeSlot(slotId: string) {
+  const index = props.slot.findIndex(s => `slot-${s.id}` === slotId)
+  if (index > -1) {
+    props.slot.splice(index, 1)
+  }
+}
+
+// Lifecycle
+onMounted(() => {
+  fetchEvents()
+})
+
+// Watcher pour changement de semaine
+watch(currentPeriod, () => {
+  fetchEvents()
+})
 </script>
 
 <template>
-  <div class="border-[1px] border-purple/20 rounded-lg p-3 w-full flex flex-col max-h-[550px] overflow-y-auto">
+  <div class="border p-4 border-grey-calendar rounded-xl backdrop-blur-sm h-[calc(100vh-200px)] flex flex-col text-white">
+    
+    <!-- Header simple -->
+    <div class="p-4 rounded-lg">
+      <div class="flex items-center justify-between mb-3">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2">
+            <UButton 
+              variant="ghost" 
+              size="sm" 
+              icon="i-heroicons-chevron-left"
+              @click="navigateWeek('prev')"
+            />
+            <span class="text-sm font-medium min-w-[200px] text-center">
+              {{ currentPeriod.label }}
+            </span>
+            <UButton 
+              variant="ghost" 
+              size="sm" 
+              icon="i-heroicons-chevron-right"
+              @click="navigateWeek('next')"
+            />
+          </div>
+        </div>
 
-    <!-- Navigation semaine -->
-    <div class="flex justify-between items-center mb-3 text-xs font-medium text-purple">
-      <button @click="current = current.subtract(1, 'week')" class="px-2 py-1 rounded bg-purple/10">Prev</button>
-      <span>{{ current.startOf('week').format('DD MMM YYYY') }} – {{ current.endOf('week').format('DD MMM') }}</span>
-      <button @click="current = current.add(1, 'week')" class="px-2 py-1 rounded bg-purple/10">Next</button>
+        <div class="flex items-center gap-2">
+          <UButton 
+            variant="outline" 
+            size="sm" 
+            @click="goToToday"
+          >
+            Today
+          </UButton>
+          
+<!--          <UButton -->
+<!--            size="sm" -->
+<!--            icon="i-heroicons-plus"-->
+<!--          >-->
+<!--            New-->
+<!--          </UButton>-->
+        </div>
+      </div>
+
+      <!-- Info simple -->
+      <div class="flex items-center justify-between text-sm">
+        <div v-if="calendar.loading" class="flex items-center gap-2 text-purple-600">
+          <UIcon name="i-heroicons-arrow-path" class="animate-spin" />
+          <span>Loading...</span>
+        </div>
+        <div v-else>
+          <span>{{ events.length }} events</span>
+        </div>
+      </div>
     </div>
 
-    <table class="overflow-y-auto scrollbar-thin scrollbar-thumb-purple/40 scrollbar-track-transparent w-full">
-      <thead>
-      <tr>
-        <th class="w-10"></th>
-        <th v-for="day in weekDays" :key="day.iso" class="text-sm text-grey pb-2 font-medium text-center">{{ day.label }}</th>
-      </tr>
-      </thead>
-
-      <tbody>
-      <tr v-for="hour in hours" :key="hour" class="rounded-lg">
-        <!-- Colonne heures -->
-        <td class="rounded-lg w-10 pr-2 text-right text-xs text-grey">{{ hour }}:00</td>
-
-        <!-- Cellules jour*heure -->
-        <td v-for="day in weekDays" :key="day.iso"
-            class="relative border border-grey-calendar h-[60px]"
-            @dragover.prevent
-            @drop="onDrop(day.iso, hour)"
+    <!-- Corps du calendrier -->
+    <div class="flex-1 overflow-hidden flex flex-col">
+      
+      <!-- Header des jours -->
+      <div class="grid grid-cols-8 border-b border-grey-calendar">
+        <div class="p-2 text-xs text-gray-500 border-r border-gray-200">Time</div>
+        <div 
+          v-for="day in weekDays" 
+          :key="day.iso"
+          class="p-2 text-center border-l border-gray-100 first:border-l-0"
+          :class="{ 'bg-purple-50 text-purple-600': day.isToday }"
         >
-          <!-- Events pour ce slot -->
-          <div v-for="event in eventsAt(day.iso, hour)" :key="event.id"
-               class="w-full font-semibold absolute inset-0 p-1 text-[10px] rounded-md border-l-4 flex flex-col justify-between cursor-move"
-               :class="event.choice ? `text-purple border-l-purple ${event.color}` : 'text-[#3B7F92] border-l-[#3B7F92] bg-[#CCEBF2]'"
-               draggable="true"
-               @dragstart="onDragStart(event.id)"
+          <div class="font-medium text-sm">{{ day.label }}</div>
+        </div>
+      </div>
+
+      <!-- Grid calendrier -->
+      <div class="flex-1 overflow-y-auto">
+        <div 
+          v-for="hour in displayHours" 
+          :key="hour"
+          class="grid grid-cols-8 border-b border-gray-50"
+          style="height: 40px"
+        >
+          <!-- Colonne heures -->
+          <div class="flex items-center justify-end pr-2 text-xs text-gray-500 border-r border-gray-100">
+            <span class="font-mono">{{ formatHour(hour) }}</span>
+          </div>
+
+          <!-- Cellules jours -->
+          <div 
+            v-for="day in weekDays" 
+            :key="`${day.iso}-${hour}`"
+            class="relative border-l first:border-l-0 hover:bg-blue-50/20"
+            :class="{ 'bg-purple-50/20': day.isToday }"
           >
-            <p>{{ event.title }}</p>
-            <div v-if="event.choice" class="flex gap-1 justify-end">
-              <button @click="confirmEvent(event.id)" class="text-xs px-1 rounded bg-green-500 text-white">✔</button>
-              <button @click="removeEvent(event.id)"   class="text-xs px-1 rounded bg-red-500   text-white">✖</button>
+            <!-- Événements -->
+            <div 
+              v-for="event in getEventsAt(day.iso, hour)" 
+              :key="event.id"
+              class="absolute inset-x-0.5 top-0.5 rounded border-l-2 p-1 text-xs font-medium shadow-sm"
+              :class="event.color"
+              style="height: 38px"
+            >
+              <div class="truncate font-semibold">{{ event.title }}</div>
+              
+              <!-- Actions pour slots IA -->
+              <div v-if="event" class="flex gap-1 mt-1">
+                <UButton 
+                  size="2xs" 
+                  color="green" 
+                  @click="confirmSlot(event.id)"
+                >
+                  ✓
+                </UButton>
+                <UButton 
+                  size="2xs" 
+                  color="red" 
+                  @click="removeSlot(event.id)"
+                >
+                  ✕
+                </UButton>
+              </div>
             </div>
           </div>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <style scoped>
-/* Conserve le motif grid subtil du calendrier original */
-td {
-  background-image: linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
-  background-size: 100% 60px; /* hauteur ligne 60px */
+/* Styles minimaux */
+.grid > div {
+  position: relative;
 }
 </style>
