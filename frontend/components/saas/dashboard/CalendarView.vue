@@ -33,7 +33,7 @@ onMounted(() => {
 })
 
 function fetchEvents(){
-  calendar.getEvent('2025-05-30T20:00:00', '2025-05-30T20:00:00')
+  calendar.getEvent('2025-05-01T00:00:00Z', '2025-05-31T23:59:59Z')
 }
 
 

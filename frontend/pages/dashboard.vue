@@ -80,8 +80,8 @@ async function addMessage(text: string) {
 
     <div class="flex-1 px-5 py-5">
 <!--      <Header />-->
-      <h1>Welcome Mohamed</h1>
-      <h1>Tuesday, 21 2025</h1>
+      <h1 class="text-white">Welcome Mohamed</h1>
+      <h1 class="text-white">Tuesday, 21 2025</h1>
       <div class="pt-2 ">
 
         <!-- Content grid -->

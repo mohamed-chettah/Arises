@@ -32,6 +32,10 @@ class GoogleCalendarService
                 'orderBy' => 'startTime',
             ]);
 
+        if($response->status() == 401){
+            return [];
+        }
+
         return [$response->json(), $response->status()];
     }
 
@@ -59,9 +63,7 @@ class GoogleCalendarService
         $user = auth()->user();
         $googleCalendar = $this->findByGoogleId($user->google_id);
 
-        $seconds = Carbon::now()->diffInSeconds($googleCalendar->created_at);
-
-        if (abs($seconds) >= $googleCalendar->expires_in) {
+        if (Carbon::now() >= $googleCalendar->expires_in) {
             $googleCalendar = $this->refreshGoogleAccessToken($googleCalendar);
         }
 

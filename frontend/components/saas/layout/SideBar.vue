@@ -48,7 +48,7 @@ const items = ref<DropdownMenuItem[]>([
       <!-- Liens -->
       <div class="flex flex-col items-center gap-2">
         <LinkSideBar title="Home" icon="i-lucide-house" link="/" :active="true" />
-        <LinkSideBar title="Tasks" icon="i-lucide-gallery-horizontal-end" link="/" />
+<!--        <LinkSideBar title="Tasks" icon="i-lucide-gallery-horizontal-end" link="/" />-->
 <!--        <LinkSideBar title="Integrations" icon="i-lucide-puzzle" link="/" />-->
         <LinkSideBar title="Usage" icon="i-lucide-signal-high" link="/" />
         <LinkSideBar title="Learn" icon="i-lucide-lightbulb" link="/" />
