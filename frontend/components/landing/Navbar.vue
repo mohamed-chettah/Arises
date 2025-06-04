@@ -25,7 +25,7 @@ const closeMenu = () => {
         <NuxtLink active-class="active" to="/what" class="hover:text-[#A480F2] px-4 py-2">What</NuxtLink>
       </div>
 
-      <NuxtLink @click="closeMenu" active-class="active" to="/login" class="text-white hover:text-[#A480F2] text-[14px] py-2 inter">Login</NuxtLink>
+      <NuxtLink @click="closeMenu" active-class="active" to="/login" class="text-white hover:text-[#A480F2] text-[14px] py-2 inter cta shadow-xl bg-gradient-to-r from-[#A480F2] via-[#9977E2] to-[#5F4A8C] hover:bg-[#A480F2]/70 px-4 rounded-lg">Login</NuxtLink>
     </div>
   </div>
 

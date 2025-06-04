@@ -4,15 +4,6 @@ import dayjs from 'dayjs'
 import type { Slot } from '~/types/Slot'
 import { useCalendarStore } from "~/store/CalendarStore"
 
-/**
- * 📅 Calendrier simplifié pour debugging
- * 
- * ✅ Navigation semaine simple
- * ✅ Affichage événements Google Calendar
- * ✅ Format AM/PM
- * ✅ Code minimal et lisible
- */
-
 interface Props {
   slot: Slot[]
 }
@@ -119,7 +110,7 @@ watch(currentPeriod, () => {
 </script>
 
 <template>
-  <div class="border p-4 border-grey-calendar rounded-xl backdrop-blur-sm h-[calc(100vh-200px)] flex flex-col text-white">
+  <div class="border p-4 border-grey-calendar rounded-xl h-[640px] backdrop-blur-sm flex flex-col text-white">
     
     <!-- Header simple -->
     <div class="p-4 rounded-lg">
@@ -152,13 +143,6 @@ watch(currentPeriod, () => {
           >
             Today
           </UButton>
-          
-<!--          <UButton -->
-<!--            size="sm" -->
-<!--            icon="i-heroicons-plus"-->
-<!--          >-->
-<!--            New-->
-<!--          </UButton>-->
         </div>
       </div>
 

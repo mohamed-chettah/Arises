@@ -11,9 +11,15 @@ const items = ref<DropdownMenuItem[]>([
     label: 'Profile',
     icon: 'i-lucide-user'
   },
+
+  {
+    label: 'Try Chrome Extension',
+    icon: 'i-lucide-chrome',
+    link: 'https://chromewebstore.google.com/detail/arises-pomodoro-timer-dis/aheohjodpllofjdihniljfkppcacpeib'
+  },
   {
     label: 'Logout',
-    icon: 'i-lucide-cog',
+    icon: 'i-lucide-log-out',
     onSelect() {
       const token = useCookie('token')
       token.value = null
@@ -22,11 +28,6 @@ const items = ref<DropdownMenuItem[]>([
       location.reload()
     }
   },
-  {
-    label: 'Chrome Extension',
-    icon: 'i-lucide-chrome',
-    link: 'https://chromewebstore.google.com/detail/arises-pomodoro-timer-dis/aheohjodpllofjdihniljfkppcacpeib'
-  }
 ])
 </script>
 
@@ -47,11 +48,49 @@ const items = ref<DropdownMenuItem[]>([
 
       <!-- Liens -->
       <div class="flex flex-col items-center gap-2">
-        <LinkSideBar title="Home" icon="i-lucide-house" link="/" :active="true" />
-<!--        <LinkSideBar title="Tasks" icon="i-lucide-gallery-horizontal-end" link="/" />-->
-<!--        <LinkSideBar title="Integrations" icon="i-lucide-puzzle" link="/" />-->
-        <LinkSideBar title="Usage" icon="i-lucide-signal-high" link="/" />
-        <LinkSideBar title="Learn" icon="i-lucide-lightbulb" link="/" />
+        <UTooltip
+            :content="{
+              align: 'center',
+              side: 'right',
+              sideOffset: 8
+            }"
+            text="Home"
+        >
+          <LinkSideBar title="Home" icon="i-lucide-house" link="/" :active="true" />
+        </UTooltip>
+        <UTooltip
+            :content="{
+              align: 'center',
+              side: 'right',
+              sideOffset: 8
+            }"
+            text="Usage"
+        >
+          <LinkSideBar title="Usage" icon="i-lucide-signal-high" link="/" />
+        </UTooltip>
+
+        <UTooltip
+            :content="{
+              align: 'center',
+              side: 'right',
+              sideOffset: 8
+            }"
+            text="Learn"
+        >
+          <LinkSideBar title="Learn" icon="i-lucide-lightbulb" link="/" />
+        </UTooltip>
+
+
+        <UTooltip
+            :content="{
+              align: 'center',
+              side: 'right',
+              sideOffset: 8
+            }"
+            text="Roadmap"
+        >
+          <LinkSideBar title="Roadmap" icon="i-lucide-map" link="/" />
+        </UTooltip>
       </div>
 
       <!-- Footer en bas -->
@@ -62,9 +101,9 @@ const items = ref<DropdownMenuItem[]>([
             <UDropdownMenu
                 :items="items"
                 :content="{
-              align: 'start',
-              side: 'bottom',
-              sideOffset: 8
+              align: 'end',
+              side: 'right',
+              sideOffset: 10
               }"
                 :ui="{
                 content: 'w-48 cursor-pointer'

@@ -72,28 +72,30 @@ async function addMessage(text: string) {
 </script>
 
 <template>
-  <div class="flex min-h-screen bg-background">
+  <div class="flex max-h-screen bg-background">
     <!-- nav / sidebar -->
     <div class="flex">
       <SideBar class="w-16 shrink-0" />
     </div>
 
+
+
     <div class="flex-1 px-5 py-5">
 <!--      <Header />-->
-      <h1 class="text-white">Welcome Mohamed</h1>
-      <h1 class="text-white">Tuesday, 21 2025</h1>
+
+      <h1 class="text-white my-2 text-xl">Welcome Mohamed ! </h1>
       <div class="pt-2 ">
 
         <!-- Content grid -->
-        <div class="grid grid-cols-3 gap-6 ">
+        <div class="grid md:grid-cols-4 grid-cols-1 gap-6 ">
           <!-- Chat column -->
-          <div class="h-full">
+          <div class="h-full col-span-1 row-span-2">
             <ChatView :messages="messages" :loading="loading" class="" />
             <ChatInput class="mt-5" @send="addMessage" :loading="loading" />
           </div>
 
           <!-- Calendar column -->
-          <CalendarView :slot="slots" class="col-span-2" />
+          <CalendarView :slot="slots" class="sm:col-span-3 col-span-1 row-span-2" />
         </div>
 
       </div>
