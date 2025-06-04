@@ -2,6 +2,7 @@
 import ChatView from '~/components/saas/dashboard/ChatView.vue'
 import ChatInput from '~/components/saas/dashboard/ChatInput.vue'
 import CalendarView from '~/components/saas/dashboard/CalendarView.vue'
+import Header from '~/components/saas/layout/Header.vue';
 import SideBar from "~/components/saas/layout/SideBar.vue";
 import type {Slot} from "~/types/Slot";
 
@@ -72,33 +73,24 @@ async function addMessage(text: string) {
 </script>
 
 <template>
-  <div class="flex max-h-screen bg-background">
-    <!-- nav / sidebar -->
+  <div class="flex max-h-screen bg-background overflow-y-hidden">
     <div class="flex">
       <SideBar class="w-16 shrink-0" />
     </div>
 
+    <div class="flex-1 ">
+      <Header />
 
-
-    <div class="flex-1 px-5 py-5">
-<!--      <Header />-->
-
-      <h1 class="text-white my-2 text-xl">Welcome Mohamed ! </h1>
-      <div class="pt-2 ">
-
-        <!-- Content grid -->
-        <div class="grid md:grid-cols-4 grid-cols-1 gap-6 ">
-          <!-- Chat column -->
-          <div class="h-full col-span-1 row-span-2">
-            <ChatView :messages="messages" :loading="loading" class="" />
-            <ChatInput class="mt-5" @send="addMessage" :loading="loading" />
-          </div>
-
-          <!-- Calendar column -->
-          <CalendarView :slot="slots" class="sm:col-span-3 col-span-1 row-span-2" />
+      <section class="rounded-lg grid grid-cols-4 bg-white mr-2">
+        <div class="col-span-1 border-r border-r-[0.5px] border-grey-calendar/20 h-screen flex-1">
+          <ChatView :messages="messages" :loading="loading" class="p-10" />
+          <ChatInput class="mt-5" @send="addMessage" :loading="loading" />
         </div>
 
-      </div>
+        <div class="col-span-3 h-screen flex-1">
+          <CalendarView :slot="slots" class="sm:col-span-3 col-span-1 row-span-2" />
+        </div>
+      </section>
 
     </div>
   </div>

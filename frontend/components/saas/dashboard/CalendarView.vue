@@ -110,7 +110,7 @@ watch(currentPeriod, () => {
 </script>
 
 <template>
-  <div class="border p-4 border-grey-calendar rounded-xl h-[640px] backdrop-blur-sm flex flex-col text-white">
+  <div class="border p-4 rounded-xl h-[640px] backdrop-blur-sm flex flex-col text-white">
     
     <!-- Header simple -->
     <div class="p-4 rounded-lg">

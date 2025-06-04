@@ -32,7 +32,7 @@ const items = ref<DropdownMenuItem[]>([
 </script>
 
 <template>
-  <section class="min-h-screen bg-background border-r border-r-[1px] border-grey-calendar flex flex-col">
+  <section class="min-h-screen max-h-screen bg-background flex flex-col">
 
     <!-- Logo / nom -->
     <div class="flex flex-col items-center py-4">
@@ -44,7 +44,7 @@ const items = ref<DropdownMenuItem[]>([
     </div>
 
     <!-- Partie centrale + footer -->
-    <div class="flex flex-col justify-between flex-1 border-t border-t-[1px] border-grey-calendar pt-4">
+    <div class="flex flex-col justify-between flex-1 ">
 
       <!-- Liens -->
       <div class="flex flex-col items-center gap-2">
@@ -64,21 +64,21 @@ const items = ref<DropdownMenuItem[]>([
               side: 'right',
               sideOffset: 8
             }"
-            text="Usage"
+            text="Analytics"
         >
-          <LinkSideBar title="Usage" icon="i-lucide-signal-high" link="/" />
+          <LinkSideBar title="Analytics" icon="i-lucide-signal-high" link="/" />
         </UTooltip>
 
-        <UTooltip
-            :content="{
-              align: 'center',
-              side: 'right',
-              sideOffset: 8
-            }"
-            text="Learn"
-        >
-          <LinkSideBar title="Learn" icon="i-lucide-lightbulb" link="/" />
-        </UTooltip>
+<!--        <UTooltip-->
+<!--            :content="{-->
+<!--              align: 'center',-->
+<!--              side: 'right',-->
+<!--              sideOffset: 8-->
+<!--            }"-->
+<!--            text="Learn"-->
+<!--        >-->
+<!--          <LinkSideBar title="Learn" icon="i-lucide-lightbulb" link="/" />-->
+<!--        </UTooltip>-->
 
 
         <UTooltip
