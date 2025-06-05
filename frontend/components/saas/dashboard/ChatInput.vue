@@ -1,10 +1,5 @@
 <template>
   <form @submit.prevent="handleSend" class="bg-purple/20 border-[1px] border-purple/20 flex flex-row items-center gap-4 px-6 py-4 rounded-lg">
-    <!-- attachment placeholder (paperclip) -->
-<!--    <label class="cursor-pointer text-gray-400 hover:text-gray-200">-->
-<!--      <UIcon name="i-lucide-paperclip" class="w-5 h-5" />-->
-<!--      <input type="file" class="hidden" />-->
-<!--    </label>-->
 
     <textarea
         v-model="text"
@@ -12,7 +7,7 @@
         autoresize
         @keydown.enter="handleSend"
         placeholder="Talk with Arises AI"
-        class="custom-scrollbar overflow-y-auto max-h-[480px] flex-1 bg-transparent resize-none outline-none text-sm text-gray-200 placeholder-gray-500 overflow-y-auto scrollbar-thin scrollbar-thumb-purple/40 scrollbar-track-transparent "
+        class="text-black custom-scrollbar overflow-y-auto max-h-[480px] flex-1 bg-transparent resize-none outline-none text-sm placeholder-gray-500 overflow-y-auto scrollbar-thin scrollbar-thumb-purple/40 scrollbar-track-transparent "
     />
 
     <UButton

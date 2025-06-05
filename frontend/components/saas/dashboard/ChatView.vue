@@ -1,14 +1,14 @@
 <template>
   <div
       ref="chatBox"
-      class="min-h-[550px] max-h-[550px] border-[1px] border-purple/20 bg-purple/20 flex flex-col gap-4 overflow-y-auto p-6 rounded-lg custom-scrollbar"
+      class="min-h-[570px] max-h-[570px] border-[1px] border-purple/20 bg-purple/20 flex flex-col gap-4 overflow-y-auto p-6 rounded-lg custom-scrollbar"
   >
     <template v-for="m in messages" :key="m.id">
       <div
           :class="[
           'max-w-[85%] px-4 py-3 text-sm leading-relaxed rounded-lg',
           m.role === 'user'
-            ? 'bg-purple/30 text-white self-end'
+            ? 'bg-purple/60 text-white self-end'
             : 'bg-[#26204d] text-gray-200 self-start',
         ]"
       >
