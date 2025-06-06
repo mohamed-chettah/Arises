@@ -13,6 +13,7 @@ export default defineNuxtConfig({
   devServer: {
     port: 3000,  // Port interne (doit correspondre au port interne de Docker)
   },
+
   ui: {
     colorMode: false
   },
