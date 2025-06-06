@@ -51,6 +51,7 @@ npm run dev
 # Backend
 cd backend
 docker compose up
+```
 
 ## 🛠️ Environment Variables
 
