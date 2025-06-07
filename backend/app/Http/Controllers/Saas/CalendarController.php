@@ -60,4 +60,35 @@ class CalendarController extends Controller
 
         return response()->json($response, $status);
     }
+
+    public function updateEvent(Request $request, string $eventId): JsonResponse
+    {
+        try {
+            $validated = $request->validate([
+                'title' => 'required|string',
+                'start' => 'required|date',
+                'end' => 'required|date|after:start',
+                'description' => 'nullable|string',
+            ]);
+
+            $payload = [
+                'summary' => $validated['title'],
+                'description' => $validated['description'] ?? '',
+                'start' => [
+                    'dateTime' => $validated['start'],
+                    'timeZone' => 'Europe/Paris',
+                ],
+                'end' => [
+                    'dateTime' => $validated['end'],
+                    'timeZone' => 'Europe/Paris',
+                ],
+            ];
+
+            [$response, $status] = $this->googleCalendarService->updateEvent($eventId, $payload);
+
+            return response()->json($response, $status);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 503);
+        }
+    }
 }

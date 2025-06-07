@@ -1,13 +1,15 @@
 <template>
-  <form @submit.prevent="handleSend" class="bg-purple/20 border-[1px] border-purple/20 flex flex-row items-center gap-4 px-6 py-4 rounded-lg">
+  <form @submit.prevent="handleSend" class="bg-white border-[1px] border-purple/20 flex flex-row items-center gap-4 px-6 py-4 rounded-lg">
 
-    <textarea
+    <UTextarea
         v-model="text"
-        rows="1"
+        :rows="1"
+        :maxrows="2"
+        variant="none"
         autoresize
-        @keydown.enter="handleSend"
+        @keyup.enter="handleSend"
         placeholder="Talk with Arises AI"
-        class="text-black custom-scrollbar overflow-y-auto max-h-[480px] flex-1 bg-transparent resize-none outline-none text-sm placeholder-gray-500 overflow-y-auto scrollbar-thin scrollbar-thumb-purple/40 scrollbar-track-transparent "
+        class="text-black custom-scrollbar overflow-y-auto flex-1 bg-transparent resize-none outline-none text-xs placeholder-gray-500 overflow-y-auto scrollbar-thin scrollbar-thumb-purple/40 scrollbar-track-transparent "
     />
 
     <UButton
@@ -15,7 +17,8 @@
         :disabled="loading"
         :loading="loading"
         icon="i-lucide-square-arrow-up"
-        class="cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-md bg-blue hover:bg-purple/20 text-sm text-gray-200"
+        loading-icon="i-lucide-loader"
+        class="cursor-pointer inline-flex items-center text-primary gap-2 px-3 py-2 rounded-lg bg-purple hover:bg-purple/20 text-sm text-gray-200"
     />
   </form>
 </template>
@@ -27,10 +30,6 @@ const props = defineProps<{ loading: boolean }>()
 
 const emit = defineEmits<{ (e: 'send', text: string): void }>()
 const text = ref('')
-
-// event key enter
-// to send the message
-
 
 function handleSend() {
   if (!text.value.trim() || props.loading) return

@@ -1,8 +1,34 @@
 ---
-description: 
-globs: 
+description: >
+  Règles pour guider l'IA de Cursor : toujours prioriser la clarté, la simplicité, et la scalabilité du code (principe KISS).
+  Le stack utilisé est Laravel (backend), Vue/Nuxt (frontend), avec TypeScript côté front.
+  Le code généré doit respecter les meilleures conventions, être modulaire, typé et prêt pour la production.
+globs:
+  - "**/*.ts"
+  - "**/*.vue"
+  - "**/*.php"
+  - "**/*.json"
+  - "**/*.scss"
+  - "**/*.css"
 alwaysApply: true
 ---
-🧠 “Toujours expliquer les concepts complexes simplement”
 
-Si tu utilises un mot ou un concept complexe (comme "injection de dépendances", "container Docker multi-stage", "design pattern", etc.), prends le réflexe de l'expliquer comme si tu étais un professeur à un élève curieux. Utilise des métaphores ou des exemples concrets si possible.
+🧠 **Toujours expliquer les concepts complexes simplement**
+
+Quand tu introduis un concept technique (ex : injection de dépendances, Docker multi-stage, design pattern, etc.), prends le réflexe de l’expliquer comme à un élève curieux. Utilise des métaphores, des analogies concrètes ou des cas d’usage si possible.
+
+💡 **Code = KISS + Propre + Scalable**
+
+- Respecter les meilleures pratiques Laravel, Vue 3 (Composition API), Nuxt 3, TypeScript
+- Structure du code claire, logique, réutilisable (composants, services, stores)
+- Noms de variables et fonctions explicites
+- Ajouter des commentaires si la logique n’est pas triviale
+- Typage fort (surtout côté front)
+- Préférer la simplicité à la complexité inutile
+- Si une solution semble trop "magique", propose une alternative plus transparente
+
+✅ **Quand tu proposes une solution**, pense à :
+- son évolutivité,
+- sa maintenabilité,
+- son lisibilité pour un autre dev (ou moi dans 3 mois).
+

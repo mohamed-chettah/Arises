@@ -47,10 +47,12 @@ class GoogleCalendarService
         return [$response->json(), $response->status()];
     }
 
-    public function updateEvent(string $accessToken, array $eventData): array
+    public function updateEvent(string $eventId, array $eventData): array
     {
+        $accessToken = $this->getCredentials();
+
         $response = Http::withToken($accessToken)
-            ->post("{$this->apiBaseUrl}/calendars/{$this->calendarId}/events", $eventData);
+            ->put("{$this->apiBaseUrl}/calendars/{$this->calendarId}/events/{$eventId}", $eventData);
 
         return [$response->json(), $response->status()];
     }

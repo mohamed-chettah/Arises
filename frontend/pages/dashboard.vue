@@ -5,6 +5,7 @@ import CalendarView from '~/components/saas/dashboard/CalendarView.vue'
 import Header from '~/components/saas/layout/Header.vue';
 import SideBar from "~/components/saas/layout/SideBar.vue";
 import type {Slot} from "~/types/Slot";
+import {useAuthStore} from "~/store/AuthStore";
 
 definePageMeta({
   middleware: [
@@ -19,6 +20,7 @@ const runtimeConfig = useRuntimeConfig()
 const apiUrl = runtimeConfig.public.apiBase
 const loading = ref(false)
 const slots = ref(<Slot[]>[])
+const authStore = useAuthStore()
 
 async function addMessage(text: string) {
   messages.value.push({ id: Date.now().toString(), role: 'user', content: text })
@@ -26,7 +28,7 @@ async function addMessage(text: string) {
   const token = useCookie('token').value
   if(!token){
     messages.value.push({ id: Date.now().toString(), role: 'assistant', content: "Please login to continue." })
-    return
+    await authStore.logout()
   }
 
   try {
@@ -83,7 +85,7 @@ async function addMessage(text: string) {
 
       <section class="rounded-lg grid grid-cols-4 bg-white mr-2">
         <div class="col-span-1 border-r border-r-[0.5px] border-grey-calendar/20 p-4 h-screen flex-1">
-          <ChatView :messages="messages" :loading="loading" class="p-10" />
+          <ChatView :messages="messages" :loading="loading" />
           <ChatInput class="mt-5" @send="addMessage" :loading="loading" />
         </div>
 

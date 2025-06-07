@@ -32,6 +32,14 @@ export const useAuthStore = defineStore('auth', {
                 this.isAuthenticated = false
                 return false
             }
+        },
+
+        async logout() {
+            const token = useCookie('token')
+            token.value = null
+            const user = useCookie('user')
+            user.value = null
+            location.reload()
         }
     },
 })

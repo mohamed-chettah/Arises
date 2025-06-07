@@ -21,11 +21,7 @@ const items = ref<DropdownMenuItem[]>([
     label: 'Logout',
     icon: 'i-lucide-log-out',
     onSelect() {
-      const token = useCookie('token')
-      token.value = null
-      const user = useCookie('user')
-      user.value = null
-      location.reload()
+      auth.logout()
     }
   },
 ])

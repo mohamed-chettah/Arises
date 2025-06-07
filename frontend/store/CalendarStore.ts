@@ -83,6 +83,67 @@ export const useCalendarStore = defineStore('calendar', {
             } finally {
                 this.loading = false
             }
+        },
+
+        // **🔥 MÉTHODES POUR DRAG & DROP MODE OPTIMISTE**
+        updateEventOptimistic(updatedEvent: any) {
+            // Mise à jour immédiate dans le state local
+            const index = this.events.findIndex(event => event.id === updatedEvent.id)
+            if (index !== -1) {
+                // Convertir vers le format Google Calendar
+                this.events[index] = {
+                    ...this.events[index],
+                    start: { 
+                        dateTime: updatedEvent.start, 
+                        timeZone: 'Europe/Paris' 
+                    },
+                    end: { 
+                        dateTime: updatedEvent.end, 
+                        timeZone: 'Europe/Paris' 
+                    }
+                }
+            }
+        },
+
+        rollbackEvent(originalEvent: any) {
+            // En cas d'erreur, remettre l'événement original
+            const index = this.events.findIndex(event => event.id === originalEvent.id)
+            if (index !== -1) {
+                this.events[index] = {
+                    ...this.events[index],
+                    start: { 
+                        dateTime: originalEvent.start, 
+                        timeZone: 'Europe/Paris' 
+                    },
+                    end: { 
+                        dateTime: originalEvent.end, 
+                        timeZone: 'Europe/Paris' 
+                    }
+                }
+            }
+        },
+
+        // **🔥 APPEL API POUR UPDATE D'UN ÉVÉNEMENT**
+        async updateEvent(eventId: string, eventData: any, abortSignal?: AbortSignal) {
+            try {
+                const response = await $fetch<{event: GoogleCalendarEvent}>(
+                    this.apiUrl + `/calendar/event/${eventId}`, 
+                    {
+                        headers: {
+                            'Authorization': 'Bearer ' + useCookie('token').value,
+                            'Content-Type': 'application/json'
+                        },
+                        method: 'PUT',
+                        body: eventData,
+                        signal: abortSignal
+                    }
+                )
+
+                return response
+            } catch (error) {
+                console.error('Error updating event:', error)
+                throw error
+            }
         }
     },
 })
