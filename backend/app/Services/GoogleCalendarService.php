@@ -86,8 +86,10 @@ class GoogleCalendarService
             'grant_type' => 'refresh_token',
         ]);
 
+
+
         if ($response->failed()) {
-            throw new \Exception('Impossible de rafraîchir le token Google.');
+            throw new \Exception('Erreur while refreshing Google access token: ' . $response->body() . ' - Status code: ' . $response->status() . '. Please check your credentials.');
         }
 
         $data = $response->json();

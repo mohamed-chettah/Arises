@@ -1,5 +1,3 @@
-import type {User} from "~/types/User";
-
 // Interface pour les événements Google Calendar
 interface GoogleCalendarEvent {
     id: string
@@ -55,7 +53,7 @@ export const useCalendarStore = defineStore('calendar', {
         }
     },
     actions: {
-        async getEvent(start: string, end: string) {
+        async getEvent(start: string, end: string, abortSignal?: AbortSignal) {
             try {
                 this.loading = true
                 this.error = null
@@ -69,19 +67,35 @@ export const useCalendarStore = defineStore('calendar', {
                     query: {
                         start: start,
                         end: end
-                    }
+                    },
+                    signal: abortSignal
                 })
+
+                // **🔥 VÉRIFIER SI LA REQUÊTE N'A PAS ÉTÉ ABORTED**
+                if (abortSignal?.aborted) {
+                    console.log('🚫 Request was aborted, not updating state')
+                    return
+                }
 
                 // Stocker les événements dans le state
                 if (response.event && response.event.items) {
                     this.events = response.event.items
                 }
                 
-            } catch (error) {
+            } catch (error: any) {
+                // **🔥 GESTION SPÉCIALE DES ERREURS D'ABORT**
+                if (error?.name === 'AbortError') {
+                    console.log('🚫 Calendar fetch aborted')
+                    return // Ne pas traiter comme une erreur
+                }
+                
                 console.error('Error fetching events:', error);
                 this.error = 'Erreur lors de la récupération des événements'
             } finally {
-                this.loading = false
+                // **🔥 NE PAS CHANGER LE LOADING SI LA REQUÊTE A ÉTÉ ABORTED**
+                if (!abortSignal?.aborted) {
+                    this.loading = false
+                }
             }
         },
 
@@ -89,9 +103,10 @@ export const useCalendarStore = defineStore('calendar', {
         updateEventOptimistic(updatedEvent: any) {
             // Mise à jour immédiate dans le state local
             const index = this.events.findIndex(event => event.id === updatedEvent.id)
+            
             if (index !== -1) {
                 // Convertir vers le format Google Calendar
-                this.events[index] = {
+                const updatedGoogleEvent = {
                     ...this.events[index],
                     start: { 
                         dateTime: updatedEvent.start, 
@@ -102,6 +117,9 @@ export const useCalendarStore = defineStore('calendar', {
                         timeZone: 'Europe/Paris' 
                     }
                 }
+                
+                // **🔥 FORCER VUE À DÉTECTER LE CHANGEMENT**
+                this.events.splice(index, 1, updatedGoogleEvent)
             }
         },
 
@@ -126,8 +144,8 @@ export const useCalendarStore = defineStore('calendar', {
         // **🔥 APPEL API POUR UPDATE D'UN ÉVÉNEMENT**
         async updateEvent(eventId: string, eventData: any, abortSignal?: AbortSignal) {
             try {
-                const response = await $fetch<{event: GoogleCalendarEvent}>(
-                    this.apiUrl + `/calendar/event/${eventId}`, 
+                return await $fetch<{ event: GoogleCalendarEvent }>(
+                    this.apiUrl + `/calendar/event/${eventId}`,
                     {
                         headers: {
                             'Authorization': 'Bearer ' + useCookie('token').value,
@@ -138,8 +156,6 @@ export const useCalendarStore = defineStore('calendar', {
                         signal: abortSignal
                     }
                 )
-
-                return response
             } catch (error) {
                 console.error('Error updating event:', error)
                 throw error

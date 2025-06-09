@@ -32,11 +32,16 @@ class GoogleAuthController extends Controller
     public function handleGoogleCallback(): RedirectResponse | JsonResponse
     {
         try {
+            if (request()->has('error')) {
+                return redirect()->away(env('FRONTEND_URL') . "/login?error=access_denied")
+                    ->with('error', 'Vous avez annulé la connexion avec Google.');
+            }
+
             $googleUser = Socialite::driver('google')->stateless()->user();
 
-
             if (!$googleUser) {
-                throw new \Exception("Google dont return user data.");
+                return redirect()->away(env('FRONTEND_URL') . "/login?error=google_auth_failed")
+                    ->with('error', 'Google authentication failed. Please try again.');
             }
 
             $user = User::where('google_id', $googleUser->getId())->OrWhere('email', $googleUser->getEmail())->first();
@@ -49,15 +54,17 @@ class GoogleAuthController extends Controller
                     'google_id' => $googleUser->getId(),
                     'avatar' => $googleUser->getAvatar(),
                 ]);
+            }
 
-                // Create a new GoogleCalendar entry for the user store the google calendar info
-                GoogleCalendar::create([
-                    'google_id' => $googleUser->getId(),
+            // replace if exist the calendar credentials
+            GoogleCalendar::updateOrCreate(
+                ['google_id' => $googleUser->getId()],
+                [
                     'access_token' => $googleUser->token,
                     'refresh_token' => $googleUser->refreshToken,
-                    'expires_in' => $googleUser->expiresIn,
-                ]);
-            }
+                    'expires_in' => now()->addSeconds($googleUser->expiresIn),
+                ]
+            );
 
             $token = JWTAuth::fromUser($user);
 

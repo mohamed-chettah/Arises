@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="handleSend" class="bg-white border-[1px] border-purple/20 flex flex-row items-center gap-4 px-6 py-4 rounded-lg">
+  <form @submit.prevent="handleSend" class="bg-white border-[1px] border-purple/20 flex flex-row items-center gap-4 px-4 py-4 rounded-lg">
 
     <UTextarea
         v-model="text"
@@ -8,7 +8,7 @@
         variant="none"
         autoresize
         @keyup.enter="handleSend"
-        placeholder="Talk with Arises AI"
+        placeholder="Ask Arises AI"
         class="text-black custom-scrollbar overflow-y-auto flex-1 bg-transparent resize-none outline-none text-xs placeholder-gray-500 overflow-y-auto scrollbar-thin scrollbar-thumb-purple/40 scrollbar-track-transparent "
     />
 

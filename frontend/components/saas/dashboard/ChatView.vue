@@ -8,7 +8,7 @@
           :class="[
           'max-w-[85%] px-4 py-3 text-sm leading-relaxed rounded-lg',
           m.role === 'user'
-            ? 'bg-purple/60 text-white self-end'
+            ? 'bg-purple/60 font-semibold self-end'
             : 'bg-[#26204d] text-gray-200 self-start',
         ]"
       >
