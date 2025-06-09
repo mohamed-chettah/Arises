@@ -84,9 +84,14 @@ async function addMessage(text: string) {
       <Header />
 
       <section class="rounded-lg grid grid-cols-4 bg-white mr-2">
-        <div class="col-span-1 border-r border-r-[0.5px] border-grey-calendar/20 p-4 h-screen flex-1">
-          <ChatView :messages="messages" :loading="loading" />
-          <ChatInput class="mt-5" @send="addMessage" :loading="loading" />
+        <div class="col-span-1 border-r border-r-[0.5px] border-grey-calendar/20 h-screen p-4 flex flex-col h-screen">
+          <!-- Zone scrollable des messages -->
+          <div class="grow  ">
+            <ChatView :messages="messages" :loading="loading" />
+          </div>
+
+          <!-- Zone du champ de saisie -->
+          <ChatInput class="mt-5 mb-10" @send="addMessage" :loading="loading" />
         </div>
 
         <div class="col-span-3 h-screen flex-1">
