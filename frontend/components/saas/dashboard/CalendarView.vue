@@ -7,6 +7,7 @@ import { useCalendarDragDrop } from '~/composables/useCalendarDragDrop'
 import { useCalendarLayout } from '~/composables/useCalendarLayout'
 import CalendarEvent from './CalendarEvent.vue'
 import CalendarCell from './CalendarCell.vue'
+import ModalNewEvent from "~/components/saas/dashboard/ModalNewEvent.vue";
 
 interface Props {
   slot: Slot[]
@@ -49,11 +50,6 @@ const displayHours = Array.from({ length: 24 }, (_, i) => i)
 
 // **🔥 SYSTÈME D'ABORT DES REQUÊTES**
 const pendingRequests = ref<Map<string, AbortController>>(new Map())
-
-// **🔥 AUTO-SCROLL PENDANT LE DRAG**
-let autoScrollInterval: ReturnType<typeof setInterval> | null = null
-const autoScrollZone = 100 // Zone de 100px en haut/bas (plus large)
-const autoScrollSpeed = 8 // Vitesse de base augmentée
 
 // Format AM/PM simple
 function formatHour(hour: number): string {
@@ -186,51 +182,9 @@ function removeSlot(slotId: string) {
   }
 }
 
-// **🔥 AUTO-SCROLL PENDANT LE DRAG**
-function handleAutoScroll(clientY: number) {
-  const scrollContainer = document.querySelector('.calendar-scroll-container') as HTMLElement
-  if (!scrollContainer) return
-  
-  const containerRect = scrollContainer.getBoundingClientRect()
-  const relativeY = clientY - containerRect.top
-  const containerHeight = containerRect.height
-  
-  // Nettoyer l'interval précédent
-  if (autoScrollInterval) {
-    clearInterval(autoScrollInterval)
-    autoScrollInterval = null
-  }
-  
-  let scrollDirection = 0
-  let scrollMultiplier = 1
-  
-  // Zone haute - scroll vers le haut
-  if (relativeY < autoScrollZone) {
-    scrollDirection = -1
-    // Plus proche du bord = plus rapide (multiplicateur de 1 à 5)
-    scrollMultiplier = Math.max(1, 5 - (relativeY / (autoScrollZone / 5)))
-  }
-  // Zone basse - scroll vers le bas  
-  else if (relativeY > containerHeight - autoScrollZone) {
-    scrollDirection = 1
-    const distanceFromBottom = containerHeight - relativeY
-    // Plus proche du bord = plus rapide (multiplicateur de 1 à 5)
-    scrollMultiplier = Math.max(1, 5 - (distanceFromBottom / (autoScrollZone / 5)))
-  }
-  
-  // Démarrer l'auto-scroll si nécessaire
-  if (scrollDirection !== 0) {
-    autoScrollInterval = setInterval(() => {
-      scrollContainer.scrollTop += scrollDirection * autoScrollSpeed * scrollMultiplier
-    }, 8) // 120fps pour plus de fluidité
-  }
-}
-
-function stopAutoScroll() {
-  if (autoScrollInterval) {
-    clearInterval(autoScrollInterval)
-    autoScrollInterval = null
-  }
+function newEvent() {
+  // Logique pour créer un nouvel événement
+  console.log('Créer un nouvel événement')
 }
 
 // Lifecycle
@@ -268,6 +222,7 @@ onUnmounted(() => {
         <div class="flex items-center gap-3">
           <UButton
               variant="outline"
+              color="neutral"
               class="rounded-lg hover:bg-purple/20 hover:text-primary cursor-pointer inter text-gray-500"
               size="sm"
               @click="goToToday"
@@ -296,7 +251,8 @@ onUnmounted(() => {
         </div>
 
         <div class="flex items-center gap-2">
-
+          <!-- Modal add event-->
+          <ModalNewEvent />
         </div>
       </div>
     </div>
@@ -353,6 +309,8 @@ onUnmounted(() => {
     </div>
 
   </div>
+
+
 </template>
 
 <style scoped>

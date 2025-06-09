@@ -39,8 +39,17 @@ class GoogleCalendarService
         return [$response->json(), $response->status()];
     }
 
-    public function createEvent(string $accessToken, array $eventData): array
+    /**
+     * @throws ConnectionException
+     */
+    public function createEvent(array $eventData): array
     {
+        $accessToken = $this->getCredentials();
+
+        if (!$accessToken) {
+            return ["missing access token", 500];
+        }
+
         $response = Http::withToken($accessToken)
             ->post("{$this->apiBaseUrl}/calendars/{$this->calendarId}/events", $eventData);
 
@@ -50,6 +59,10 @@ class GoogleCalendarService
     public function updateEvent(string $eventId, array $eventData): array
     {
         $accessToken = $this->getCredentials();
+
+        if (!$accessToken) {
+            return ["missing access token", 500];
+        }
 
         $response = Http::withToken($accessToken)
             ->put("{$this->apiBaseUrl}/calendars/{$this->calendarId}/events/{$eventId}", $eventData);

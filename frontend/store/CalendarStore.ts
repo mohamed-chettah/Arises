@@ -1,30 +1,14 @@
 // Interface pour les événements Google Calendar
-interface GoogleCalendarEvent {
-    id: string
-    summary: string
-    description?: string
-    start: {
-        dateTime: string
-        timeZone: string
-    }
-    end: {
-        dateTime: string  
-        timeZone: string
-    }
-    colorId?: string
-    status: string
-}
-
-interface GoogleCalendarResponse {
-    kind: string
-    items: GoogleCalendarEvent[]
-}
+import type {GoogleCalendarEvent, GoogleCalendarResponse} from "~/types/GoogleCalendar";
+import {hours} from "~/types/GoogleCalendar";
+import {CalendarDate} from "@internationalized/date";
 
 export const useCalendarStore = defineStore('calendar', {
     state: () => ({
         apiUrl: useRuntimeConfig().public.apiBase,
         events: [] as GoogleCalendarEvent[],
         loading: false,
+        loadingCreation: false,
         error: null as string | null,
         // 🔄 Gestion de l'annulation des requêtes
         currentAbortController: null as AbortController | null,
@@ -99,6 +83,43 @@ export const useCalendarStore = defineStore('calendar', {
             }
         },
 
+        async createEvent(day: CalendarDate, start: string, end: string, title?: string | undefined , description?: string, colorId?: string){
+            try {
+                this.loadingCreation = true
+                this.error = null
+
+                let body = {
+                    day : day,
+                    start: start,
+                    end: end,
+                    title: title || '',
+                    description: description || '',
+                    colorId: colorId || '3', // Couleur par défaut
+                }
+
+                const response = await $fetch<{ event: GoogleCalendarEvent }>(
+                    this.apiUrl + '/calendar/event',
+                    {
+                        headers: {
+                            'Authorization': 'Bearer ' + useCookie('token').value,
+                            'Content-Type': 'application/json'
+                        },
+                        method: 'POST',
+                        body: body
+                    }
+                )
+
+                // Ajouter l'événement créé au state local
+                this.events.push(response.event)
+
+            } catch (error) {
+                console.error('Error creating event:', error)
+                this.error = 'Erreur lors de la création de l\'événement'
+            } finally {
+                this.loadingCreation = false
+            }
+        },
+
         // **🔥 MÉTHODES POUR DRAG & DROP MODE OPTIMISTE**
         updateEventOptimistic(updatedEvent: any) {
             // Mise à jour immédiate dans le state local
@@ -122,6 +143,7 @@ export const useCalendarStore = defineStore('calendar', {
                 this.events.splice(index, 1, updatedGoogleEvent)
             }
         },
+
 
         rollbackEvent(originalEvent: any) {
             // En cas d'erreur, remettre l'événement original

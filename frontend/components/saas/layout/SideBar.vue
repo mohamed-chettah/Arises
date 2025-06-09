@@ -3,13 +3,18 @@ import LinkSideBar from "~/components/ui/LinkSideBar.vue";
 
 import type { DropdownMenuItem } from '@nuxt/ui'
 import {useAuthStore} from "~/store/AuthStore";
+import { useRouter } from 'nuxt/app'
 
 const auth = useAuthStore()
+const router = useRouter()
 
 const items = ref<DropdownMenuItem[]>([
   {
     label: 'Profile',
-    icon: 'i-lucide-user'
+    icon: 'i-lucide-user',
+    onSelect() {
+      router.push('/profile')
+    }
   },
 
   {

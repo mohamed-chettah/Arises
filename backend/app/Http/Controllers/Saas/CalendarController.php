@@ -28,21 +28,17 @@ class CalendarController extends Controller
 
     }
 
-    public function createEvent(Request $request)
+    public function createEvent(Request $request): JsonResponse
     {
-        $accessToken = env('GOOGLE_CALENDAR_API_KEY', '');
-
-        if (!$accessToken) {
-            return response()->json(['error' => 'Missing access token'], 422);
-        }
-
         $validated = $request->validate([
             'title' => 'required|string',
-            'start' => 'required|date',
-            'end' => 'required|date|after:start',
+            'date' => 'required|date',
+            'start' => 'required',
+            'end' => 'required|',
             'description' => 'nullable|string',
         ]);
 
+        dd($validated);
         $payload = [
             'summary' => $validated['title'],
             'description' => $validated['description'] ?? '',
@@ -56,7 +52,8 @@ class CalendarController extends Controller
             ],
         ];
 
-        [$response, $status] = $this->googleCalendarService->createEvent($accessToken, $payload);
+
+        [$response, $status] = $this->googleCalendarService->createEvent($payload);
 
         return response()->json($response, $status);
     }
