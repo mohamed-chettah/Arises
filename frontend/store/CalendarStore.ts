@@ -83,21 +83,23 @@ export const useCalendarStore = defineStore('calendar', {
             }
         },
 
-        async createEvent(day: CalendarDate, start: string, end: string, title?: string | undefined , description?: string, colorId?: string){
+        async createEvent(date: CalendarDate, start: string, end: string, title: string | undefined , description?: string, colorId?: string){
+
+            const toast = useToast()
             try {
                 this.loadingCreation = true
                 this.error = null
 
                 let body = {
-                    day : day,
+                    date : date,
                     start: start,
                     end: end,
-                    title: title || '',
+                    title: title,
                     description: description || '',
                     colorId: colorId || '3', // Couleur par défaut
                 }
 
-                const response = await $fetch<{ event: GoogleCalendarEvent }>(
+                const response = await $fetch(
                     this.apiUrl + '/calendar/event',
                     {
                         headers: {
@@ -107,14 +109,26 @@ export const useCalendarStore = defineStore('calendar', {
                         method: 'POST',
                         body: body
                     }
-                )
+                ) as GoogleCalendarEvent
+
+                toast.add({
+                    title: 'Event successfully created',
+                    icon: 'i-lucide-check-check',
+                    color: 'success',
+                })
 
                 // Ajouter l'événement créé au state local
-                this.events.push(response.event)
+                this.events.push(response)
 
             } catch (error) {
-                console.error('Error creating event:', error)
                 this.error = 'Erreur lors de la création de l\'événement'
+                this.loadingCreation = false
+                toast.add({
+                    title: 'Error creating event',
+                    icon: 'i-lucide-x',
+                    color: 'error',
+                })
+
             } finally {
                 this.loadingCreation = false
             }

@@ -20,6 +20,9 @@ class OpenAIChatService
 
         ⚠️ Always follow these strict rules:
 
+        No emoji in in the response
+        - NEVER ask for the agenda, it will always be provided in the conversation.
+
         1. Ask ONE question at a time.
            Question order:
            - Preferences (morning/evening, duration)?

@@ -18,7 +18,7 @@
         :loading="loading"
         icon="i-lucide-square-arrow-up"
         loading-icon="i-lucide-loader"
-        class="cursor-pointer inline-flex items-center text-primary gap-2 px-3 py-2 rounded-lg bg-purple hover:bg-purple/20 text-sm text-gray-200"
+        class="cursor-pointer inline-flex items-center text-primary gap-2 px-3 py-2 rounded-lg bg-purple hover:bg-purple/20  text-sm text-white hover:text-gray-500"
     />
   </form>
 </template>

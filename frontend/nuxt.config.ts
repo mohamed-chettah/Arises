@@ -12,7 +12,6 @@ export default defineNuxtConfig({
   modules: ['@nuxt/ui', '@nuxt/image','@pinia/nuxt'],
   css: ['~/assets/css/main.css'],
   pages: true,
-
   devServer: {
     port: 3000,  // Port interne (doit correspondre au port interne de Docker)
   },

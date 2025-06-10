@@ -14,13 +14,13 @@ const schema = z.object({
 type Schema = z.output<typeof schema>
 
 const state = reactive<Partial<Schema>>({
-  title: undefined,
-  description: undefined
 })
 const calendarStore = useCalendarStore()
 const items = ref(hours)
 const start = ref('08:00')
 const end = ref('09:00')
+const title = ref('')
+const description = ref('')
 
 const df = new DateFormatter('en-US', {
   dateStyle: 'medium'
@@ -28,8 +28,9 @@ const df = new DateFormatter('en-US', {
 
 const modelValue = shallowRef(new CalendarDate(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate()))
 
-async function onSubmit(event: FormSubmitEvent<typeof state>) {
-  await calendarStore.createEvent(modelValue.value, start.value, end.value, state.title, state.description)
+async function onSubmit() {
+
+  await calendarStore.createEvent(modelValue.value, start.value, end.value, title.value, description.value)
 }
 </script>
 
@@ -38,6 +39,7 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
       title="New Event"
       :close="{
       color: 'primary',
+      class: 'cursor-pointer hover:text-purple'
     }"
   >
     <UButton  variant="outline"
@@ -45,10 +47,10 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
               size="sm" label="New Event" icon="i-heroicons-plus" color="neutral" />
 
     <template #body>
-      <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+      <UForm :schema="schema" :state="state" class="space-y-4">
         <div class="flex flex-col gap-5">
 
-          <UInput placeholder="Titre" :v-model="state.title" required/>
+          <UInput placeholder="Titre" v-model="title" required/>
           <UPopover>
             <UButton color="neutral" variant="subtle" icon="i-lucide-calendar">
               {{ modelValue ? df.format(modelValue.toDate(getLocalTimeZone())) : 'Select a date' }}
@@ -65,10 +67,16 @@ async function onSubmit(event: FormSubmitEvent<typeof state>) {
             <USelect v-model="end" :items="items" class="w-48" required/>
           </div>
 
-          <UTextarea placeholder="Description"  :v-model="state.description"/>
+          <UTextarea placeholder="Description" v-model="description"/>
 
         </div>
-        <UButton type="submit" :loading="calendarStore.loadingCreation" class="bg-purple cursor-pointer" @click="onSubmit()">
+
+        <UButton @click="onSubmit" :loading="calendarStore.loadingCreation"  variant="outline"
+                 color="neutral"
+                 icon="i-heroicons-plus"
+                 active-color="primary"
+                 class="bg-purple rounded-lg hover:bg-purple/20 hover:text-gray-500 cursor-pointer inter"
+                 size="sm">
           Create Event
         </UButton>
       </UForm>

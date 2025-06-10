@@ -191,7 +191,7 @@ function newEvent() {
 onMounted(async () => {
   await fetchEvents()
   // **🔥 SCROLL VERS L'HEURE ACTUELLE APRÈS CHARGEMENT**
-  scrollToCurrentTime()
+  // scrollToCurrentTime()
 })
 
 // Watcher pour changement de semaine
