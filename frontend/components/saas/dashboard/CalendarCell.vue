@@ -86,7 +86,7 @@ const cellClasses = computed(() => [
         top: `${dropPreview.topPercent}%`
       }"
     >
-      <p class="font-semibold text-sm">{{ draggedEvent?.title }}</p>
+      <p class="font-semibold text-sm wrap-break-word">{{ draggedEvent?.title }}</p>
       <div class="text-[10px] font-medium">
         {{ formatTime(dropPreview.newStart) }}-{{ formatTime(dropPreview.newEnd) }}
       </div>

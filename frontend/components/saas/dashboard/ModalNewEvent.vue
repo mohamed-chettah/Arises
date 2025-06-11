@@ -2,7 +2,6 @@
 import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
 
 import * as z from 'zod'
-import type { FormSubmitEvent } from '@nuxt/ui'
 import {hours} from "~/types/GoogleCalendar";
 import {useCalendarStore} from "~/store/CalendarStore";
 
@@ -25,17 +24,31 @@ const description = ref('')
 const df = new DateFormatter('en-US', {
   dateStyle: 'medium'
 })
-
+const open = ref(false)
+const toast = useToast()
 const modelValue = shallowRef(new CalendarDate(new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate()))
 
 async function onSubmit() {
+  if(modelValue.value === null || start.value === null || end.value === null || title.value === '' || title.value.length < 4) {
+    toast.add({
+      title: 'Error',
+      description: 'Please fill in all required fields correctly.',
+      color: 'error',
+      duration: 3000,
+    })
+    return
+  }
 
   await calendarStore.createEvent(modelValue.value, start.value, end.value, title.value, description.value)
+
+  // close the modal after creation
+  open.value = false
 }
 </script>
 
 <template>
   <UModal
+      v-model:open="open"
       title="New Event"
       :close="{
       color: 'primary',
@@ -44,7 +57,7 @@ async function onSubmit() {
   >
     <UButton  variant="outline"
               class="rounded-lg hover:bg-purple/20 hover:text-primary cursor-pointer inter text-gray-500"
-              size="sm" label="New Event" icon="i-heroicons-plus" color="neutral" />
+              size="sm" label="New Event" icon="i-heroicons-plus" color="neutral"/>
 
     <template #body>
       <UForm :schema="schema" :state="state" class="space-y-4">
@@ -75,7 +88,7 @@ async function onSubmit() {
                  color="neutral"
                  icon="i-heroicons-plus"
                  active-color="primary"
-                 class="bg-purple rounded-lg hover:bg-purple/20 hover:text-gray-500 cursor-pointer inter"
+                 class="hover:bg-purple rounded-lg bg-purple/20 hover:text-white cursor-pointer inter"
                  size="sm">
           Create Event
         </UButton>

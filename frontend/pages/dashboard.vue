@@ -84,9 +84,9 @@ async function addMessage(text: string) {
       <Header />
 
       <section class="rounded-lg grid grid-cols-4 bg-white mr-2">
-        <div class="col-span-1 border-r border-r-[0.5px] border-grey-calendar/20 h-screen p-4 flex flex-col h-screen">
+        <div class="col-span-1 border-r border-r-[0.5px] border-grey-calendar/20 h-screen p-4 flex flex-col h-full min-h-0">
           <!-- Zone scrollable des messages -->
-          <div class="grow  ">
+          <div class="grow min-h-0">
             <ChatView :messages="messages" :loading="loading" />
           </div>
 

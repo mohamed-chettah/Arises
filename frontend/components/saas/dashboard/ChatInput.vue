@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="handleSend" class="bg-white border-[1px] border-purple/20 flex flex-row items-center gap-4 px-4 py-4 rounded-lg">
+  <form @submit.prevent="handleSend" class="bg-white border-[1px] border-purple/20 flex flex-row items-center gap-4 px-4 py-2 rounded-lg">
 
     <UTextarea
         v-model="text"
@@ -18,7 +18,7 @@
         :loading="loading"
         icon="i-lucide-square-arrow-up"
         loading-icon="i-lucide-loader"
-        class="cursor-pointer inline-flex items-center text-primary gap-2 px-3 py-2 rounded-lg bg-purple hover:bg-purple/20  text-sm text-white hover:text-gray-500"
+        class="cursor-pointer disabled:bg-purple inline-flex items-center text-primary gap-2 px-3 py-2 rounded-lg bg-purple hover:bg-purple/20  text-sm text-white hover:text-gray-500"
     />
   </form>
 </template>

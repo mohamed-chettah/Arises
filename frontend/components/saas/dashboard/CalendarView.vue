@@ -208,7 +208,6 @@ onUnmounted(() => {
   if (currentFetchController) {
     currentFetchController.abort()
     currentFetchController = null
-    console.log('🧹 Fetch controller cleaned on unmount')
   }
 })
 </script>

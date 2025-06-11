@@ -44,7 +44,7 @@ const eventStyles = computed(() => ({
 
 // **🔥 CLASSES CSS CALCULÉES**
 const eventClasses = computed(() => [
-  'absolute rounded border-l-2 p-1 text-xs font-medium shadow-sm cursor-move z-10 event-draggable',
+  'absolute rounded border-l-3 border-l-purple p-1 text-xs font-medium shadow-sm cursor-move z-10 event-draggable',
   props.event.color,
   { 'opacity-0': !props.event.isStartCell }
 ])
@@ -60,9 +60,9 @@ const eventClasses = computed(() => [
   >
     <div 
       v-if="event.isStartCell"
-      class="font-semibold text-[10px]"
+      class="font-semibold text-[10px] px-1"
     >
-      <p class="font-semibold text-xs">{{ event.title }}</p>
+      <p class="font-semibold text-xs wrap-break-word line-clamp-2">{{ event.title }}</p>
       <p class="text-gray-500 font-normal">
         {{ formatTime(event.start) }}-{{ formatTime(event.end) }}
       </p>

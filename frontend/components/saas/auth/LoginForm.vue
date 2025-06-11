@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import VideoBackground from "~/components/VideoBackground.vue";
 
 const runtimeConfig = useRuntimeConfig()
 const apiUrl = runtimeConfig.public.apiBase
+const toast = useToast()
 
 /**
  * Redirect the user to Google OAuth.
@@ -11,7 +11,13 @@ const loginWithGoogle = async () => {
   const { data, error } = await useFetch<{ url: string }>(`${apiUrl}/app/auth/google`)
 
   if (error.value) {
-    console.error('Error connecting to Google:', error.value)
+    toast.add({
+      title: 'Error',
+      description: 'Failed to connect to Google. Please try again later.',
+      color: 'error',
+      duration: 5000
+    })
+    error.value = null
     return
   }
 
