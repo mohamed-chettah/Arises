@@ -5,6 +5,7 @@
         v-model="text"
         :rows="1"
         :maxrows="2"
+        :maxlength="100"
         variant="none"
         autoresize
         @keyup.enter="handleSend"

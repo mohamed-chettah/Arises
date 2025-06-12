@@ -1,7 +1,7 @@
 // Interface pour les événements Google Calendar
 import type {GoogleCalendarEvent, GoogleCalendarResponse} from "~/types/GoogleCalendar";
-import {hours} from "~/types/GoogleCalendar";
 import {CalendarDate} from "@internationalized/date";
+import type {Slot} from "~/types/Slot";
 
 export const useCalendarStore = defineStore('calendar', {
     state: () => ({
@@ -13,6 +13,7 @@ export const useCalendarStore = defineStore('calendar', {
         // 🔄 Gestion de l'annulation des requêtes
         currentAbortController: null as AbortController | null,
         requestId: 0, // Pour tracker les requêtes
+        slots: [] as Slot[],
     }),
     getters: {
         // Formatter les événements pour le calendrier
@@ -196,6 +197,14 @@ export const useCalendarStore = defineStore('calendar', {
                 console.error('Error updating event:', error)
                 throw error
             }
+        },
+
+        async setSlot(newSlots: Slot[]){
+
+        },
+
+        async acceptSlot(slotId: number, start: string, end: string) {
+
         }
     },
 })

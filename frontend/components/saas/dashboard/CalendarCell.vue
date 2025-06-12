@@ -1,32 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import CalendarEvent from './CalendarEvent.vue'
-
-interface CalendarCellProps {
-  date: string
-  hour: number
-  isToday: boolean
-  events: any[]
-  dropPreview: {
-    date: string
-    hour: number
-    minutes: number
-    topPercent: number
-    height: number
-    newStart: string
-    newEnd: string
-  } | null
-  draggedEvent: any
-  formatTime: (date: string) => string
-}
-
-interface CalendarCellEmits {
-  dragover: [event: DragEvent, date: string, hour: number]
-  dragleave: [event: DragEvent]
-  drop: [event: DragEvent, date: string, hour: number]
-  eventDragstart: [event: DragEvent, calendarEvent: any]
-  eventDragend: [event: DragEvent]
-}
+import type { CalendarCellProps, CalendarCellEmits } from '~/types/GoogleCalendar'
 
 const props = defineProps<CalendarCellProps>()
 const emit = defineEmits<CalendarCellEmits>()

@@ -182,11 +182,6 @@ function removeSlot(slotId: string) {
   }
 }
 
-function newEvent() {
-  // Logique pour créer un nouvel événement
-  console.log('Créer un nouvel événement')
-}
-
 // Lifecycle
 onMounted(async () => {
   await fetchEvents()
@@ -210,6 +205,7 @@ onUnmounted(() => {
     currentFetchController = null
   }
 })
+
 </script>
 
 <template>
@@ -224,6 +220,7 @@ onUnmounted(() => {
               color="neutral"
               class="rounded-lg hover:bg-purple/20 hover:text-primary cursor-pointer inter text-gray-500"
               size="sm"
+              icon="i-lucide-calendar"
               @click="goToToday"
           >
             Today
@@ -303,6 +300,17 @@ onUnmounted(() => {
             @event-dragstart="onDragStart"
             @event-dragend="onDragEnd"
           />
+
+
+          <div v-for="event in slot">
+            <div class="'absolute rounded border-l-3 border-l-purple p-1 text-xs font-medium shadow-sm cursor-move z-10 event-draggable'">
+              <p> {{ event.title }}</p>
+              <p class="text-gray-500 font-normal">
+                {{ formatTime(event.start) }}-{{ formatTime(event.end) }}
+              </p>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

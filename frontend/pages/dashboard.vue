@@ -86,7 +86,11 @@ async function addMessage(text: string) {
       <section class="rounded-lg grid grid-cols-4 bg-white mr-2">
         <div class="col-span-1 border-r border-r-[0.5px] border-grey-calendar/20 h-screen p-4 flex flex-col h-full min-h-0">
           <!-- Zone scrollable des messages -->
-          <div class="grow min-h-0">
+          <div class="grow min-h-0 flex flex-col gap-4 ">
+            <UButton  variant="outline"
+                      class="rounded-lg hover:bg-purple/20 hover:text-primary cursor-pointer inter text-gray-500"
+                      size="sm" label="New Chat" icon="i-heroicons-pencil-square" color="neutral"/>
+
             <ChatView :messages="messages" :loading="loading" />
           </div>
 

@@ -1,26 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-
-interface CalendarEventProps {
-  event: {
-    id: string
-    title: string
-    start: string
-    end: string
-    color: string
-    width: number
-    leftOffset: number
-    topOffset: number
-    height: number
-    isStartCell: boolean
-  }
-  formatTime: (date: string) => string
-}
-
-interface CalendarEventEmits {
-  dragstart: [event: DragEvent, calendarEvent: any]
-  dragend: [event: DragEvent]
-}
+import type { CalendarEventProps, CalendarEventEmits } from '~/types/GoogleCalendar'
 
 const props = defineProps<CalendarEventProps>()
 const emit = defineEmits<CalendarEventEmits>()

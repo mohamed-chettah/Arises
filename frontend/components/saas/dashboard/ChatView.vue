@@ -8,8 +8,8 @@
           :class="[
           'max-w-[85%] px-4 py-3 text-sm leading-relaxed rounded-lg',
           m.role === 'user'
-            ? 'bg-purple/60 font-semibold self-end'
-            : 'bg-[#26204d] text-gray-200 self-start',
+            ? 'bg-purple/60 font-semibold self-end line-clamp-3 '
+            : 'bg-[#26204d] text-gray-200 self-start line-clamp-3',
         ]"
       >
         <p class="text-xs">{{ m.content }}</p>

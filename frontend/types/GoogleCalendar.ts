@@ -19,6 +19,56 @@ export interface GoogleCalendarResponse {
     items: GoogleCalendarEvent[]
 }
 
+
+export interface CalendarEventProps {
+    event: {
+        id: string
+        title: string
+        start: string
+        end: string
+        color: string
+        width: number
+        leftOffset: number
+        topOffset: number
+        height: number
+        isStartCell: boolean
+    }
+    formatTime: (date: string) => string
+}
+
+export interface CalendarEventEmits {
+    dragstart: [event: DragEvent, calendarEvent: any]
+    dragend: [event: DragEvent]
+}
+
+export interface CalendarCellProps {
+    date: string
+    hour: number
+    isToday: boolean
+    events: any[]
+    dropPreview: {
+        date: string
+        hour: number
+        minutes: number
+        topPercent: number
+        height: number
+        newStart: string
+        newEnd: string
+    } | null
+    draggedEvent: any
+    formatTime: (date: string) => string
+}
+
+export interface CalendarCellEmits {
+    dragover: [event: DragEvent, date: string, hour: number]
+    dragleave: [event: DragEvent]
+    drop: [event: DragEvent, date: string, hour: number]
+    eventDragstart: [event: DragEvent, calendarEvent: any]
+    eventDragend: [event: DragEvent]
+}
+
+
+
 export const hours = [
     { value: '00:00', label: '12:00 AM' },
     { value: '00:15', label: '12:15 AM' },
