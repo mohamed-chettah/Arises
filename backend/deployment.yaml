@@ -20,6 +20,7 @@ spec:
           workingDir: /app
           ports:
             - containerPort: 5005
+          imagePullPolicy: Never
           env:
             - name: NODE_ENV
               value: production
