@@ -14,13 +14,16 @@ spec:
       labels:
         app: backend
     spec:
+      imagePullSecrets:
+        - name: ghcr-secret
       containers:
         - name: backend
-          image: arises/backend:dev
+          image: ghcr.io/mohamedevweb/backend:latest
           workingDir: /app
           ports:
             - containerPort: 5005
-          imagePullPolicy: Never
+          imagePullPolicy: Always
+
           env:
             - name: NODE_ENV
               value: production
