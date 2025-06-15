@@ -23,6 +23,10 @@ spec:
           ports:
             - containerPort: 5005
           imagePullPolicy: Always
+          envFrom:
+            - secretRef:
+                name: backend-env
+
 
           env:
             - name: NODE_ENV
