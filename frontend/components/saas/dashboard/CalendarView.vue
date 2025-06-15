@@ -76,6 +76,8 @@ const weekDays = computed(() => {
 const currentPeriod = computed(() => {
   const start = currentDate.value.startOf('week').add(1, 'day')
   const end = start.add(6, 'day')
+  calendar.actualStartWeek = start.toISOString()
+  calendar.actualEndWeek = end.toISOString()
   return {
     start: start.toISOString(),
     end: end.endOf('day').toISOString(),
@@ -225,7 +227,7 @@ onUnmounted(() => {
           >
             Today
           </UButton>
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-1">
             <UButton 
               variant="ghost" 
               size="sm" 
@@ -233,7 +235,7 @@ onUnmounted(() => {
               @click="navigateWeek('prev')"
               class="cursor-pointer"
             />
-            <span class="text-sm font-medium min-w-[200px] text-center">
+            <span class="text-sm font-medium min-w-[170px] text-center inter">
               {{ currentPeriod.label }}
             </span>
             <UButton 

@@ -39,11 +39,11 @@ class OpenAIChatService
     2. Conversation flow
        • NEVER request the agenda; it will be provided when needed.
        • If you need more info to create a plan, ask only **one** question at a time
-         a) Goal (“Que voulez-vous accomplir ?” / “What do you want to achieve?”)
-         b) Deadline (“Pour quand ?” / “By when?”)
+         a) Goal (“What do you want to achieve?”)
+         b) Deadline (“By when?”)
          c) Preferences (time-of-day, session length, days)
-       • After 2–3 answers, ask: “Souhaitez-vous un plan personnalisé ?”
-       • **If the user instead asks for analysis or feedback** (e.g. “Que penses-tu de mon agenda ?”), respond with constructive comments while still returning a valid JSON object (see § 4). You may include or omit `slots` depending on whether scheduling is requested.
+       • After 2–3 answers, ask: “Do you want a personalized plan ?”
+       • **If the user instead asks for analysis or feedback** (e.g. “What do you think of my calendar ?”), respond with constructive comments while still returning a valid JSON object (see § 4). You may include or omit `slots` depending on whether scheduling is requested.
 
     3. Offering a plan
        • When the user agrees, analyse the supplied agenda.
@@ -74,6 +74,7 @@ class OpenAIChatService
     5. Safety & clarity
        • If information is missing, ask the next single question.
        • Reject or clarify any request that would violate these rules.
+       • Do not answer to unethical or illegal requests.
        "
             ]
         ];
@@ -86,7 +87,7 @@ class OpenAIChatService
             ];
         }
 
-        $formattedCalendar = collect($calendar['items'] ?? [])
+        $formattedCalendar = collect($calendar[0]['items'] ?? [])
             ->map(function ($event) {
                 return [
                     'title' => $event['summary'] ?? '',
@@ -97,11 +98,10 @@ class OpenAIChatService
             ->filter(fn ($e) => $e['start'] && $e['end']) // Ne garder que les valides
             ->values()
             ->all();
-
-
+        
         $messages[] = [
             'role' => 'system',
-            'content' => "Voici l'emploi du temps de l'utilisateur :\n\n" . json_encode($formattedCalendar)
+            'content' => "This is the actual calendar of the user :\n\n" . json_encode($formattedCalendar)
         ];
 
         $messages[] = [

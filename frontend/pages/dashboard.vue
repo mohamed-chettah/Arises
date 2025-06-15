@@ -6,6 +6,7 @@ import Header from '~/components/saas/layout/Header.vue';
 import SideBar from "~/components/saas/layout/SideBar.vue";
 import type {Slot} from "~/types/Slot";
 import {useAuthStore} from "~/store/AuthStore";
+import {useCalendarStore} from "~/store/CalendarStore";
 
 definePageMeta({
   middleware: [
@@ -13,6 +14,7 @@ definePageMeta({
   ],
 });
 const authStore = useAuthStore()
+const calendarStore = useCalendarStore();
 interface Message { id: string; role: 'user' | 'assistant'; content: string }
 const messages = ref<Message[]>([
   { id: Date.now().toString(), role: 'assistant', content: 'Hello ' + authStore.user?.name + ' ! How can I assist you today ?' }
@@ -49,8 +51,8 @@ async function addMessage(text: string) {
       },
       body: {
         question: text,
-        start: "2025-05-01T00:00:00Z",
-        end: "2025-05-31T23:59:59Z",
+        start: calendarStore.actualStartWeek,
+        end: calendarStore.actualEndWeek,
       }
     })
 

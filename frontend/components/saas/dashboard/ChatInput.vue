@@ -16,17 +16,13 @@
     <UButton
         type="submit"
         :disabled="loading || !text.trim()"
-        :loading="loading"
         icon="i-lucide-square-arrow-up"
-        loading-icon="i-lucide-loader"
         class="cursor-pointer disabled:bg-purple inline-flex items-center text-primary gap-2 px-3 py-2 rounded-lg bg-purple hover:bg-purple/20  text-sm text-white hover:text-gray-500"
     />
   </form>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-
 const props = defineProps<{ loading: boolean }>()
 
 const emit = defineEmits<{ (e: 'send', text: string): void }>()

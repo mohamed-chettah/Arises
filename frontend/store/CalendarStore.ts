@@ -14,6 +14,8 @@ export const useCalendarStore = defineStore('calendar', {
         currentAbortController: null as AbortController | null,
         requestId: 0, // Pour tracker les requêtes
         slots: [] as Slot[],
+        actualStartWeek: '',
+        actualEndWeek: '',
     }),
     getters: {
         // Formatter les événements pour le calendrier
