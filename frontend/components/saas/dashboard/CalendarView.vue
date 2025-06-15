@@ -8,6 +8,9 @@ import { useCalendarLayout } from '~/composables/useCalendarLayout'
 import CalendarEvent from './CalendarEvent.vue'
 import CalendarCell from './CalendarCell.vue'
 import ModalNewEvent from "~/components/saas/dashboard/ModalNewEvent.vue";
+import isoWeek from 'dayjs/plugin/isoWeek'
+dayjs.extend(isoWeek)
+
 
 interface Props {
   slot: Slot[]
@@ -42,6 +45,7 @@ const {
 // État simple
 const currentDate = ref(dayjs())
 
+
 // **🔥 GESTION ABORT CONTROLLER POUR FETCH EVENTS**
 let currentFetchController: AbortController | null = null
 
@@ -61,7 +65,7 @@ function formatHour(hour: number): string {
 
 // Jours de la semaine
 const weekDays = computed(() => {
-  const start = currentDate.value.startOf('week').add(1, 'day') // Lundi
+  const start = currentDate.value.startOf('isoWeek') // Lundi automatiquement
   return Array.from({ length: 7 }, (_, i) => {
     const day = start.add(i, 'day')
     return {
@@ -74,7 +78,8 @@ const weekDays = computed(() => {
 
 // Période pour l'API
 const currentPeriod = computed(() => {
-  const start = currentDate.value.startOf('week').add(1, 'day')
+
+  const start = currentDate.value.startOf('isoWeek')
   const end = start.add(6, 'day')
   calendar.actualStartWeek = start.toISOString()
   calendar.actualEndWeek = end.toISOString()
@@ -172,8 +177,8 @@ function scrollToCurrentTime() {
 function confirmSlot(slotId: string) {
   const slot = props.slot.find(s => `slot-${s.id}` === slotId)
   if (slot) {
-    slot.choice = false
-    slot.color = 'bg-green-500/40'
+    slot.choice = true
+    slot.color = 'bg-success-500/40'
   }
 }
 
@@ -293,6 +298,7 @@ onUnmounted(() => {
             :hour="hour"
             :is-today="day.isToday"
             :events="getEventsAt(day.iso, hour)"
+            :slots="getSlotsAt(day.iso, hour)"
             :drop-preview="dropPreview"
             :dragged-event="draggedEvent"
             :format-time="formatTime"

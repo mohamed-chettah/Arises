@@ -59,16 +59,16 @@ const items = ref<DropdownMenuItem[]>([
         >
           <LinkSideBar title="Home" icon="i-lucide-house" link="/" :active="true" />
         </UTooltip>
-        <UTooltip
-            :content="{
-              align: 'center',
-              side: 'right',
-              sideOffset: 8
-            }"
-            text="Analytics"
-        >
-          <LinkSideBar title="Analytics" icon="i-lucide-signal-high" link="/" />
-        </UTooltip>
+<!--        <UTooltip-->
+<!--            :content="{-->
+<!--              align: 'center',-->
+<!--              side: 'right',-->
+<!--              sideOffset: 8-->
+<!--            }"-->
+<!--            text="Analytics"-->
+<!--        >-->
+<!--          <LinkSideBar title="Analytics" icon="i-lucide-signal-high" link="/" />-->
+<!--        </UTooltip>-->
 
 <!--        <UTooltip-->
 <!--            :content="{-->
