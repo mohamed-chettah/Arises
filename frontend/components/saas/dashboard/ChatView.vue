@@ -8,17 +8,19 @@
           :class="[
           'max-w-[85%] px-4 py-3 text-sm leading-relaxed rounded-lg',
           m.role === 'user'
-            ? 'bg-purple/60 font-semibold self-end line-clamp-3 '
-            : 'bg-[#26204d] text-gray-200 self-start line-clamp-3',
+            ? 'bg-purple/20 font-semibold self-end '
+            : 'bg-[#26204d] text-gray-200 self-start',
         ]"
       >
-        <p class="text-xs">{{ m.content }}</p>
+        <p class="text-xs line-clamp-8">{{ m.content }}</p>
       </div>
     </template>
 
     <!-- Loader bubble -->
     <div v-if="loading" class="self-start flex gap-1 px-3 py-2">
-      <span class="w-2.5 h-2.5 bg-blue rounded-full animate-bounce"></span>
+      <span class="w-2.5 h-2.5 bg-[#26204d] rounded-full animate-bounce"></span>
+      <span class="w-2.5 h-2.5 bg-[#26204d] rounded-full animate-bounce"></span>
+      <span class="w-2.5 h-2.5 bg-[#26204d] rounded-full animate-bounce"></span>
     </div>
   </div>
 </template>

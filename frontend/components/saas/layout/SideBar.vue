@@ -82,16 +82,16 @@ const items = ref<DropdownMenuItem[]>([
 <!--        </UTooltip>-->
 
 
-        <UTooltip
-            :content="{
-              align: 'center',
-              side: 'right',
-              sideOffset: 8
-            }"
-            text="Roadmap"
-        >
-          <LinkSideBar title="Roadmap" icon="i-lucide-map" link="/" />
-        </UTooltip>
+<!--        <UTooltip-->
+<!--            :content="{-->
+<!--              align: 'center',-->
+<!--              side: 'right',-->
+<!--              sideOffset: 8-->
+<!--            }"-->
+<!--            text="Roadmap"-->
+<!--        >-->
+<!--          <LinkSideBar title="Roadmap" icon="i-lucide-map" link="/" />-->
+<!--        </UTooltip>-->
       </div>
 
       <!-- Footer en bas -->

@@ -12,15 +12,24 @@ definePageMeta({
     'auth',
   ],
 });
-
+const authStore = useAuthStore()
 interface Message { id: string; role: 'user' | 'assistant'; content: string }
-const messages = ref<Message[]>([])
+const messages = ref<Message[]>([
+  { id: Date.now().toString(), role: 'assistant', content: 'Hello ' + authStore.user?.name + ' ! How can I assist you today ?' }
+])
 
 const runtimeConfig = useRuntimeConfig()
 const apiUrl = runtimeConfig.public.apiBase
 const loading = ref(false)
 const slots = ref(<Slot[]>[])
-const authStore = useAuthStore()
+
+
+async function resetMessages(){
+  messages.value = [
+    { id: Date.now().toString(), role: 'assistant', content: 'Hello ' + authStore.user?.name + ' ! How can I assist you today ?' }
+  ]
+  slots.value = []
+}
 
 async function addMessage(text: string) {
   messages.value.push({ id: Date.now().toString(), role: 'user', content: text })
@@ -89,7 +98,7 @@ async function addMessage(text: string) {
           <div class="grow min-h-0 flex flex-col gap-4 ">
             <UButton  variant="outline"
                       class="rounded-lg hover:bg-purple/20 hover:text-primary cursor-pointer inter text-gray-500"
-                      size="sm" label="New Chat" icon="i-heroicons-pencil-square" color="neutral"/>
+                      size="sm" label="New Chat" icon="i-heroicons-pencil-square" color="neutral" @click="resetMessages"/>
 
             <ChatView :messages="messages" :loading="loading" />
           </div>

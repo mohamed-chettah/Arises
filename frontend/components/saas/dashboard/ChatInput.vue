@@ -5,7 +5,7 @@
         v-model="text"
         :rows="1"
         :maxrows="2"
-        :maxlength="100"
+        :maxlength="300"
         variant="none"
         autoresize
         @keyup.enter="handleSend"
@@ -15,7 +15,7 @@
 
     <UButton
         type="submit"
-        :disabled="loading"
+        :disabled="loading || !text.trim()"
         :loading="loading"
         icon="i-lucide-square-arrow-up"
         loading-icon="i-lucide-loader"
