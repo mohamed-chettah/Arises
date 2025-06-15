@@ -27,6 +27,10 @@ spec:
             - name: NODE_ENV
               value: production
 
+          envFrom:
+            - secretRef:
+                name: frontend-env
+
           readinessProbe:
             httpGet:
               path: /                  # URL à tester (page d'accueil ici)
