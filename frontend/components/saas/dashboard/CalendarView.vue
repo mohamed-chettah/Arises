@@ -38,7 +38,6 @@ const {
 // **🔥 NOUVEAU : UTILISATION DU COMPOSABLE LAYOUT**
 const {
   events,
-  getEventsAt,
   layoutDebugInfo
 } = useCalendarLayout()
 
@@ -89,6 +88,79 @@ const currentPeriod = computed(() => {
     label: `${start.format('DD MMM')} - ${end.format('DD MMM YYYY')}`
   }
 })
+
+// **🔥 FUSION INTELLIGENTE : SLOTS + ÉVÉNEMENTS**
+const allCalendarItems = computed(() => {
+  // Convertir les événements normaux
+  const normalEvents = events.value.map(event => ({
+    ...event,
+    type: 'event' as const
+  }))
+  
+  // Convertir les slots IA
+  const slotEvents = props.slot.map(slot => ({
+    id: `slot-${slot.id}`,
+    title: slot.title || 'Slot disponible',
+    start: slot.start,
+    end: slot.end,
+    description: '',
+    color: slot.choice ? 'bg-success-500/40' : 'bg-orange-500/40',
+    status: 'confirmed',
+    type: 'slot' as const,
+    originalSlot: slot // Référence vers le slot original pour les actions
+  }))
+  
+  return [...normalEvents, ...slotEvents]
+})
+
+// **🔥 ADAPTER getEventsAt POUR UTILISER LA FUSION**
+function getEventsAt(date: string, hour: number) {
+  const cellEvents = allCalendarItems.value.filter(event => {
+    const eventDate = dayjs(event.start).format('YYYY-MM-DD')
+    if (eventDate !== date) return false
+    
+    const eventStartHour = dayjs(event.start).hour()
+    const eventEndTime = dayjs(event.end)
+    const eventEndHour = eventEndTime.hour()
+    const eventEndMinutes = eventEndTime.minute()
+    
+    const adjustedEndHour = eventEndMinutes === 0 ? eventEndHour - 1 : eventEndHour
+    return eventStartHour <= hour && hour <= adjustedEndHour
+  })
+  
+  // **🔥 RÉUTILISER LA LOGIQUE DE LAYOUT EXISTANTE**
+  return cellEvents.map((event, index) => {
+    const eventStartHour = dayjs(event.start).hour()
+    
+    let topOffset = 0
+    if (eventStartHour === hour) {
+      const eventMinutes = dayjs(event.start).minute()
+      if (eventMinutes >= 45) topOffset = 75
+      else if (eventMinutes >= 30) topOffset = 50  
+      else if (eventMinutes >= 15) topOffset = 25
+      else topOffset = 0
+    }
+    
+    let height = 60
+    if (eventStartHour === hour) {
+      const startTime = dayjs(event.start)
+      const endTime = dayjs(event.end)
+      const durationMinutes = endTime.diff(startTime, 'minute')
+      height = (durationMinutes / 15) * 15
+    } else {
+      height = 0
+    }
+    
+    return {
+      ...event,
+      width: eventStartHour === hour ? 100 / cellEvents.length : 0,
+      leftOffset: eventStartHour === hour ? (100 / cellEvents.length) * index : 0,
+      topOffset,
+      height,
+      isStartCell: eventStartHour === hour
+    }
+  })
+}
 
 // **🔥 APPEL API POUR UPDATE**
 async function updateEventOnServer(event: any) {
@@ -184,6 +256,22 @@ function confirmSlot(slotId: string) {
 
 function removeSlot(slotId: string) {
   const index = props.slot.findIndex(s => `slot-${s.id}` === slotId)
+  if (index > -1) {
+    props.slot.splice(index, 1)
+  }
+}
+
+// **🔥 GESTIONNAIRES POUR LES ACTIONS DES SLOTS**
+function handleSlotAccepted(slot: any) {
+  console.log('Slot accepté:', slot)
+  // Ici vous pouvez ajouter la logique pour sauvegarder l'acceptation
+  // Par exemple, appeler une API ou mettre à jour un store
+}
+
+function handleSlotRejected(slot: any) {
+  console.log('Slot rejeté:', slot)
+  // Supprimer le slot de la liste
+  const index = props.slot.findIndex(s => s.id === slot.id)
   if (index > -1) {
     props.slot.splice(index, 1)
   }
@@ -298,7 +386,6 @@ onUnmounted(() => {
             :hour="hour"
             :is-today="day.isToday"
             :events="getEventsAt(day.iso, hour)"
-            :slots="getSlotsAt(day.iso, hour)"
             :drop-preview="dropPreview"
             :dragged-event="draggedEvent"
             :format-time="formatTime"
@@ -307,17 +394,9 @@ onUnmounted(() => {
             @drop="onDrop"
             @event-dragstart="onDragStart"
             @event-dragend="onDragEnd"
+            @slot-accepted="handleSlotAccepted"
+            @slot-rejected="handleSlotRejected"
           />
-
-
-          <div v-for="event in slot">
-            <div class="'absolute rounded border-l-3 border-l-purple p-1 text-xs font-medium shadow-sm cursor-move z-10 event-draggable'">
-              <p> {{ event.title }}</p>
-              <p class="text-gray-500 font-normal">
-                {{ formatTime(event.start) }}-{{ formatTime(event.end) }}
-              </p>
-            </div>
-          </div>
 
         </div>
       </div>

@@ -70,7 +70,7 @@ class OpenAIChatService
           • All textual values (message, title, description) MUST be in the user’s language
           • If the user talk in French, the title and description must be in French if the user talk in English, the title and description must be in English
           • For the message its the same, if the user talk in French, the message must be in French if the user talk in English, the message must be in English
-
+       • For the time of the slot, prefer empty spots over overlapping ones. but you can overlap if the user ask for it:
     5. Safety & clarity
        • If information is missing, ask the next single question.
        • Reject or clarify any request that would violate these rules.
@@ -98,7 +98,7 @@ class OpenAIChatService
             ->filter(fn ($e) => $e['start'] && $e['end']) // Ne garder que les valides
             ->values()
             ->all();
-        
+
         $messages[] = [
             'role' => 'system',
             'content' => "This is the actual calendar of the user :\n\n" . json_encode($formattedCalendar)

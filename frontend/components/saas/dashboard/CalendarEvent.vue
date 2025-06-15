@@ -7,11 +7,32 @@ const emit = defineEmits<CalendarEventEmits>()
 
 // **🔥 GESTIONNAIRES D'ÉVÉNEMENTS**
 function onDragStart(event: DragEvent) {
+  // **🔥 EMPÊCHER LE DRAG DES SLOTS**
+  if (props.event.type === 'slot') {
+    event.preventDefault()
+    return
+  }
   emit('dragstart', event, props.event)
 }
 
 function onDragEnd(event: DragEvent) {
   emit('dragend', event)
+}
+
+// **🔥 ACTIONS SPÉCIFIQUES AUX SLOTS**
+function acceptSlot() {
+  if (props.event.type === 'slot' && props.event.originalSlot) {
+    props.event.originalSlot.choice = true
+    // Émettre un événement pour notifier le parent
+    emit('slot-accepted', props.event.originalSlot)
+  }
+}
+
+function rejectSlot() {
+  if (props.event.type === 'slot' && props.event.originalSlot) {
+    // Émettre un événement pour notifier le parent
+    emit('slot-rejected', props.event.originalSlot)
+  }
 }
 
 // **🔥 STYLES CALCULÉS**
@@ -24,9 +45,11 @@ const eventStyles = computed(() => ({
 
 // **🔥 CLASSES CSS CALCULÉES**
 const eventClasses = computed(() => [
-  'absolute rounded border-l-3 border-l-purple p-1 text-xs font-medium shadow-sm cursor-move z-10 event-draggable',
+  'absolute rounded border-l-3 p-1 text-xs font-medium shadow-sm z-10',
   props.event.color,
-  { 'opacity-0': !props.event.isStartCell }
+  { 'opacity-0': !props.event.isStartCell },
+  // **🔥 STYLES DIFFÉRENTS SELON LE TYPE**
+  props.event.type === 'slot' ? 'border-l-orange cursor-default' : 'border-l-purple cursor-move event-draggable'
 ])
 </script>
 
@@ -34,7 +57,7 @@ const eventClasses = computed(() => [
   <div 
     :class="eventClasses"
     :style="eventStyles"
-    draggable="true"
+    :draggable="event.type !== 'slot'"
     @dragstart="onDragStart"
     @dragend="onDragEnd"
   >
@@ -46,6 +69,29 @@ const eventClasses = computed(() => [
       <p class="text-gray-500 font-normal">
         {{ formatTime(event.start) }}-{{ formatTime(event.end) }}
       </p>
+      
+      <!-- **🔥 ACTIONS POUR LES SLOTS** -->
+      <div v-if="event.type === 'slot' && !event.originalSlot?.choice" class="flex gap-1 mt-1">
+        <button 
+          @click="acceptSlot"
+          class="bg-green-500 text-white text-[8px] px-1 py-0.5 rounded hover:bg-green-600"
+        >
+          ✓
+        </button>
+        <button 
+          @click="rejectSlot"
+          class="bg-red-500 text-white text-[8px] px-1 py-0.5 rounded hover:bg-red-600"
+        >
+          ✗
+        </button>
+      </div>
+      
+      <!-- **🔥 INDICATEUR SLOT ACCEPTÉ** -->
+      <div v-if="event.type === 'slot' && event.originalSlot?.choice" class="mt-1">
+        <span class="bg-green-500 text-white text-[8px] px-1 py-0.5 rounded">
+          Accepté ✓
+        </span>
+      </div>
     </div>
   </div>
 </template>
@@ -56,30 +102,30 @@ const eventClasses = computed(() => [
   will-change: transform, opacity;
   backface-visibility: hidden;
   transform: translateZ(0);
-  /* **🔥 S'ASSURER QUE TOUTE LA SURFACE EST DRAGGABLE** */
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
-  /* **🔥 FORCER LE DRAG SUR TOUTE LA SURFACE** */
   display: block !important;
   overflow: hidden;
 }
 
 .event-draggable * {
-  /* **🔥 EMPÊCHER TOUS LES ENFANTS D'INTERFÉRER** */
   pointer-events: none !important;
   user-select: none !important;
   -webkit-user-select: none !important;
 }
 
 .event-draggable:hover {
-  /* Feedback visuel au hover */
   filter: brightness(1.1);
   transition: filter 0.1s ease;
 }
 
 .event-draggable:active {
-  /* Feedback au click/drag */
   filter: brightness(0.95);
+}
+
+/* **🔥 STYLES SPÉCIFIQUES AUX SLOTS** */
+button {
+  pointer-events: auto !important;
 }
 </style> 
