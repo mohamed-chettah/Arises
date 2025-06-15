@@ -36,3 +36,4 @@ spec:
             timeoutSeconds: 2          # Abandonne le test si + de 2 sec
             failureThreshold: 3        # Marqué "non prêt" après 3 échecs consécutifs
             successThreshold: 1        # Marqué "prêt" dès que 1 succès
+
