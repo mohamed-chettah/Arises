@@ -19,7 +19,7 @@ spec:
       containers:
         - name: backend
           image: ghcr.io/mohamedevweb/backend:latest
-          workingDir: /app
+          workingDir: /var/www
           ports:
             - containerPort: 5005
           imagePullPolicy: Always
