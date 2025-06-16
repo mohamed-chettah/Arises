@@ -7,6 +7,7 @@ import SideBar from "~/components/saas/layout/SideBar.vue";
 import type {Slot} from "~/types/Slot";
 import {useAuthStore} from "~/store/AuthStore";
 import {useCalendarStore} from "~/store/CalendarStore";
+import type {Message} from "~/types/Message";
 
 definePageMeta({
   middleware: [
@@ -15,7 +16,6 @@ definePageMeta({
 });
 const authStore = useAuthStore()
 const calendarStore = useCalendarStore();
-interface Message { id: string; role: 'user' | 'assistant'; content: string }
 const messages = ref<Message[]>([
   { id: Date.now().toString(), role: 'assistant', content: 'Hello ' + authStore.user?.name + ' ! How can I assist you today ?' }
 ])
@@ -24,7 +24,6 @@ const runtimeConfig = useRuntimeConfig()
 const apiUrl = runtimeConfig.public.apiBase
 const loading = ref(false)
 const slots = ref(<Slot[]>[])
-
 
 async function resetMessages(){
   messages.value = [
@@ -57,7 +56,7 @@ async function addMessage(text: string) {
     })
 
     if(data.value?.message){
-      messages.value.push({ id: Date.now().toString(), role: 'assistant', content: data.value?.message })
+      messages.value.push({ id: Date.now().toString(), role: 'assistant', content: data.value?.message, slots: data.value?.slots  ? data.value?.slots : []})
     } else {
       messages.value.push({ id: Date.now().toString(), role: 'assistant', content: "Sorry, something goes wrong, please try again later" })
     }
