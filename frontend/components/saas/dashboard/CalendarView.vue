@@ -356,7 +356,7 @@ onUnmounted(() => {
       <div class="flex-1 overflow-y-auto calendar-scroll-container">
         
         <!-- Header des jours (dans le scroll pour alignement parfait) -->
-        <div class="grid grid-cols-8 border-b border-gray-200 sticky top-0 bg-white z-10">
+        <div class="grid grid-cols-8 border-b border-gray-200 sticky top-0 bg-white z-96">
           <div class="text-xs text-gray-500 border-r border-gray-200"></div>
           <div 
             v-for="day in weekDays" 

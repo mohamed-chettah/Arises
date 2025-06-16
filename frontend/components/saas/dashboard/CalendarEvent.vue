@@ -83,12 +83,13 @@ const eventClasses = computed(() => {
     
     const colorClasses = isAccepted 
       ? 'bg-purple-500/40 border-l-purple-500/40 text-purple-900'
-      : 'bg-orange-500/40 border-l-orange text-orange-900'
+      : 'bg-orange-500/40 border-l-orange text-orange-900 min-h-[60px]'
     
     return [
       ...baseClasses,
       colorClasses,
       'cursor-default',
+      { 'opacity-0': !props.event.isStartCell }
     ]
   } else {
     // **🔥 COULEUR NORMALE POUR LES ÉVÉNEMENTS**
@@ -120,18 +121,20 @@ const eventClasses = computed(() => {
       </p>
       
       <!-- **🔥 ACTIONS POUR LES SLOTS NON ACCEPTÉS** -->
-      <div v-if="event.type === 'slot' && event.originalSlot?.choice === false" class="flex gap-1 mt-1">
+      <div v-if="event.type === 'slot' && event.originalSlot?.choice === false" class="flex gap-1">
         <UButton
           icon="i-lucide-check" 
           @click="acceptSlot" 
           variant="solid"
-          class="cursor-pointer"
+          size="xs"
+          class="cursor-pointer hover:bg-purple/20 hover:text-primary"
         />
         <UButton 
           icon="i-lucide-x" 
           @click="rejectSlot" 
           variant="solid"
-          class="cursor-pointer"
+          size="xs"
+          class="cursor-pointer hover:bg-purple/20 hover:text-primary"
         />
       </div>
     </div>
@@ -157,14 +160,7 @@ const eventClasses = computed(() => {
   -webkit-user-select: none !important;
 }
 
-.event-draggable:hover {
-  filter: brightness(1.1);
-  transition: filter 0.1s ease;
-}
 
-.event-draggable:active {
-  filter: brightness(0.95);
-}
 
 /* **🔥 STYLES SPÉCIFIQUES AUX SLOTS** */
 button {

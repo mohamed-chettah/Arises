@@ -20,7 +20,10 @@ const items = ref<DropdownMenuItem[]>([
   {
     label: 'Try Chrome Extension',
     icon: 'i-lucide-chrome',
-    link: 'https://chromewebstore.google.com/detail/arises-pomodoro-timer-dis/aheohjodpllofjdihniljfkppcacpeib'
+    onSelect() {
+      window.open('https://chromewebstore.google.com/detail/arises-pomodoro-timer-dis/aheohjodpllofjdihniljfkppcacpeib', '_blank')
+    }
+
   },
   {
     label: 'Logout',

@@ -124,14 +124,9 @@ const cellClasses = computed(() => [
 <style scoped>
 /* Preview fluide */
 .drop-preview {
-  will-change: transform, opacity;
+
   transform: translateZ(0);
   transition: opacity 0.1s ease-out;
 }
 
-/* Cellules optimisées */
-.calendar-cell {
-  will-change: background-color;
-  transform: translateZ(0);
-}
 </style> 
