@@ -57,7 +57,7 @@ const items = ref<DropdownMenuItem[]>([
             }"
             text="Home"
         >
-          <LinkSideBar title="Home" icon="i-lucide-house" link="/" :active="true" />
+          <LinkSideBar title="Home" icon="i-lucide-house" link="/dashboard" :active="true" />
         </UTooltip>
 <!--        <UTooltip-->
 <!--            :content="{-->

@@ -5,4 +5,6 @@ export interface Slot {
     end: string,
     color: string,
     choice?: boolean,
+    description?: string,
+    type?: string,
 }

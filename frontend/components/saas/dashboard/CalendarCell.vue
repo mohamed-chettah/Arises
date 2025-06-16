@@ -1,13 +1,34 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import CalendarEvent from './CalendarEvent.vue'
-import type { CalendarCellProps, CalendarCellEmits } from '~/types/GoogleCalendar'
 
-const props = defineProps<CalendarCellProps>()
-const emit = defineEmits<CalendarCellEmits>()
+const props = defineProps<{
+  date: string
+  hour: number
+  isToday: boolean
+  events: any[]
+  dropPreview: any
+  draggedEvent: any
+  formatTime: (date: string) => string
+}>()
+
+const emit = defineEmits<{
+  dragover: [event: DragEvent, date: string, hour: number]
+  dragleave: [event: DragEvent]
+  drop: [event: DragEvent, date: string, hour: number]
+  eventDragstart: [event: DragEvent, calendarEvent: any]
+  eventDragend: [event: DragEvent]
+  'slot-accepted': [slot: any]
+  'slot-rejected': [slot: any]
+}>()
 
 // **🔥 GESTIONNAIRES D'ÉVÉNEMENTS DRAG & DROP**
 function onDragOver(event: DragEvent) {
+  // **🔥 EMPÊCHER LE DRAG & DROP DES SLOTS**
+  const target = event.target as HTMLElement
+  const isSlot = target.closest('.event-draggable')?.getAttribute('data-status') === 'slot'
+  if (isSlot) return
+
   emit('dragover', event, props.date, props.hour)
 }
 
@@ -16,15 +37,34 @@ function onDragLeave(event: DragEvent) {
 }
 
 function onDrop(event: DragEvent) {
+  // **🔥 EMPÊCHER LE DROP DES SLOTS**
+  const target = event.target as HTMLElement
+  const isSlot = target.closest('.event-draggable')?.getAttribute('data-status') === 'slot'
+  if (isSlot) return
+
   emit('drop', event, props.date, props.hour)
 }
 
 function onEventDragStart(event: DragEvent, calendarEvent: any) {
+  // **🔥 EMPÊCHER LE DRAG DES SLOTS**
+  if (calendarEvent.type === 'slot') {
+    event.preventDefault()
+    return
+  }
   emit('eventDragstart', event, calendarEvent)
 }
 
 function onEventDragEnd(event: DragEvent) {
   emit('eventDragend', event)
+}
+
+// **🔥 GESTIONNAIRES POUR LES SLOTS**
+function onSlotAccepted(slot: any) {
+  emit('slot-accepted', slot)
+}
+
+function onSlotRejected(slot: any) {
+  emit('slot-rejected', slot)
 }
 
 // **🔥 COMPUTED POUR VÉRIFIER LA PREVIEW**
@@ -67,7 +107,7 @@ const cellClasses = computed(() => [
       </div>
     </div>
     
-    <!-- **🔥 ÉVÉNEMENTS DE LA CELLULE** -->
+    <!-- **🔥 ÉVÉNEMENTS ET SLOTS DE LA CELLULE** -->
     <CalendarEvent 
       v-for="(event, index) in events" 
       :key="`${event.id}-${date}-${hour}-${index}`"
@@ -75,6 +115,8 @@ const cellClasses = computed(() => [
       :format-time="formatTime"
       @dragstart="onEventDragStart"
       @dragend="onEventDragEnd"
+      @slot-accepted="onSlotAccepted"
+      @slot-rejected="onSlotRejected"
     />
   </div>
 </template>

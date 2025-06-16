@@ -9,6 +9,7 @@ import CalendarEvent from './CalendarEvent.vue'
 import CalendarCell from './CalendarCell.vue'
 import ModalNewEvent from "~/components/saas/dashboard/ModalNewEvent.vue";
 import isoWeek from 'dayjs/plugin/isoWeek'
+import { CalendarDate } from '@internationalized/date'
 dayjs.extend(isoWeek)
 
 
@@ -18,6 +19,7 @@ interface Props {
 
 const props = defineProps<Props>()
 const calendar = useCalendarStore()
+const toast = useToast()
 
 // **🔥 NOUVEAU : UTILISATION DU COMPOSABLE DRAG & DROP**
 const {
@@ -91,25 +93,32 @@ const currentPeriod = computed(() => {
 
 // **🔥 FUSION INTELLIGENTE : SLOTS + ÉVÉNEMENTS**
 const allCalendarItems = computed(() => {
+
   // Convertir les événements normaux
   const normalEvents = events.value.map(event => ({
     ...event,
     type: 'event' as const
   }))
-  
-  // Convertir les slots IA
-  const slotEvents = props.slot.map(slot => ({
-    id: `slot-${slot.id}`,
-    title: slot.title || 'Slot disponible',
-    start: slot.start,
-    end: slot.end,
-    description: '',
-    color: slot.choice ? 'bg-success-500/40' : 'bg-orange-500/40',
-    status: 'confirmed',
-    type: 'slot' as const,
-    originalSlot: slot // Référence vers le slot original pour les actions
-  }))
-  
+
+  // Convertir les slots IA avec copie pour éviter la mutation des props
+  const slotEvents = props.slot.map((slot, index) => {
+    // **🔥 CRÉER UNE COPIE DU SLOT POUR ÉVITER LA MUTATION DES PROPS**
+    const slotCopy = { ...slot }
+
+    slotCopy.choice = false
+
+    return {
+      id: `slot-${index}`, // Utiliser l'index si pas d'id
+      title: slotCopy.title || 'Slot disponible',
+      start: slotCopy.start,
+      end: slotCopy.end,
+      description: slotCopy.description,
+      color: 'bg-purple', // Toujours orange par défaut, la couleur sera gérée dans CalendarEvent
+      type: 'slot' as const,
+      originalSlot: slotCopy // Référence vers la copie du slot
+    }
+  })
+
   return [...normalEvents, ...slotEvents]
 })
 
@@ -118,29 +127,28 @@ function getEventsAt(date: string, hour: number) {
   const cellEvents = allCalendarItems.value.filter(event => {
     const eventDate = dayjs(event.start).format('YYYY-MM-DD')
     if (eventDate !== date) return false
-    
+
     const eventStartHour = dayjs(event.start).hour()
     const eventEndTime = dayjs(event.end)
     const eventEndHour = eventEndTime.hour()
     const eventEndMinutes = eventEndTime.minute()
-    
+
     const adjustedEndHour = eventEndMinutes === 0 ? eventEndHour - 1 : eventEndHour
     return eventStartHour <= hour && hour <= adjustedEndHour
   })
-  
-  // **🔥 RÉUTILISER LA LOGIQUE DE LAYOUT EXISTANTE**
+
   return cellEvents.map((event, index) => {
     const eventStartHour = dayjs(event.start).hour()
-    
+
     let topOffset = 0
     if (eventStartHour === hour) {
       const eventMinutes = dayjs(event.start).minute()
       if (eventMinutes >= 45) topOffset = 75
-      else if (eventMinutes >= 30) topOffset = 50  
+      else if (eventMinutes >= 30) topOffset = 50
       else if (eventMinutes >= 15) topOffset = 25
       else topOffset = 0
     }
-    
+
     let height = 60
     if (eventStartHour === hour) {
       const startTime = dayjs(event.start)
@@ -150,7 +158,7 @@ function getEventsAt(date: string, hour: number) {
     } else {
       height = 0
     }
-    
+
     return {
       ...event,
       width: eventStartHour === hour ? 100 / cellEvents.length : 0,
@@ -162,28 +170,9 @@ function getEventsAt(date: string, hour: number) {
   })
 }
 
-// **🔥 APPEL API POUR UPDATE**
-async function updateEventOnServer(event: any) {
-  const eventId = event.id
-  
-  // **🔥 CRÉER ABORT CONTROLLER POUR CETTE REQUÊTE**
-  const abortController = new AbortController()
-  pendingRequests.value.set(eventId, abortController)
-  
-  // Appel à l'API Laravel via le store avec signal d'abort
-  const eventData = {
-    title: event.title,
-    start: event.start,
-    end: event.end,
-    description: event.description || ''
-  }
-  
-  await calendar.updateEvent(event.id, eventData, abortController.signal)
-}
-
 // Navigation simple
 function navigateWeek(direction: 'prev' | 'next') {
-  currentDate.value = direction === 'prev' 
+  currentDate.value = direction === 'prev'
     ? currentDate.value.subtract(1, 'week')
     : currentDate.value.add(1, 'week')
 }
@@ -198,14 +187,14 @@ async function fetchEvents() {
   if (currentFetchController) {
     currentFetchController.abort()
   }
-  
+
   // **🔥 CRÉER UN NOUVEAU CONTROLLER**
   currentFetchController = new AbortController()
-  
+
   try {
     await calendar.getEvent(
-      currentPeriod.value.start, 
-      currentPeriod.value.end, 
+      currentPeriod.value.start,
+      currentPeriod.value.end,
       currentFetchController.signal
     )
   } catch (error: any) {
@@ -227,13 +216,13 @@ function scrollToCurrentTime() {
   nextTick(() => {
     const currentHour = dayjs().hour()
     const currentMinutes = dayjs().minute()
-    
+
     // Calculer la position dans la grille
     const cellHeight = 60 // hauteur d'une cellule en px
     const hourPosition = currentHour * cellHeight
     const minuteOffset = (currentMinutes / 60) * cellHeight
     const totalPosition = hourPosition + minuteOffset
-    
+
     // Scroll vers cette position (centré dans la vue)
     const scrollContainer = document.querySelector('.calendar-scroll-container')
     if (scrollContainer) {
@@ -245,36 +234,48 @@ function scrollToCurrentTime() {
   })
 }
 
-// Actions pour les slots IA
-function confirmSlot(slotId: string) {
-  const slot = props.slot.find(s => `slot-${s.id}` === slotId)
-  if (slot) {
-    slot.choice = true
-    slot.color = 'bg-success-500/40'
-  }
-}
-
-function removeSlot(slotId: string) {
-  const index = props.slot.findIndex(s => `slot-${s.id}` === slotId)
-  if (index > -1) {
-    props.slot.splice(index, 1)
-  }
-}
-
 // **🔥 GESTIONNAIRES POUR LES ACTIONS DES SLOTS**
-function handleSlotAccepted(slot: any) {
-  console.log('Slot accepté:', slot)
-  // Ici vous pouvez ajouter la logique pour sauvegarder l'acceptation
-  // Par exemple, appeler une API ou mettre à jour un store
+async function handleSlotAccepted(slot: any) {
+  console.log('🟢 Slot accepté:', slot)
+
+  try {
+    // **🔥 1. CRÉER L'ÉVÉNEMENT DANS LE CALENDRIER GOOGLE**
+    const startDate = dayjs(slot.start)
+    const endDate = dayjs(slot.end)
+
+    // Convertir en CalendarDate pour l'API
+    const calendarDate = new CalendarDate(
+      startDate.year(),
+      startDate.month() + 1,
+      startDate.date()
+    )
+
+    // Créer l'événement via le store
+    await calendar.createEvent(
+      calendarDate,
+      startDate.format('HH:mm'),
+      endDate.format('HH:mm'),
+      slot.title,
+      slot.description || '',
+    )
+
+    // **🔥 2. SUPPRIMER LE SLOT DE LA LISTE**
+    const index = props.slot.findIndex(s => s.id === slot.id)
+    if (index > -1) {
+      props.slot.splice(index, 1)
+    }
+
+  } catch (error) {
+    console.error('❌ Erreur lors de l\'acceptation du slot:', error)
+  }
 }
 
 function handleSlotRejected(slot: any) {
-  console.log('Slot rejeté:', slot)
-  // Supprimer le slot de la liste
   const index = props.slot.findIndex(s => s.id === slot.id)
   if (index > -1) {
     props.slot.splice(index, 1)
   }
+
 }
 
 // Lifecycle

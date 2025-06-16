@@ -59,7 +59,7 @@ async function addMessage(text: string) {
     if(data.value?.message){
       messages.value.push({ id: Date.now().toString(), role: 'assistant', content: data.value?.message })
     } else {
-      messages.value.push({ id: Date.now().toString(), role: 'assistant', content: "Sorry, I couldn't find any information." })
+      messages.value.push({ id: Date.now().toString(), role: 'assistant', content: "Sorry, something goes wrong, please try again later" })
     }
 
     if(data.value?.slots){

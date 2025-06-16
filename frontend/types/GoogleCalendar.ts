@@ -31,7 +31,11 @@ export interface CalendarEventProps {
         leftOffset: number
         topOffset: number
         height: number
-        isStartCell: boolean
+        isStartCell: boolean,
+        type: string,
+        originalSlot: {
+            choice: boolean
+        }
     }
     formatTime: (date: string) => string
 }
