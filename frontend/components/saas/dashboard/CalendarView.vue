@@ -371,7 +371,7 @@ onUnmounted(() => {
         <div 
           v-for="hour in displayHours" 
           :key="hour"
-          class="grid grid-cols-8 border-b border-gray-200"
+          class="grid grid-cols-8 border-b border-gray-100"
           style="height: 60px"
         >
           <!-- Colonne heures -->
