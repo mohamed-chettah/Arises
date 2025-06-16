@@ -76,7 +76,7 @@ const showDropPreview = computed(() => {
 
 // **🔥 CLASSES CSS CALCULÉES**
 const cellClasses = computed(() => [
-  'relative border-r border-gray-200 last:border-r-0 hover:bg-blue-50/20 calendar-cell',
+  'relative border-r border-gray-200 last:border-r-0 hover:bg-blue-50/20',
   { 'bg-purple-50/20': props.isToday }
 ])
 </script>

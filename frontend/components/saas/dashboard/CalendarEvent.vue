@@ -83,7 +83,7 @@ const eventClasses = computed(() => {
     
     const colorClasses = isAccepted 
       ? 'bg-purple-500/40 border-l-purple-500/40 text-purple-900'
-      : 'bg-orange-500/40 border-l-orange text-orange-900 min-h-[60px]'
+      : 'bg-orange-500/40 border-l-orange text-orange-900 min-h-[80px]'
     
     return [
       ...baseClasses,

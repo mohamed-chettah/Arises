@@ -22,7 +22,7 @@ watch(
         text.value = 'Thinking...'
 
         setTimeout(() => {
-          text.value = 'Analyse of the calendar...'
+          text.value = 'Analyzing your calendar...'
         }, 2000) // Delay to simulate thinking
 
         setTimeout(() => {
@@ -48,9 +48,6 @@ onMounted(() => {
       class="h-full border-[1px] border-purple/20 bg-purple/20 flex flex-col gap-4 overflow-y-auto p-6 rounded-lg custom-scrollbar"
   >
     <template v-for="m in messages" :key="m.id">
-      <div>
-
-      </div>
       <div
           :class="[
           'max-w-[85%] px-4 py-3 text-sm leading-relaxed rounded-lg',
@@ -62,24 +59,18 @@ onMounted(() => {
         <p class="text-xs line-clamp-8">{{ m.content }}</p>
 
 
+        <div v-if="m.slots && m.slots?.length > 0" class="w-full mt-3">
+          <UButton class="text-white text-[10px] hover:text-purple hover:bg-white px-2 py-1 inter cta shadow-xl bg-gradient-to-r from-[#A480F2] via-[#9977E2] to-[#5F4A8C] rounded-lg">
+            Accept New Events
+          </UButton>
+        </div>
       </div>
 
-      <div v-if="m.slots" class="w-full">
-        <UButton class="text-white text-[10px] hover:text-purple hover:bg-white p-2 inter cta shadow-xl bg-gradient-to-r from-[#A480F2] via-[#9977E2] to-[#5F4A8C] rounded-lg">
-          Accept New Events
-        </UButton>
-      </div>
     </template>
 
     <!-- Loader bubble -->
     <div v-if="loading" class="">
       <p class="text-xs mt-2">{{ text }}</p>
-
-<!--      <USkeleton class="h-12 w-12 rounded-full" />-->
-<!--      <p>Check if the user want event</p>-->
-
-<!--      <USkeleton class="h-12 w-12 rounded-full" />-->
-<!--      <p>Preparing Answer</p>-->
     </div>
   </div>
 </template>
