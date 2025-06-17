@@ -1,5 +1,20 @@
+<script setup lang="ts">
+import type {Message} from "~/types/Message";
+
+const props = defineProps<{ loading: boolean, messages: Message[] }>()
+
+const emit = defineEmits<{ (e: 'send', text: string): void }>()
+const text = ref('')
+
+function handleSend() {
+  if (!text.value.trim() || props.loading) return
+  emit('send', text.value.trim())
+  text.value = ''
+}
+</script>
+
 <template>
-  <form @submit.prevent="handleSend" class="bg-white border-[1px] border-purple/20 flex flex-row items-center gap-4 px-4 py-2 rounded-lg">
+  <form @submit.prevent="handleSend" class="bg-white border-[4px] border-purple/20 flex flex-row items-center gap-4 px-4 py-2 rounded-lg">
 
     <UTextarea
         v-model="text"
@@ -22,18 +37,6 @@
   </form>
 </template>
 
-<script setup lang="ts">
-const props = defineProps<{ loading: boolean }>()
-
-const emit = defineEmits<{ (e: 'send', text: string): void }>()
-const text = ref('')
-
-function handleSend() {
-  if (!text.value.trim() || props.loading) return
-  emit('send', text.value.trim())
-  text.value = ''
-}
-</script>
 
 <style>
 .custom-scrollbar::-webkit-scrollbar {

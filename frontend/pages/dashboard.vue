@@ -105,7 +105,7 @@ async function addMessage(text: string) {
           </div>
 
           <!-- Zone du champ de saisie -->
-          <ChatInput class="mt-5 mb-10" @send="addMessage" :loading="loading" />
+          <ChatInput class="mt-5 mb-10" @send="addMessage" :loading="loading" :messages="messages"/>
         </div>
 
         <div class="col-span-3 h-screen flex-1">

@@ -182,8 +182,9 @@ export const useCalendarStore = defineStore('calendar', {
 
         // **🔥 APPEL API POUR UPDATE D'UN ÉVÉNEMENT**
         async updateEvent(eventId: string, eventData: any, abortSignal?: AbortSignal) {
+            const toast = useToast()
             try {
-                return await $fetch<{ event: GoogleCalendarEvent }>(
+                await $fetch<{ event: GoogleCalendarEvent }>(
                     this.apiUrl + `/calendar/event/${eventId}`,
                     {
                         headers: {
@@ -195,7 +196,20 @@ export const useCalendarStore = defineStore('calendar', {
                         signal: abortSignal
                     }
                 )
+
+
+                toast.add({
+                    title: 'Event successfully updated',
+                    icon: 'i-lucide-check-check',
+                    color: 'success',
+                })
             } catch (error) {
+                toast.add({
+                    title: 'Error updating event',
+                    icon: 'i-lucide-x',
+                    color: 'error',
+                })
+
                 console.error('Error updating event:', error)
                 throw error
             }
