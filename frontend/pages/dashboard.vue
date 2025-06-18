@@ -31,6 +31,9 @@ async function resetMessages(){
     { id: Date.now().toString(), role: 'assistant', content: 'Hello ' + authStore.user?.name + ' ! How can I help you today ?' }
   ]
   slots.value = []
+  loading.value = false
+  // todo abort any ongoing request
+
 }
 
 const lastMessageAi = computed(() => {
@@ -108,9 +111,11 @@ function cleanSlots() {
         <div class="col-span-1 border-r border-r-[0.5px] border-grey-calendar/20 h-screen p-4 flex flex-col h-full min-h-0">
           <!-- Zone scrollable des messages -->
           <div class="grow min-h-0 flex flex-col gap-4 ">
-            <UButton  variant="outline"
-                      class="rounded-lg hover:bg-purple/20 hover:text-primary cursor-pointer inter text-gray-500"
-                      size="sm" label="New Chat" icon="i-heroicons-pencil-square" color="neutral" @click="resetMessages"/>
+            <button
+                      class="disabled:border-alpha-300 border-alpha-400 hover:border-alpha-400  aria-disabled:border-alpha-300 inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-1.5 whitespace-nowrap text-nowrap border font-medium outline-none ring-blue-600 transition-[background,border-color,color,transform,opacity,box-shadow] disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400 disabled:ring-0 aria-disabled:cursor-not-allowed aria-disabled:bg-gray-100 aria-disabled:text-gray-400 aria-disabled:ring-0 [&>svg]:pointer-events-none [&>svg]:size-4 [&_svg]:shrink-0 bg-background-subtle text-gray-900 hover:bg-purple/20  h-8 px-3 text-sm has-[>kbd]:gap-2 has-[>svg]:px-2 has-[>kbd]:pr-[6px] rounded-lg border-gray-300 shadow-sm mb-2 flex flex-row items-center gap-2.5"
+                      size="sm"  @click="resetMessages">
+              New Chat
+            </button>
 
             <ChatView :messages="messages" :loading="loading" />
           </div>

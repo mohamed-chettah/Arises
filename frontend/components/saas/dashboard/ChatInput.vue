@@ -3,7 +3,12 @@ import type {Slot} from "~/types/Slot";
 
 const props = defineProps<{ loading: boolean, slots: Slot[] | null }>()
 
-const emit = defineEmits<{ (e: 'send', text: string): void }>()
+const emit = defineEmits<{ 
+  (e: 'send', text: string): void,
+  (e: 'accept-all-slots'): void,
+  (e: 'reject-all-slots'): void
+}>()
+
 const text = ref('')
 
 function handleSend() {
@@ -11,21 +16,50 @@ function handleSend() {
   emit('send', text.value.trim())
   text.value = ''
 }
+
+function acceptAllSlots() {
+  emit('accept-all-slots')
+}
+
+function rejectAllSlots() {
+  emit('reject-all-slots')
+}
 </script>
 
 <template>
-
   <form @submit.prevent="handleSend">
-      <div v-if="slots && slots?.length > 0" class="mb-3 flex justify-between">
-        <UButton class="text-white text-[12px] hover:text-purple hover:bg-white px-3 py-1 inter cta shadow-xl bg-gradient-to-r from-[#A480F2] via-[#9977E2] to-[#5F4A8C] rounded-lg">
-          Accept Events
-        </UButton>
-        <UButton class="text-white text-[12px] hover:text-purple hover:bg-white px-3 py-1 inter cta shadow-xl bg-gradient-to-r from-[#A480F2] via-[#9977E2] to-[#5F4A8C] rounded-lg">
-          Remove Events
-        </UButton>
+    <!-- **🔥 BANDE DE GESTION DES SLOTS (STYLE CURSOR)** -->
+    <div v-if="slots && slots.length > 0" class="p-2 mx-auto flex flex-row justify-between rounded-tl-lg rounded-tr-lg w-[95%] bg-purple/20">
+      <!-- Compteur de slots avec icône -->
+      <div class="flex items-center gap-1 text-xs text-gray-500 font-medium inter">
+        <span>{{ slots.length }}</span>
+        <span class="">
+           Event{{ slots.length > 1 ? 's' : '' }}
+        </span>
       </div>
 
-    <div  class="bg-white border-[4px] border-purple/20 flex flex-row items-center gap-4 px-4 py-2 rounded-lg">
+      <!-- Boutons Reject/Accept -->
+      <div class="flex gap-2 inter ">
+        <UButton
+            @click="rejectAllSlots"
+            class="cursor-pointer px-1 py-1 text-xs font-medium text-gray-500 hover:text-purple rounded-md transition-colors duration-200"
+        >
+          Reject
+        </UButton>
+        <UButton
+            @click="acceptAllSlots"
+            class="cursor-pointer px-1.5 py-1.5 hover:bg-purple hover:text-white text-xs font-medium text-gray-500 bg-white rounded-md transition-colors duration-200"
+        >
+          Accept
+        </UButton>
+      </div>
+    </div>
+
+
+<!--    <div class="mx-auto rounded-tl-lg rounded-tr-lg w-[97%] bg-purple/20">-->
+<!--t-->
+<!--    </div>-->
+    <div class="bg-white border-[2px] border-purple/20 flex flex-row items-center gap-4 px-4 py-2 rounded-lg">
       <UTextarea
           v-model="text"
           :rows="1"

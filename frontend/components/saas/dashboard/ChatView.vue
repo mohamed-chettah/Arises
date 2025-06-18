@@ -19,7 +19,7 @@ watch(
     () => props.loading,
     (newVal) => {
       if (newVal) {
-        text.value = 'Thinking...'
+        text.value = 'Arises is thinking...'
 
         setTimeout(() => {
           text.value = 'Analyzing your calendar...'
