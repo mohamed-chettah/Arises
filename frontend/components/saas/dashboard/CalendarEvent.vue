@@ -83,7 +83,7 @@ const eventClasses = computed(() => {
     
     const colorClasses = isAccepted 
       ? 'bg-purple-500/40 border-l-purple-500/40 text-purple-900 z-1'
-      : 'bg-orange-500/40 border-l-orange text-orange-900 min-h-[100px] z-96'
+      : 'bg-orange-500/40 border-l-orange-500/40 text-orange-900 min-h-[100px] z-96'
     
     return [
       ...baseClasses,
@@ -115,7 +115,7 @@ const eventClasses = computed(() => {
       v-if="event.isStartCell"
       class="font-semibold text-[10px] px-1"
     >
-      <p class="font-semibold text-xs wrap-break-word line-clamp-2">{{ event.title }}</p>
+      <p class="font-semibold text-[12px] wrap-break-word line-clamp-2">{{ event.title }}</p>
       <p class="text-gray-500 font-normal">
         {{ formatTime(event.start) }}-{{ formatTime(event.end) }}
       </p>

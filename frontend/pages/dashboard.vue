@@ -8,6 +8,7 @@ import type {Slot} from "~/types/Slot";
 import {useAuthStore} from "~/store/AuthStore";
 import {useCalendarStore} from "~/store/CalendarStore";
 import type {Message} from "~/types/Message";
+import type {UnwrapRefSimple} from "@vue/reactivity";
 
 definePageMeta({
   middleware: [
@@ -17,7 +18,7 @@ definePageMeta({
 const authStore = useAuthStore()
 const calendarStore = useCalendarStore();
 const messages = ref<Message[]>([
-  { id: Date.now().toString(), role: 'assistant', content: 'Hello ' + authStore.user?.name + ' ! How can I assist you today ?' }
+  { id: Date.now().toString(), role: 'assistant', content: 'Hello ' + authStore.user?.name + ' ! How can I help you today ?' }
 ])
 
 const runtimeConfig = useRuntimeConfig()
@@ -27,10 +28,15 @@ const slots = ref(<Slot[]>[])
 
 async function resetMessages(){
   messages.value = [
-    { id: Date.now().toString(), role: 'assistant', content: 'Hello ' + authStore.user?.name + ' ! How can I assist you today ?' }
+    { id: Date.now().toString(), role: 'assistant', content: 'Hello ' + authStore.user?.name + ' ! How can I help you today ?' }
   ]
   slots.value = []
 }
+
+const lastMessageAi = computed(() => {
+  const last = messages.value.at(-1)
+  return last?.role === 'assistant' ? last : null
+})
 
 async function addMessage(text: string) {
   messages.value.push({ id: Date.now().toString(), role: 'user', content: text })
@@ -62,6 +68,7 @@ async function addMessage(text: string) {
     }
 
     if(data.value?.slots){
+      slots.value = []
       data.value?.slots.map((slot: Slot) => {
         slot.color = 'bg-purple'
         slot.choice = true
@@ -81,6 +88,10 @@ async function addMessage(text: string) {
   finally {
     loading.value = false
   }
+}
+
+function cleanSlots() {
+  slots.value = []
 }
 </script>
 
@@ -105,7 +116,7 @@ async function addMessage(text: string) {
           </div>
 
           <!-- Zone du champ de saisie -->
-          <ChatInput class="mt-5 mb-10" @send="addMessage" :loading="loading" :messages="messages"/>
+          <ChatInput class="mt-5 mb-10" @send="addMessage" :loading="loading" :slots="slots"/>
         </div>
 
         <div class="col-span-3 h-screen flex-1">

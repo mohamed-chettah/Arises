@@ -107,6 +107,12 @@ class OpenAIChatService
         ];
 
         $messages[] = [
+            'role' => 'system',
+            'content' => "Today is " . now()->format('Y-m-d')
+        ];
+
+
+        $messages[] = [
             'role' => 'user',
             'content' => $userPrompt
         ];

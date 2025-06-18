@@ -117,14 +117,14 @@ export const useCalendarStore = defineStore('calendar', {
                 toast.add({
                     title: 'Event successfully created',
                     icon: 'i-lucide-check-check',
-                    color: 'success',
+                    color: 'neutral',
                 })
 
                 // Ajouter l'événement créé au state local
                 this.events.push(response)
 
             } catch (error) {
-                this.error = 'Erreur lors de la création de l\'événement'
+                this.error = 'Error creating event: ' + (error as Error).message || 'Unknown error'
                 this.loadingCreation = false
                 toast.add({
                     title: 'Error creating event',
@@ -201,7 +201,7 @@ export const useCalendarStore = defineStore('calendar', {
                 toast.add({
                     title: 'Event successfully updated',
                     icon: 'i-lucide-check-check',
-                    color: 'success',
+                    color: 'neutral',
                 })
             } catch (error) {
                 toast.add({

@@ -40,6 +40,13 @@ onMounted(() => {
     chatBox.value?.scrollTo({ top: chatBox.value.scrollHeight, behavior: 'smooth' })
   })
 })
+
+function acceeptAllEvents() {
+  // Emit an event to accept all events
+  // This function should be implemented in the parent component
+  // to handle the acceptance of all events
+  console.log('Accepting all events')
+}
 </script>
 
 <template>
@@ -59,11 +66,7 @@ onMounted(() => {
         <p class="text-xs line-clamp-8">{{ m.content }}</p>
 
 
-        <div v-if="m.slots && m.slots?.length > 0" class="w-full mt-3">
-          <UButton class="text-white text-[10px] hover:text-purple hover:bg-white px-2 py-1 inter cta shadow-xl bg-gradient-to-r from-[#A480F2] via-[#9977E2] to-[#5F4A8C] rounded-lg">
-            Accept New Events
-          </UButton>
-        </div>
+
       </div>
 
     </template>

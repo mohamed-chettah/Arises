@@ -19,7 +19,6 @@ interface Props {
 
 const props = defineProps<Props>()
 const calendar = useCalendarStore()
-const toast = useToast()
 
 // **🔥 NOUVEAU : UTILISATION DU COMPOSABLE DRAG & DROP**
 const {
@@ -94,6 +93,9 @@ const currentPeriod = computed(() => {
 // **🔥 FUSION INTELLIGENTE : SLOTS + ÉVÉNEMENTS**
 const allCalendarItems = computed(() => {
 
+  // remove les ancien slots
+  let slotEvents: any[] = []
+
   // Convertir les événements normaux
   const normalEvents = events.value.map(event => ({
     ...event,
@@ -101,7 +103,7 @@ const allCalendarItems = computed(() => {
   }))
 
   // Convertir les slots IA avec copie pour éviter la mutation des props
-  const slotEvents = props.slot.map((slot, index) => {
+  slotEvents = props.slot.map((slot, index) => {
     // **🔥 CRÉER UNE COPIE DU SLOT POUR ÉVITER LA MUTATION DES PROPS**
     const slotCopy = { ...slot }
 
@@ -236,7 +238,6 @@ function scrollToCurrentTime() {
 
 // **🔥 GESTIONNAIRES POUR LES ACTIONS DES SLOTS**
 async function handleSlotAccepted(slot: any) {
-  console.log('🟢 Slot accepté:', slot)
 
   try {
     // **🔥 1. CRÉER L'ÉVÉNEMENT DANS LE CALENDRIER GOOGLE**
@@ -282,7 +283,7 @@ function handleSlotRejected(slot: any) {
 onMounted(async () => {
   await fetchEvents()
   // **🔥 SCROLL VERS L'HEURE ACTUELLE APRÈS CHARGEMENT**
-  // scrollToCurrentTime()
+  scrollToCurrentTime()
 })
 
 // Watcher pour changement de semaine

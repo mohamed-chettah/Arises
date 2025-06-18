@@ -88,7 +88,8 @@ async function onSubmit() {
                  color="neutral"
                  icon="i-heroicons-plus"
                  active-color="primary"
-                 class="hover:bg-purple disabled:bg-purple rounded-lg text-gray-500 hover:text-white cursor-pointer inter"
+                 class="rounded-lg hover:bg-purple/20 hover:text-primary
+                 rounded-lg text-gray-500 cursor-pointer inter"
                  size="sm">
           Create Event
         </UButton>
