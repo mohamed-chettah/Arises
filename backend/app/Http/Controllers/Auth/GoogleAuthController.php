@@ -67,13 +67,18 @@ class GoogleAuthController extends Controller
             );
 
             $token = JWTAuth::fromUser($user);
+            
+            // Génération du refresh token avec une durée de vie plus longue
+            $refreshToken = JWTAuth::customClaims([
+                'type' => 'refresh',
+                'exp' => now()->addMinutes(config('jwt.refresh_ttl'))->timestamp
+            ])->fromUser($user);
 
             // return to the frontend
             return redirect()->away(env('FRONTEND_URL') . "/dashboard")
                 ->cookie('token', $token, 60, '/', 'localhost', false, env('APP_ENV') === 'production')
+                ->cookie('refresh_token', $refreshToken, config('jwt.refresh_ttl'), '/', 'localhost', false, env('APP_ENV') === 'production')
                 ->cookie('user', json_encode($user), 60, '/', 'localhost', false, env('APP_ENV') === 'production');
-
-            // TODO ENVOYER UN Refresh Token aussi
 
         } catch (\Exception $e) {
             // Log the error to Sentry

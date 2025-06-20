@@ -8,7 +8,6 @@ import type {Slot} from "~/types/Slot";
 import {useAuthStore} from "~/store/AuthStore";
 import {useCalendarStore} from "~/store/CalendarStore";
 import type {Message} from "~/types/Message";
-import type {UnwrapRefSimple} from "@vue/reactivity";
 
 definePageMeta({
   middleware: [
@@ -70,6 +69,8 @@ async function addMessage(text: string) {
       messages.value.push({ id: Date.now().toString(), role: 'assistant', content: "Sorry, something goes wrong, please try again later" })
     }
 
+    // todo add neww message in local storag
+
     if(data.value?.slots){
       slots.value = []
       data.value?.slots.map((slot: Slot) => {
@@ -112,7 +113,7 @@ function cleanSlots() {
           <!-- Zone scrollable des messages -->
           <div class="grow min-h-0 flex flex-col gap-4 ">
             <button
-                      class="disabled:border-alpha-300 border-alpha-400 hover:border-alpha-400  aria-disabled:border-alpha-300 inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-1.5 whitespace-nowrap text-nowrap border font-medium outline-none ring-blue-600 transition-[background,border-color,color,transform,opacity,box-shadow] disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400 disabled:ring-0 aria-disabled:cursor-not-allowed aria-disabled:bg-gray-100 aria-disabled:text-gray-400 aria-disabled:ring-0 [&>svg]:pointer-events-none [&>svg]:size-4 [&_svg]:shrink-0 bg-background-subtle text-gray-900 hover:bg-purple/20  h-8 px-3 text-sm has-[>kbd]:gap-2 has-[>svg]:px-2 has-[>kbd]:pr-[6px] rounded-lg border-gray-300 shadow-sm mb-2 flex flex-row items-center gap-2.5"
+                      class="disabled:border-alpha-300 border-alpha-400 hover:border-alpha-400  aria-disabled:border-alpha-300 inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-1.5 whitespace-nowrap text-nowrap border font-medium outline-none ring-blue-600 transition-[background,border-color,color,transform,opacity,box-shadow] disabled:cursor-not-allowed pb-0 disabled:bg-gray-100 disabled:text-gray-400 disabled:ring-0 aria-disabled:cursor-not-allowed aria-disabled:bg-gray-100 aria-disabled:text-gray-400 aria-disabled:ring-0 [&>svg]:pointer-events-none [&>svg]:size-4 [&_svg]:shrink-0 bg-background-subtle text-gray-900 hover:bg-purple/20  h-8 px-3 text-sm has-[>kbd]:gap-2 has-[>svg]:px-2 has-[>kbd]:pr-[6px] rounded-lg border-gray-300 shadow-sm flex flex-row items-center gap-2.5"
                       size="sm"  @click="resetMessages">
               New Chat
             </button>

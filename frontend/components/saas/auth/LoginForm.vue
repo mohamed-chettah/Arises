@@ -4,6 +4,30 @@ const runtimeConfig = useRuntimeConfig()
 const apiUrl = runtimeConfig.public.apiBase
 const toast = useToast()
 
+// **🔐 PROTECTION TEMPORAIRE**
+const devPassword = ref('')
+const isUnlocked = ref(false)
+const DEV_ACCESS_CODE = 'arises2025' // Mot de passe temporaire
+
+const checkDevAccess = () => {
+  if (devPassword.value === DEV_ACCESS_CODE) {
+    isUnlocked.value = true
+    toast.add({
+      title: 'Access granted!',
+      description: 'Welcome to Arises Beta.',
+      color: 'success',
+      duration: 3000
+    })
+  } else {
+    toast.add({
+      title: '❌ Invalid access code',
+      description: 'Please contact the development team.',
+      color: 'error',
+      duration: 3000
+    })
+  }
+}
+
 /**
  * Redirect the user to Google OAuth.
  */
@@ -56,8 +80,35 @@ const loginWithGoogle = async () => {
           </p>
         </div>
 
-        <!-- Google button -->
-        <UButton class="text-xs bg-white border-t border-[#A480F2]/70 cursor-pointer text-center flex justify-center rounded-[8px] hover:text-white w-42 cursor-pointer text-black" size="sm" icon="i-mdi-google" @click="loginWithGoogle">
+        <!-- 🔐 Protection temporaire ou bouton Google -->
+        <div v-if="!isUnlocked" class="space-y-4">
+          <div class="space-y-2">
+            <label class="text-sm text-gray-300">Beta Access</label>
+            <input 
+              v-model="devPassword"
+              type="password"
+              placeholder="Enter access code..."
+              class="w-full mt-4 px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500"
+              @keyup.enter="checkDevAccess"
+            />
+          </div>
+          <UButton 
+          class="text-xs bg-white border-t border-[#A480F2]/70 cursor-pointer text-center flex justify-center rounded-[8px] hover:text-white w-42 cursor-pointer text-black" 
+            size="sm" 
+            @click="checkDevAccess"
+          >
+            Access to the beta
+          </UButton>
+        </div>
+
+        <!-- Google button (affiché seulement si déverrouillé) -->
+        <UButton 
+          v-else
+          class="text-xs bg-white border-t border-[#A480F2]/70 cursor-pointer text-center flex justify-center rounded-[8px] hover:text-white w-42 cursor-pointer text-black" 
+          size="sm" 
+          icon="i-mdi-google" 
+          @click="loginWithGoogle"
+        >
           Continue with Google
         </UButton>
 
