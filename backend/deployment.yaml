@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+    app: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: backend
+          image: ghcr.io/mohamedevweb/backend:latest
+          workingDir: /var/www
+          ports:
+            - containerPort: 5005
+          imagePullPolicy: Always
+          envFrom:
+            - secretRef:
+                name: backend-env
+
+
+          env:
+            - name: NODE_ENV
+              value: production
+
+          readinessProbe:
+            httpGet:
+              path: /                  # URL à tester (page d'accueil ici)
+              port: 5005               # Même port que containerPort
+            initialDelaySeconds: 5     # Attente avant le 1er test (lancement initial)
+            periodSeconds: 10          # Test toutes les 10 secondes
+            timeoutSeconds: 2          # Abandonne le test si + de 2 sec
+            failureThreshold: 3        # Marqué "non prêt" après 3 échecs consécutifs
+            successThreshold: 1        # Marqué "prêt" dès que 1 succès
