@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth\Extension;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Services\UserWebsiteService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class GoogleController extends Controller
+class GoogleExtensionController extends Controller
 {
     public function redirectToGoogle(): JsonResponse
     {
+
         // Obtenir l'URL de redirection générée par Socialite
         $url = Socialite::driver('google')->stateless()->redirect()->getTargetUrl();
 

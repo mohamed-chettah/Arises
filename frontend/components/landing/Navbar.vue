@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import ChromeButton from "~/components/ChromeButton.vue";
+import ChromeButton from "~/components/landing/ChromeButton.vue";
 
 const isMenuOpen = ref(false);
 
@@ -16,7 +16,7 @@ const closeMenu = () => {
 <template>
   <!-- Desktop Navigation -->
   <div class="md:flex hidden justify-between items-center">
-    <NuxtImg @click="navigateTo('/')" class="w-20 cursor-pointer" src="/images/Arise.svg" />
+    <NuxtImg @click="navigateTo('/')"  class="w-12 h-12 cursor-pointer" src="/logo_without_text.svg" />
 
     <div class="flex gap-5 flex-row items-center">
       <div class="text-white text-[14px] inter">
@@ -25,7 +25,7 @@ const closeMenu = () => {
         <NuxtLink active-class="active" to="/what" class="hover:text-[#A480F2] px-4 py-2">What</NuxtLink>
       </div>
 
-      <ChromeButton text="Chrome Extension" class-t="text-[14px] bg-linear-to-r from-[#445EF2] to-[#27368C] cursor-pointer inter"/>
+<!--      <NuxtLink @click="closeMenu" active-class="active" to="/login" class="text-white hover:text-[#A480F2] text-[14px] py-1 inter cta shadow-xl bg-gradient-to-r from-[#A480F2] via-[#9977E2] to-[#5F4A8C] hover:bg-[#A480F2]/70 px-4 rounded-lg">Login</NuxtLink>-->
     </div>
   </div>
 
@@ -54,8 +54,7 @@ const closeMenu = () => {
       <NuxtLink @click="closeMenu" active-class="active" to="/ranking" class="text-white hover:text-[#A480F2] text-[14px] py-2 inter">Extension</NuxtLink>
       <NuxtLink @click="closeMenu" active-class="active" to="/what" class="text-white hover:text-[#A480F2] text-[14px] py-2 inter">What</NuxtLink>
 
-
-      <ChromeButton text="Chrome Extension" class-t="text-[14px] bg-linear-to-r from-[#445EF2] to-[#27368C] cursor-pointer inter"/>
+<!--      <NuxtLink @click="closeMenu" active-class="active" to="/login" class="text-white hover:text-[#A480F2] text-[14px] py-1 inter">Login</NuxtLink>-->
     </div>
   </div>
 </template>

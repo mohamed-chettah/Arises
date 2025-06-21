@@ -1,8 +1,11 @@
 <script setup lang="ts">
 
-import Navbar from "~/components/Navbar.vue";
-import VideoShowcase from "~/components/VideoShowcase.vue";
+import Navbar from "~/components/landing/Navbar.vue";
+import VideoShowcase from "~/components/landing/VideoShowcase.vue";
 import VideoBackground from "~/components/VideoBackground.vue";
+import HeroSection from "~/components/landing/HeroSection.vue";
+import Footer from "~/components/landing/Footer.vue";
+
 </script>
 
 <template>

@@ -1,7 +1,9 @@
 <script setup lang="ts">
 
-import Navbar from "~/components/Navbar.vue";
+import Navbar from "~/components/landing/Navbar.vue";
 import VideoBackground from "~/components/VideoBackground.vue";
+import Footer from "~/components/landing/Footer.vue";
+
 </script>
 <template>
   <section class="flex flex-col min-h-screen background-image text-white sm:px-0 px-4">

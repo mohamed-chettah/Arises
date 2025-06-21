@@ -2,6 +2,15 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
 
+@theme {
+    --color-grey: #C0CAD5;
+    --color-grey-calendar: #2B3443;
+    --color-purple-transparent: #A480F2 · 20%;
+    --color-purple: #A480F2;
+    --color-blue: #445EF2;
+    --color-background: #1D1340;
+}
+
 .inter {
     font-family: "Inter", sans-serif;
     font-style: normal;
@@ -29,3 +38,5 @@
 .back-video {
     @apply fixed top-0 left-0 w-[100vw] h-[100vh] object-cover -z-10 pointer-events-none;
 }
+
+

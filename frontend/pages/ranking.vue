@@ -1,8 +1,10 @@
 <script setup lang="ts">
 
-import Navbar from "~/components/Navbar.vue";
-import type { TableColumn } from '@nuxt/ui'
+import Navbar from "~/components/landing/Navbar.vue";
+import Footer from "~/components/landing/Footer.vue";
 import VideoBackground from "~/components/VideoBackground.vue";
+import VideoShowcase from "~/components/landing/VideoShowcase.vue";
+import ChromeButton from "~/components/landing/ChromeButton.vue";
 
 const data = ref([
   {

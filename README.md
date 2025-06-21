@@ -19,11 +19,10 @@ Inspired by RPG-leveling systems, Arises aims to transform productivity into an 
 
 - **Frontend**: Nuxt 3 (SSR)
 - **Backend**: Laravel (REST API)
-- **Database**: PostgreSQL
+- **Database**: PostgreSQL - Neon
 - **AI**: OpenAI GPT
-- **Auth**: Magic links via Resend
+- **Auth**: Laravel JWT
 - **Infra**: Docker + GitHub Actions CI/CD
-- **Chrome Extension**: Used to onboard beta testers and gather feedback
 
 ## 🛣️ Roadmap (Next Features)
 
@@ -41,7 +40,7 @@ Inspired by RPG-leveling systems, Arises aims to transform productivity into an 
 
 ```bash
 # Clone the repo
-git clone https://github.com/mohamedevweb/Arises.git
+git clone https://github.com/mohamedevweb/arises.git
 
 # Frontend
 cd frontend

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 useHead({
-  title:"Arises",
+  title:"Arises - The AI Scheduler",
   script: [
     {
       src: 'https://www.googletagmanager.com/gtag/js?id=G-NR5YSZPY2Q',
