@@ -26,6 +26,13 @@ const items = ref<DropdownMenuItem[]>([
 
   },
   {
+    label: 'Support',
+    icon: 'i-lucide-mail',
+    onSelect() {
+      window.open('https://arises.app/support', '_blank')
+    }
+  },
+  {
     label: 'Logout',
     icon: 'i-lucide-log-out',
     onSelect() {

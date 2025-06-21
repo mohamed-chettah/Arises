@@ -335,7 +335,7 @@ onUnmounted(() => {
             </span>
             <UButton 
               variant="ghost" 
-              size="sm" 
+              size="md"
               icon="i-heroicons-chevron-right"
               class="cursor-pointer"
               @click="navigateWeek('next')"
